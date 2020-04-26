@@ -37,7 +37,7 @@ public class Advertisement {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public PriceList priceList;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Set<RentRequest> rentRequest;
+    public Set<RentRequest> rentRequests;
 
 
 

@@ -20,6 +20,6 @@ public class TransmissionType {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "transmisionType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "transmissionType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Car> car;
 }

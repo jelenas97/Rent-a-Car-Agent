@@ -18,6 +18,12 @@ public class Car {
     private Long id;
 
     @Column
+    private String name;
+
+    @Column
+    private Double rate;
+
+    @Column
     private Integer mileage;
 
     @Column
