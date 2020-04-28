@@ -8,18 +8,18 @@ import lombok.Setter;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.List;
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class CodeBookDTO {
-    private List<CarBrand> carBrands;
-    private List<CarClass> carClasses;
-    private List<CarModel> carModels;
-    private List<FuelType> fuelTypes;
-    private List<TransmissionType> transmissionTypes;
-    public CodeBookDTO(List<CarBrand> carBrands,List<CarClass> carClasses,List<CarModel> carModels,
-                        List<FuelType> fuelTypes,List<TransmissionType> transmissionTypes){
+    private List<String> carBrands;
+    private List<String> carClasses;
+    private List<String> carModels;
+    private List<String> fuelTypes;
+    private List<String> transmissionTypes;
+    public CodeBookDTO(List<String> carBrands,List<String> carClasses,List<String> carModels,
+                        List<String> fuelTypes,List<String> transmissionTypes){
+
         this.carBrands = carBrands;
         this.carClasses = carClasses;
         this.carModels = carModels;

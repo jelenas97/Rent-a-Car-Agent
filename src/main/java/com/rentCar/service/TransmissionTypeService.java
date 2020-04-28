@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TransmissionTypeService {
     TransmissionType findOne(Long id);
-    List<TransmissionType> findAll();
+    List<String> findAllStringList();
 }

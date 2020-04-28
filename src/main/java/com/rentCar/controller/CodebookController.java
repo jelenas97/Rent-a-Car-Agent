@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "api/admin")
+@RequestMapping(value = "codebook")
 @CrossOrigin("http://localhost:4200")
-public class AdminController {
+public class CodebookController {
 
     @Autowired
     private CarBrandServiceImpl carBrandService;
@@ -36,11 +36,11 @@ public class AdminController {
     public ResponseEntity<?> getCodeBookInfo()
     {
         try {
-            List<CarBrand> carBrands = this.carBrandService.findAll();
-            List<CarClass> carClasses = this.carClassService.findAll();
-            List<CarModel> carModels = this.carModelService.findAll();
-            List<FuelType> fuelTypes = this.fuelTypeService.findAll();
-            List<TransmissionType> transmissionTypes = this.transTypeService.findAll();
+            List<String> carBrands = this.carBrandService.findAllStringList();
+            List<String> carClasses = this.carClassService.findAllStringList();
+            List<String> carModels = this.carModelService.findAllStringList();
+            List<String> fuelTypes = this.fuelTypeService.findAllStringList();
+            List<String> transmissionTypes = this.transTypeService.findAllStringList();
             CodeBookDTO codeBook = new  CodeBookDTO(carBrands,carClasses, carModels, fuelTypes,transmissionTypes);
 
             return new ResponseEntity(codeBook, HttpStatus.OK);

@@ -19,7 +19,12 @@ public class CarBrandServiceImpl implements CarBrandService {
         return carBrandRepository.findById(id).orElse(null);
     }
     @Override
-    public List<CarBrand> findAll() {
-        return carBrandRepository.findAll();
+    public List<String> findAllStringList()
+    {
+        List<String> stringList = new ArrayList<>();
+        for(CarBrand  carBrand: carBrandRepository.findAll()){
+            stringList.add(carBrand.getName());
+        }
+        return stringList;
     }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CarClassService {
     CarClass findOne(Long id);
-    List<CarClass> findAll();
+    List<String> findAllStringList();
 }

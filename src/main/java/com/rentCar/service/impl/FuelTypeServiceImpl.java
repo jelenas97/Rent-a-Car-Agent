@@ -8,6 +8,7 @@ import com.rentCar.service.FuelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class FuelTypeServiceImpl implements FuelTypeService {
@@ -20,7 +21,12 @@ public class FuelTypeServiceImpl implements FuelTypeService {
         return fuelTypeRepository.findById(id).orElse(null);
     }
     @Override
-    public List<FuelType> findAll() {
-        return fuelTypeRepository.findAll();
+    public List<String> findAllStringList()
+    {
+        List<String> stringList = new ArrayList<>();
+        for(FuelType  fuelType: fuelTypeRepository.findAll()){
+            stringList.add(fuelType.getName());
+        }
+        return stringList;
     }
 }
