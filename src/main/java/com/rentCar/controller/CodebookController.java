@@ -46,7 +46,6 @@ public class CodebookController {
             return new ResponseEntity(codeBook, HttpStatus.OK);
 
         } catch(NullPointerException e){
-
             return ResponseEntity.notFound().build();
         }
     }

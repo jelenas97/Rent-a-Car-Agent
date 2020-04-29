@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 @Service
 public class FuelTypeServiceImpl implements FuelTypeService {
 
@@ -23,10 +24,33 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     @Override
     public List<String> findAllStringList()
     {
-        List<String> stringList = new ArrayList<>();
-        for(FuelType  fuelType: fuelTypeRepository.findAll()){
-            stringList.add(fuelType.getName());
-        }
-        return stringList;
+        return fuelTypeRepository.findAll().stream()
+                .map( Object::toString )
+                .collect( Collectors.toList());
+    }
+
+    @Override
+    public FuelType findOneByName(String name) {
+        return this.fuelTypeRepository.findByName(name);
+    }
+
+    @Override
+    public void addFuel(String name) {
+        this.fuelTypeRepository.save(new FuelType(name));
+    }
+
+    @Override
+    public void deleteFuel(String name) {
+        FuelType fuelType = this.fuelTypeRepository.findByName(name);
+        fuelType.setActive(false);
+        this.fuelTypeRepository.save(fuelType);
+
+    }
+
+    @Override
+    public void setActive(String name) {
+        FuelType fuelType = this.fuelTypeRepository.findByName(name);
+        fuelType.setActive(true);
+        this.fuelTypeRepository.save(fuelType);
     }
 }

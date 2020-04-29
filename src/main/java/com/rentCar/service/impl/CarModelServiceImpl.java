@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 @Service
 public class CarModelServiceImpl implements CarModelService {
 
@@ -23,10 +24,33 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     public List<String> findAllStringList()
     {
-        List<String> stringList = new ArrayList<>();
-        for(CarModel  carModel: carModelRepository.findAll()){
-            stringList.add(carModel.getName());
-        }
-        return stringList;
+        return carModelRepository.findAll().stream()
+                .map( Object::toString )
+                .collect( Collectors.toList() );
+    }
+
+    @Override
+    public CarModel findOneByName(String name) {
+        return this.carModelRepository.findByName(name);
+    }
+
+    @Override
+    public void addModel(String name) {
+        this.carModelRepository.save(new CarModel(name));
+    }
+
+    @Override
+    public void deleteModel(String name) {
+        CarModel carModel = this.carModelRepository.findByName(name);
+        carModel.setActive(false);
+        this.carModelRepository.save(carModel);
+
+    }
+
+    @Override
+    public void setActive(String name) {
+        CarModel carModel = this.carModelRepository.findByName(name);
+        carModel.setActive(true);
+        this.carModelRepository.save(carModel);
     }
 }

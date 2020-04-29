@@ -8,4 +8,9 @@ import java.util.List;
 public interface CarClassService {
     CarClass findOne(Long id);
     List<String> findAllStringList();
+    CarClass findOneByName(String name);
+    void addClass(String name);
+    void deleteClass(String name);
+    void setActive(String name);
+
 }

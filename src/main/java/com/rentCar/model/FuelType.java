@@ -20,6 +20,17 @@ public class FuelType {
     @Column
     private String name;
 
+    @Column
+    private Boolean active = true;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Car> car;
+    public FuelType(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -20,6 +20,18 @@ public class CarClass {
     @Column
     private String name;
 
+    @Column
+    private Boolean active = true;
+
     @OneToMany(mappedBy = "carClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Car> car;
+
+    public CarClass(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
