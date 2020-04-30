@@ -24,7 +24,7 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     public List<String> findAllStringList()
     {
-        return carModelRepository.findAll().stream()
+        return carModelRepository.getActiveCarModels().stream()
                 .map( Object::toString )
                 .collect( Collectors.toList() );
     }

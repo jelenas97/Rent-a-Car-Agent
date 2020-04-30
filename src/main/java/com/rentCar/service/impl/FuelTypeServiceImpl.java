@@ -24,7 +24,7 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     @Override
     public List<String> findAllStringList()
     {
-        return fuelTypeRepository.findAll().stream()
+        return fuelTypeRepository.getActiveFuelTypes().stream()
                 .map( Object::toString )
                 .collect( Collectors.toList());
     }

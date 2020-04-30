@@ -23,7 +23,7 @@ public class TransTypeServiceImpl implements TransmissionTypeService {
     @Override
     public List<String> findAllStringList()
     {
-        List<String> stringList = transmissionTypeRepository.findAll().stream()
+        List<String> stringList = transmissionTypeRepository.getActiveTransTypes().stream()
                 .map( Object::toString )
                 .collect( Collectors.toList() );
         return stringList;
