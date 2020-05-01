@@ -6,9 +6,9 @@ insert into car_brand(name,active) values('Audi',true);
 insert into car_brand(name,active) values('Mercedes',true);
 insert into car_brand(name,active) values('Tesla',true);
 
-insert into car_model(name,active) values('M5',true);
-insert into car_model(name,active) values('R8',true);
-insert into car_model(name,active) values('S5',true);
+insert into car_model(name,active,car_brand_id) values('model1',true,1);
+insert into car_model(name,active,car_brand_id) values('model2',true,1);
+insert into car_model(name,active,car_brand_id) values('model3',true,2);
 
 insert into car_class(name,active) values('SUV',true);
 insert into car_class(name,active) values('Old timer',true);

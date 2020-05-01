@@ -38,10 +38,9 @@ public class CodebookController {
         try {
             List<String> carBrands = this.carBrandService.findAllStringList();
             List<String> carClasses = this.carClassService.findAllStringList();
-            List<String> carModels = this.carModelService.findAllStringList();
             List<String> fuelTypes = this.fuelTypeService.findAllStringList();
             List<String> transmissionTypes = this.transTypeService.findAllStringList();
-            CodeBookDTO codeBook = new  CodeBookDTO(carBrands,carClasses, carModels, fuelTypes,transmissionTypes);
+            CodeBookDTO codeBook = new  CodeBookDTO(carBrands,carClasses, fuelTypes,transmissionTypes);
 
             return new ResponseEntity(codeBook, HttpStatus.OK);
 

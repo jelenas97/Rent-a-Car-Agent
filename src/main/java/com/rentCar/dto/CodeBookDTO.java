@@ -14,15 +14,13 @@ import java.util.List;
 public class CodeBookDTO {
     private List<String> carBrands;
     private List<String> carClasses;
-    private List<String> carModels;
     private List<String> fuelTypes;
     private List<String> transmissionTypes;
-    public CodeBookDTO(List<String> carBrands,List<String> carClasses,List<String> carModels,
+    public CodeBookDTO(List<String> carBrands,List<String> carClasses,
                         List<String> fuelTypes,List<String> transmissionTypes){
 
         this.carBrands = carBrands;
         this.carClasses = carClasses;
-        this.carModels = carModels;
         this.fuelTypes = fuelTypes;
         this.transmissionTypes = transmissionTypes;
     }

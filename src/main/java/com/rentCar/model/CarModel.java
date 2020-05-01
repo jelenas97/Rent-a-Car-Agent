@@ -23,11 +23,12 @@ public class CarModel {
     @Column
     private Boolean active = true;
 
-    @OneToMany(mappedBy = "carModel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Set<CarBrand> carBrand;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public CarBrand carBrand;
 
-    public CarModel(String name) {
+    public CarModel(String name,CarBrand carBrand) {
         this.name = name;
+        this.carBrand = carBrand;
     }
 
     @Override
