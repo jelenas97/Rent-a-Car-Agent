@@ -1,5 +1,6 @@
 package com.rentCar.service.impl;
 
+import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarClass;
 import com.rentCar.model.CarModel;
 import com.rentCar.repository.CarModelRepository;
@@ -22,9 +23,9 @@ public class CarModelServiceImpl implements CarModelService {
         return carModelRepository.findById(id).orElse(null);
     }
     @Override
-    public List<String> findAllStringList()
+    public List<String> findAllStringList(Long brand)
     {
-        return carModelRepository.getActiveCarModels().stream()
+        return carModelRepository.getActiveCarModels(brand).stream()
                 .map( Object::toString )
                 .collect( Collectors.toList() );
     }
@@ -35,8 +36,8 @@ public class CarModelServiceImpl implements CarModelService {
     }
 
     @Override
-    public void addModel(String name) {
-        this.carModelRepository.save(new CarModel(name));
+    public void addModel(String name, CarBrand brand) {
+        this.carModelRepository.save(new CarModel(name,brand));
     }
 
     @Override

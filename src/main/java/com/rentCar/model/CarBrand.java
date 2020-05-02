@@ -26,8 +26,8 @@ public class CarBrand {
     @OneToMany(mappedBy = "carBrand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Car> car;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public CarModel carModel;
+    @OneToMany(mappedBy = "carBrand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<CarModel> carModel;
 
     public CarBrand(String name) {
         this.name = name;
