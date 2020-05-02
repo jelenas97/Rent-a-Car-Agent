@@ -1,5 +1,6 @@
 package com.rentCar.model;
 
+import com.rentCar.enumerations.AccountStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("USER")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +24,12 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String username;
+
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status = AccountStatus.ACTIVE;
+
+    @Column
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -35,3 +43,5 @@ public class User {
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> sent;
 }
+
+

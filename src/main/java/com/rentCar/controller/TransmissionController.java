@@ -18,7 +18,7 @@ public class TransmissionController {
     private TransTypeServiceImpl transTypeService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity newTransmission(@RequestBody String name) {
 
         try {
@@ -36,6 +36,7 @@ public class TransmissionController {
     }
 
     @DeleteMapping(value = "/{name}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteTransmission(@PathVariable String name) {
 
         try {

@@ -16,7 +16,7 @@ public class CarBrandController {
     private CarBrandServiceImpl carBrandService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity newBrand(@RequestBody String name) {
 
         try {
@@ -34,6 +34,7 @@ public class CarBrandController {
     }
 
     @DeleteMapping(value = "/{name}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteBrand(@PathVariable String name) {
 
         try {

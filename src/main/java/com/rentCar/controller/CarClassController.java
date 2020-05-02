@@ -17,7 +17,7 @@ public class CarClassController {
     private CarClassServiceImpl carClassService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity newClass(@RequestBody String name) {
 
         try {
@@ -35,6 +35,7 @@ public class CarClassController {
     }
 
     @DeleteMapping(value = "/{name}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteClass(@PathVariable String name) {
 
         try {
