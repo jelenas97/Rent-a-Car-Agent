@@ -16,7 +16,7 @@ public class FuelTypeController {
     private FuelTypeServiceImpl fuelTypeService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity newFuel(@RequestBody String name) {
 
         try {
@@ -34,6 +34,7 @@ public class FuelTypeController {
     }
 
     @DeleteMapping(value = "/{name}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteFuel(@PathVariable String name) {
 
         try {

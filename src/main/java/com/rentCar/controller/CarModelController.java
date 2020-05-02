@@ -22,7 +22,7 @@ public class CarModelController {
     private CarBrandServiceImpl carBrandService;
 
     @PostMapping(value = "/{brand}",produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity newModel(@RequestBody String name,@PathVariable String brand) {
 
         try {
@@ -41,6 +41,7 @@ public class CarModelController {
     }
 
     @DeleteMapping(value = "/{name}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteModel(@PathVariable String name) {
 
         try {
@@ -55,7 +56,7 @@ public class CarModelController {
     }
 
     @GetMapping(value="/{brand}", produces="application/json")
-   // @PreAuthorize("hasRole('')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getModels(@PathVariable("brand") String brand){
 
         try {
