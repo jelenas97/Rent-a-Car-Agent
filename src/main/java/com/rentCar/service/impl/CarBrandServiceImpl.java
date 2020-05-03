@@ -35,12 +35,12 @@ public class CarBrandServiceImpl implements CarBrandService {
     }
 
     @Override
-    public void addBrand(String name) {
+    public void save(String name) {
         this.carBrandRepository.save(new CarBrand(name));
     }
 
     @Override
-    public void deleteBrand(String name) {
+    public void delete(String name) {
         CarBrand carBrand = this.carBrandRepository.findByName(name);
         carBrand.setActive(false);
         this.carBrandRepository.save(carBrand);

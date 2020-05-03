@@ -26,7 +26,7 @@ public class TransmissionController {
             if (transmissionType != null) {
                 this.transTypeService.setActive(name);
             } else {
-                this.transTypeService.addTransmission(name);
+                this.transTypeService.save(name);
             }
             return new ResponseEntity(HttpStatus.OK);
 
@@ -42,7 +42,7 @@ public class TransmissionController {
         try {
             TransmissionType transmissionType = this.transTypeService.findOneByName(name);
             if (transmissionType != null) {
-                this.transTypeService.deleteTransmission(name);
+                this.transTypeService.delete(name);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();

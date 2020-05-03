@@ -11,6 +11,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-@DiscriminatorValue("ADMINISTRATOR")
+@DiscriminatorValue("ADMIN")
 public class Administrator extends User{
 }

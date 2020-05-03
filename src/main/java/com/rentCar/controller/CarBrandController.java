@@ -24,7 +24,7 @@ public class CarBrandController {
             if (brand != null) {
                 this.carBrandService.setActive(name);
             } else {
-                this.carBrandService.addBrand(name);
+                this.carBrandService.save(name);
             }
             return new ResponseEntity(HttpStatus.OK);
 
@@ -40,7 +40,7 @@ public class CarBrandController {
         try {
             CarBrand brand = this.carBrandService.findOneByName(name);
             if (brand != null) {
-                this.carBrandService.deleteBrand(name);
+                this.carBrandService.delete(name);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
