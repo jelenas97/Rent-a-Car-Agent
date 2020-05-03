@@ -9,7 +9,7 @@ public interface FuelTypeService {
     FuelType findOne(Long id);
     List<String> findAllStringList();
     FuelType findOneByName(String name);
-    void addFuel(String name);
-    void deleteFuel(String name);
+    void save(String name);
+    void delete(String name);
     void setActive(String name);
 }

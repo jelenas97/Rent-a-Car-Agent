@@ -10,7 +10,7 @@ public interface CarModelService {
     CarModel findOne(Long id);
     List<String> findAllStringList(Long brand);
     CarModel findOneByName(String name);
-    void addModel(String name, CarBrand brand);
-    void deleteModel(String name);
+    void save(String name, CarBrand brand);
+    void delete(String name);
     void setActive(String name);
 }

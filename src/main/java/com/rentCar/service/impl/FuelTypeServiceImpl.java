@@ -35,12 +35,12 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     }
 
     @Override
-    public void addFuel(String name) {
+    public void save(String name) {
         this.fuelTypeRepository.save(new FuelType(name));
     }
 
     @Override
-    public void deleteFuel(String name) {
+    public void delete(String name) {
         FuelType fuelType = this.fuelTypeRepository.findByName(name);
         fuelType.setActive(false);
         this.fuelTypeRepository.save(fuelType);

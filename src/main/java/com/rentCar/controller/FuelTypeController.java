@@ -24,7 +24,7 @@ public class FuelTypeController {
             if (fuelType != null) {
                 this.fuelTypeService.setActive(name);
             } else {
-                this.fuelTypeService.addFuel(name);
+                this.fuelTypeService.save(name);
             }
             return new ResponseEntity(HttpStatus.OK);
 
@@ -40,7 +40,7 @@ public class FuelTypeController {
         try {
             FuelType fuelType = this.fuelTypeService.findOneByName(name);
             if (fuelType != null) {
-                this.fuelTypeService.deleteFuel(name);
+                this.fuelTypeService.delete(name);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();

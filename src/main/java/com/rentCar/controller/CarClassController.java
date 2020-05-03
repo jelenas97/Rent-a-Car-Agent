@@ -1,6 +1,5 @@
 package com.rentCar.controller;
 
-import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarClass;
 import com.rentCar.service.impl.CarClassServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class CarClassController {
             if (carClass != null) {
                 this.carClassService.setActive(name);
             } else {
-                this.carClassService.addClass(name);
+                this.carClassService.save(name);
             }
             return new ResponseEntity(HttpStatus.OK);
 
@@ -41,7 +40,7 @@ public class CarClassController {
         try {
             CarClass carClass = this.carClassService.findOneByName(name);
             if (carClass != null) {
-                this.carClassService.deleteClass(name);
+                this.carClassService.delete(name);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();

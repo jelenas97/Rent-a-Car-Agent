@@ -45,8 +45,14 @@ public class Car {
     public CarBrand carBrand;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public CarModel carModel;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public TransmissionType transmissionType;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<FuelType> fuelType;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Term> terms;
 }

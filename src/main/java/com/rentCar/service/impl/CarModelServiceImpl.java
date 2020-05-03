@@ -36,12 +36,12 @@ public class CarModelServiceImpl implements CarModelService {
     }
 
     @Override
-    public void addModel(String name, CarBrand brand) {
+    public void save(String name, CarBrand brand) {
         this.carModelRepository.save(new CarModel(name,brand));
     }
 
     @Override
-    public void deleteModel(String name) {
+    public void delete(String name) {
         CarModel carModel = this.carModelRepository.findByName(name);
         carModel.setActive(false);
         this.carModelRepository.save(carModel);

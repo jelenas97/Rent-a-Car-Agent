@@ -35,12 +35,12 @@ public class TransTypeServiceImpl implements TransmissionTypeService {
     }
 
     @Override
-    public void addTransmission(String name) {
+    public void save(String name) {
         this.transmissionTypeRepository.save(new TransmissionType(name));
     }
 
     @Override
-    public void deleteTransmission(String name) {
+    public void delete(String name) {
         TransmissionType transmissionType = this.transmissionTypeRepository.findByName(name);
         transmissionType.setActive(false);
         this.transmissionTypeRepository.save(transmissionType);

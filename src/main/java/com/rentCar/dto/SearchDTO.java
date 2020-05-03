@@ -5,24 +5,45 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class SearchDTO<any> {
 
     private String place;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String brand;
     private String fuelType;
     private String carClass;
-    private String limitMileage;
+    private Integer limitMileage;
     private String transmissionType;
     private String carModel;
-    private String dmg;
-    private String seats;
-    private String mileage;
-    private String minPrice;
-    private String maxPrice;
+    private Boolean dmg;
+    private Integer seats;
+    private Integer mileage;
+    private Double minPrice;
+    private Double maxPrice;
 
+    @Override
+    public String toString() {
+        return "SearchDTO{" +
+                "place='" + place + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", brand='" + brand + '\'' +
+                ", fuelType='" + fuelType + '\'' +
+                ", carClass='" + carClass + '\'' +
+                ", limitMileage=" + limitMileage +
+                ", transmissionType='" + transmissionType + '\'' +
+                ", carModel='" + carModel + '\'' +
+                ", dmg=" + dmg +
+                ", seats=" + seats +
+                ", mileage=" + mileage +
+                ", minPrice=" + minPrice +
+                ", maxPrice=" + maxPrice +
+                '}';
+    }
 }
