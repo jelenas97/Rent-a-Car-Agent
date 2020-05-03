@@ -9,8 +9,8 @@ public interface CarClassService {
     CarClass findOne(Long id);
     List<String> findAllStringList();
     CarClass findOneByName(String name);
-    void addClass(String name);
-    void deleteClass(String name);
+    void save(String name);
+    void delete(String name);
     void setActive(String name);
 
 }
