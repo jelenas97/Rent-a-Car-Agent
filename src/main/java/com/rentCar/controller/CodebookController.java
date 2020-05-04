@@ -3,6 +3,7 @@ package com.rentCar.controller;
 
 import com.rentCar.dto.CodeBookDTO;
 import com.rentCar.model.*;
+import com.rentCar.service.*;
 import com.rentCar.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +21,15 @@ import java.util.List;
 public class CodebookController {
 
     @Autowired
-    private CarBrandServiceImpl carBrandService;
+    private CarBrandService carBrandService;
     @Autowired
-    private CarModelServiceImpl carModelService;
+    private CarModelService carModelService;
     @Autowired
-    private CarClassServiceImpl carClassService;
+    private CarClassService carClassService;
     @Autowired
-    private FuelTypeServiceImpl fuelTypeService;
+    private FuelTypeService fuelTypeService;
     @Autowired
-    private TransTypeServiceImpl transTypeService;
+    private TransmissionTypeService transTypeService;
 
 
     @GetMapping(value="/getCodeBookInfo", produces="application/json")

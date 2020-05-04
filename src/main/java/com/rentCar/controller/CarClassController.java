@@ -1,6 +1,7 @@
 package com.rentCar.controller;
 
 import com.rentCar.model.CarClass;
+import com.rentCar.service.CarClassService;
 import com.rentCar.service.impl.CarClassServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:4200")
 public class CarClassController {
     @Autowired
-    private CarClassServiceImpl carClassService;
+    private CarClassService carClassService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('ADMIN')")

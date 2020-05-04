@@ -2,6 +2,8 @@ package com.rentCar.controller;
 
 import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarModel;
+import com.rentCar.service.CarBrandService;
+import com.rentCar.service.CarModelService;
 import com.rentCar.service.impl.CarBrandServiceImpl;
 import com.rentCar.service.impl.CarModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,9 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class CarModelController {
     @Autowired
-    private CarModelServiceImpl carModelService;
+    private CarModelService carModelService;
     @Autowired
-    private CarBrandServiceImpl carBrandService;
+    private CarBrandService carBrandService;
 
     @PostMapping(value = "/{brand}",produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('ADMIN')")

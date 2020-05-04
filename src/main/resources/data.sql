@@ -48,5 +48,6 @@ values(true,10,'Novi Sad',10000,2,3,2,'2020-05-03','2020-06-03');
 insert into car_fuel_type(car_id, fuel_type_id) values (1,3);
 insert into car_fuel_type(car_id, fuel_type_id) values (2,3);
 
-
-
+insert into comment(content, date, advertisement_id, user_id, status) values ('Really good car!','2020-05-03',1,1,'UNPROCESSED');
+insert into comment(content, date, advertisement_id, user_id, status) values ('Awesome car!','2020-05-04',1,1,'UNPROCESSED');
+insert into comment(content, date, advertisement_id, user_id, status) values ('STUPID CAR!!!!','2020-05-05',1,2,'UNPROCESSED');
