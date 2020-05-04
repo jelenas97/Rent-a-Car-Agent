@@ -46,3 +46,7 @@
 /.idea/modules.xml
 /.idea/Rent-a-Car.iml
 /.idea/vcs.xml
+/.idea/dataSources.local.xml
+/target/**
+*.class
+*.iml
