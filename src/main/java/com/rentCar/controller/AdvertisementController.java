@@ -3,6 +3,7 @@ package com.rentCar.controller;
 import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
+import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.impl.AdvertisementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import java.util.List;
 public class AdvertisementController {
 
     @Autowired
-    private AdvertisementServiceImpl advertisementService;
+    private AdvertisementService advertisementService;
 
     //alternativa je 10+ parametar u arg
     @PostMapping(value = "/searchAds", produces="application/json")

@@ -2,6 +2,7 @@ package com.rentCar.controller;
 
 
 import com.rentCar.model.TransmissionType;
+import com.rentCar.service.TransmissionTypeService;
 import com.rentCar.service.impl.TransTypeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransmissionController {
 
     @Autowired
-    private TransTypeServiceImpl transTypeService;
+    private TransmissionTypeService transTypeService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('ADMIN')")

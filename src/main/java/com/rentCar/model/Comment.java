@@ -1,5 +1,6 @@
 package com.rentCar.model;
 
+import com.rentCar.enumerations.ApproveStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,9 @@ public class Comment {
 
     @Column
     private String content;
+
+    @Enumerated(EnumType.STRING)
+    private ApproveStatus status = ApproveStatus.UNPROCESSED;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Advertisement advertisement;

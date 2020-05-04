@@ -1,8 +1,9 @@
 package com.rentCar.controller;
 
-import com.rentCar.dto.UserDTO;
-import com.rentCar.service.UserService;
-import com.rentCar.service.impl.UserServiceImpl;
+import com.rentCar.dto.CommentDTO;
+import com.rentCar.model.Comment;
+import com.rentCar.service.CommentService;
+import com.rentCar.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "users")
+@RequestMapping(value = "comments")
 @CrossOrigin("http://localhost:4200")
-public class UserController {
+public class CommentController {
     @Autowired
-    private UserService userService;
+    private CommentService commentService;
 
     @GetMapping(produces="application/json")
     //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getUsers(){
+    public ResponseEntity<?> getUnComments(){
 
         try {
-            List<UserDTO> users = this.userService.findAllUsers();
+            List<CommentDTO> users = this.commentService.findUnprocessed();
 
             return new ResponseEntity(users, HttpStatus.OK);
 
@@ -31,13 +32,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error while loading users");
         }
     }
-    @PutMapping(value="/changeStatus", produces = "application/json", consumes = "application/json")
+
+    @PutMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity changeStatus(@RequestBody UserDTO user) {
+    public ResponseEntity changeStatus(@RequestBody CommentDTO commentDTO) {
 
         try {
-           this.userService.changeStatus(user);
-           return new ResponseEntity(HttpStatus.OK);
+            this.commentService.changeStatus(commentDTO);
+            return new ResponseEntity(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
