@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String username;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +31,7 @@ public class User {
     @Column
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

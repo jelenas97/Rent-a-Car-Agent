@@ -14,6 +14,12 @@ import java.util.Set;
 @DiscriminatorValue("AGENT")
 public class Agent extends User{
 
+    @Column
+    private String firstName;
+
+    @Column
+    private String lastName;
+
     @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<PriceList> priceList;
 }
