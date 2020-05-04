@@ -1,5 +1,5 @@
 /.idea/.gitignore
-/.target/classes/com/rentCar/Application.class
+/target/classes/com/rentCar/Application.class
 /.idea/compiler.xml
 /.idea/encodings.xml
 /.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml
@@ -46,3 +46,4 @@
 /.idea/modules.xml
 /.idea/Rent-a-Car.iml
 /.idea/vcs.xml
+*.class
