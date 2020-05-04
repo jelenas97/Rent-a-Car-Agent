@@ -47,3 +47,4 @@
 /.idea/Rent-a-Car.iml
 /.idea/vcs.xml
 *.class
+/target
