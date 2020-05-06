@@ -18,8 +18,8 @@ insert into transmission_type(name,active) values('Manual',true);
 insert into transmission_type(name,active) values('Automatic',true);
 insert into transmission_type(name,active) values('Semi-Automatic',true);
 
-insert into users(type, password, username, email,status) values ('USER',123456789,'petar', 'pera@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('USER',123456789,'nikola', 'nikola@gmail.com','ACTIVE');
+insert into users(type, password, username, email,status) values ('CLIENT',123456789,'petar', 'pera@gmail.com','ACTIVE');
+insert into users(type, password, username, email,status) values ('CLIENT',123456789,'nikola', 'nikola@gmail.com','ACTIVE');
 insert into users(type, password, username, email,status) values ('AGENT',123456789,'agent', 'agent@gmail.com','ACTIVE');
 insert into users(type, password, username, email,status) values ('AGENT',123456789,'agent2', 'agent2@gmail.com','ACTIVE');
 insert into users(type, password, username, email,status) values ('AGENT',123456789,'agent3', 'agent3@gmail.com','ACTIVE');

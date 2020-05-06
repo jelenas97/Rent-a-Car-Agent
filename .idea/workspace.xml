@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9ebef3b-abd0-4d74-b2e2-f2beb62a7db1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d68713e2-1cbc-4e90-848a-7a063e769969.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/rentCar/dto/RentRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d68713e2-1cbc-4e90-848a-7a063e769969.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d68713e2-1cbc-4e90-848a-7a063e769969.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/rentCar/model/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/rentCar/model/Agent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/rentCar/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/rentCar/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rentCar/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rentCar/model/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rentCar/model/RentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rentCar/model/RentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rentCar/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rentCar/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rentCar/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rentCar/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +49,7 @@
         <item name="dtba@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="dtba: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="comment: table" type="285a2a93:MysqlImplModel$Table" />
+        <item name="price_list: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -155,6 +158,9 @@
       <workItem from="1588598121244" duration="354000" />
       <workItem from="1588608578096" duration="2873000" />
       <workItem from="1588621938624" duration="7345000" />
+      <workItem from="1588631305353" duration="376000" />
+      <workItem from="1588701431202" duration="1663000" />
+      <workItem from="1588783943258" duration="944000" />
     </task>
     <task id="LOCAL-00001" summary="small changes">
       <created>1587924695203</created>
@@ -163,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587924695204</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="small changes">
+      <created>1588631417711</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1588631417711</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,6 +199,7 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="small changes" />
     <option name="LAST_COMMIT_MESSAGE" value="small changes" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

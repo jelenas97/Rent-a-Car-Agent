@@ -9,4 +9,5 @@ public interface UserService {
     List<UserDTO> findAllUsers();
     void changeStatus(UserDTO user);
 
+
 }

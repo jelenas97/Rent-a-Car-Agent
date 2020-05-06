@@ -42,6 +42,9 @@ public class User {
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> sent;
+
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<RentRequest> rentRequests;
 }
 
 

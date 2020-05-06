@@ -29,7 +29,7 @@ public class RentRequest {
     private RentRequestStatus rentRequestStatus;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Client client;
+    private User sender;
 
     @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Advertisement> advertisements;
