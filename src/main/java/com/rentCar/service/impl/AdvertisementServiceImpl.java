@@ -88,4 +88,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         System.out.println("Filtrated : " + ads);
         return ads;
     }
+
+    @Override
+    public Advertisement find(Long id) {
+
+        return this.advertisementRepository.find(id);
+    }
 }

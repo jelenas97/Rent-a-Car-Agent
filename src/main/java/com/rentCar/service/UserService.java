@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> findAllUsers();
     void changeStatus(UserDTO user);
-
+    User findOne(String email);
 
 }
