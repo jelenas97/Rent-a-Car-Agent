@@ -5,14 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class RentRequestDTO {
 
     private Long id;
-    private String startDateTime;
-    private String endDateTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String rentRequestStatus;
     private String cars;
     private Long advertisementId;
@@ -21,10 +23,12 @@ public class RentRequestDTO {
     public RentRequestDTO(RentRequest rr) {
 
         this.id = rr.getId();
-        String[] dateTime = rr.getStartDateTime().toString().split("T");
-        this.startDateTime = dateTime[0] + "\r\n" + dateTime[1];
-        String[] dateTime1 = rr.getEndDateTime().toString().split("T");
-        this.endDateTime = dateTime1[0] + " " + dateTime1[1];
+        //   String[] dateTime = rr.getStartDateTime().toString().split("T");
+        //  this.startDateTime = dateTime[0] + "\r\n" + dateTime[1];
+        this.startDateTime = rr.getStartDateTime();
+        //  String[] dateTime1 = rr.getEndDateTime().toString().split("T");
+        //  this.endDateTime = dateTime1[0] + " " + dateTime1[1];
+        this.endDateTime = rr.getEndDateTime();
         this.rentRequestStatus = rr.getRentRequestStatus().toString();
 
         this.cars = rr.getAdvertisement().getCar().getCarClass().toString();

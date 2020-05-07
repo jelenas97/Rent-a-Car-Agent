@@ -10,4 +10,6 @@ public interface UserService {
     void changeStatus(UserDTO user);
     User findOne(String email);
 
+    User find(Long id);
+
 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -35,12 +34,18 @@ public class RentRequest {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Advertisement advertisement;
 
-    @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<RequestsHolder> requests;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private RequestsHolder requests;
 
-    public RentRequest(RentRequestDTO requestDTO) {
+    //new RentRequest with pending status
+    public RentRequest(RentRequestDTO requestDTO, User sender, Advertisement advertisement, RequestsHolder holder) {
         this.startDateTime = requestDTO.getStartDateTime();
         this.endDateTime = requestDTO.getEndDateTime();
+        this.rentRequestStatus = RentRequestStatus.PENDING;
+        this.sender = sender;
+        this.advertisement = advertisement;
+        this.requests = holder;
+
     }
 
 

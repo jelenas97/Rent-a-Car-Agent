@@ -2,6 +2,10 @@ package com.rentCar.controller;
 
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.dto.RequestsHolderDTO;
+import com.rentCar.model.Advertisement;
+import com.rentCar.model.RentRequest;
+import com.rentCar.model.RequestsHolder;
+import com.rentCar.model.User;
 import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.RentRequestService;
 import com.rentCar.service.UserService;
@@ -27,6 +31,9 @@ public class RentRequestController {
     @Autowired
     private AdvertisementService advertisementService;
 
+//    @Autowired
+//    privat
+
 
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -36,6 +43,21 @@ public class RentRequestController {
         try {
             System.out.println("Posal zahtjev " + holderDTO);
             System.out.println("Posal zahtjev " + holderDTO.toString());
+            for (RentRequestDTO requestDTO : holderDTO.getRentRequests()) {
+                Advertisement advertisement = this.advertisementService.find(requestDTO.getAdvertisementId());
+                User sender = this.userService.find(requestDTO.getSenderId());
+                RequestsHolder requestsHolder = new RequestsHolder();
+                requestsHolder.setBundle(holderDTO.getBundle());
+                RentRequest rentRequest = new RentRequest(requestDTO, sender, advertisement, requestsHolder);
+
+                //treba i holder snimiti!!
+                this.rentRequestService.save(rentRequest);
+
+            }
+
+
+
+
 //            User user = this.userService.findOne(requestDTO.getSender_email());
 //            Set<Advertisement> advertisements = new HashSet<>();
 //

@@ -40,5 +40,10 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByEmail(email);
     }
 
+    @Override
+    public User find(Long id) {
+        return this.userRepository.find(id);
+    }
+
 
 }

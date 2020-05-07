@@ -55,7 +55,7 @@ public class RentRequestImpl implements RentRequestService {
     }
 
     @Override
-    public void save(RentRequestDTO rentRequestDTO) {
-//        this.rentRequestRepository.save(new RentRequest(rentRequestDTO));
+    public void save(RentRequest rentRequest) {
+        this.rentRequestRepository.save(rentRequest);
     }
 }

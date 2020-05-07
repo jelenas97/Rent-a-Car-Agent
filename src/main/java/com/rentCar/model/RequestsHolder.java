@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -21,6 +20,6 @@ public class RequestsHolder {
     @Column
     private Boolean bundle;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "requests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<RentRequest> rentRequests;
 }

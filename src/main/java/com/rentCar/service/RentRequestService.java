@@ -1,6 +1,7 @@
 package com.rentCar.service;
 
 import com.rentCar.dto.RentRequestDTO;
+import com.rentCar.model.RentRequest;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface RentRequestService {
 
     List<RentRequestDTO> getCancelableRentRequests(long id);
 
-    void save(RentRequestDTO requestDTO);
+    void save(RentRequest requestDTO);
 }
