@@ -1,5 +1,6 @@
 package com.rentCar.model;
 
+import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.enumerations.RentRequestStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,11 @@ public class RentRequest {
 
     @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RequestsHolder> requests;
+
+    public RentRequest(RentRequestDTO requestDTO) {
+        this.startDateTime = requestDTO.getStartDateTime();
+        this.endDateTime = requestDTO.getEndDateTime();
+    }
 
 
 

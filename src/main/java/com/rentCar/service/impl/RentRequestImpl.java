@@ -53,8 +53,9 @@ public class RentRequestImpl implements RentRequestService {
 
         return cancelableList;
     }
-//    @Override
-//    public void save(RentRequest rentRequest) {
-//        this.rentRequestRepository.save(rentRequest);
-//    }
+
+    @Override
+    public void save(RentRequestDTO rentRequestDTO) {
+//        this.rentRequestRepository.save(new RentRequest(rentRequestDTO));
+    }
 }

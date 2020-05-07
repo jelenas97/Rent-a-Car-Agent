@@ -9,4 +9,6 @@ public interface RentRequestService {
     List<RentRequestDTO> getHistoryRentRequests(long id);
 
     List<RentRequestDTO> getCancelableRentRequests(long id);
+
+    void save(RentRequestDTO requestDTO);
 }

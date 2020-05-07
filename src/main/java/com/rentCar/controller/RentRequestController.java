@@ -1,6 +1,7 @@
 package com.rentCar.controller;
 
 import com.rentCar.dto.RentRequestDTO;
+import com.rentCar.dto.RequestsHolderDTO;
 import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.RentRequestService;
 import com.rentCar.service.UserService;
@@ -30,11 +31,11 @@ public class RentRequestController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('CLIENT') and hasRole('AGENT')")
-    public ResponseEntity sentRequest(@RequestBody RentRequestDTO requestDTO) {
+    public ResponseEntity sentRequest(@RequestBody RequestsHolderDTO holderDTO) {
 
         try {
-            System.out.println("Posal zahtjev " + requestDTO);
-            System.out.println("Posal zahtjev " + requestDTO.toString());
+            System.out.println("Posal zahtjev " + holderDTO);
+            System.out.println("Posal zahtjev " + holderDTO.toString());
 //            User user = this.userService.findOne(requestDTO.getSender_email());
 //            Set<Advertisement> advertisements = new HashSet<>();
 //
