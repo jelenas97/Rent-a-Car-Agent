@@ -15,8 +15,8 @@ public class RentRequestDTO {
     private String endDateTime;
     private String rentRequestStatus;
     private String cars;
-    private String advertisementId;
-
+    private Long advertisementId;
+    private Long senderId;
 
     public RentRequestDTO(RentRequest rr) {
 
@@ -27,8 +27,9 @@ public class RentRequestDTO {
         this.endDateTime = dateTime1[0] + " " + dateTime1[1];
         this.rentRequestStatus = rr.getRentRequestStatus().toString();
 
-        this.cars = "";
-        this.advertisementId = "";
+        this.cars = rr.getAdvertisement().getCar().getCarClass().toString();
+        this.advertisementId = rr.getAdvertisement().getId();
+        this.senderId = rr.getSender().getId();
 //        for (Advertisement a : rr.getAdvertisements()) {
 //            this.cars += a.getCar().getCarBrand().getName() + " / " + a.getCar().getCarClass().toString() + " / " + a.getCar().getCarModel().getName() + "\r\n";
 //            this.advertisementId = a.getId().toString();
@@ -36,4 +37,16 @@ public class RentRequestDTO {
 
     }
 
+    @Override
+    public String toString() {
+        return "RentRequestDTO{" +
+                "id=" + id +
+                ", startDateTime='" + startDateTime + '\'' +
+                ", endDateTime='" + endDateTime + '\'' +
+                ", rentRequestStatus='" + rentRequestStatus + '\'' +
+                ", cars='" + cars + '\'' +
+                ", advertisementId=" + advertisementId +
+                ", senderId=" + senderId +
+                '}';
+    }
 }

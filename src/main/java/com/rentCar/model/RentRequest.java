@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,8 +34,8 @@ public class RentRequest {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Advertisement advertisement;
 
-//    @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Set<RequestsHolder> requests;
+    @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<RequestsHolder> requests;
 
 
 

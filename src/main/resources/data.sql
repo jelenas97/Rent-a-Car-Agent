@@ -67,16 +67,16 @@ insert into comment(content, date, advertisement_id, user_id, status) values ('R
 insert into comment(content, date, advertisement_id, user_id, status) values ('Awesome car!','2020-05-04',1,1,'UNPROCESSED');
 insert into comment(content, date, advertisement_id, user_id, status) values ('STUPID CAR!!!!','2020-05-05',1,2,'UNPROCESSED');
 
-insert into rent_request(client_id, end_date_time, rent_request_status, start_date_time)
-values (8, '2020-05-03 05:05:05', 'PENDING', '2021-05-15 04:04:04');
-insert into rent_request(client_id, end_date_time, rent_request_status, start_date_time)
-values (8, '2020-05-12 05:05:05', 'RESERVED', '2020-05-22 04:04:04');
-insert into rent_request(client_id, end_date_time, rent_request_status, start_date_time)
-values (8, '2021-05-05 05:05:05', 'PAID', '2021-04-04 04:04:04');
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
+values (1, 8, '2020-05-03 05:05:05', 'PENDING', '2021-05-15 04:04:04');
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
+values (2, 8, '2020-05-12 05:05:05', 'RESERVED', '2020-05-22 04:04:04');
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
+values (3, 8, '2021-05-05 05:05:05', 'PAID', '2021-04-04 04:04:04');
 
-insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
-values (1, 1);
-insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
-values (2, 2);
-insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
-values (3, 3);
+# insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
+# values (1, 1);
+# insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
+# values (2, 2);
+# insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
+# values (3, 3);

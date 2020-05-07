@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Controller
-@RequestMapping(value = "rentRequests")
+@RequestMapping(value = "rentRequest")
 @CrossOrigin("http://localhost:4200")
 public class RentRequestController {
 
@@ -33,7 +33,8 @@ public class RentRequestController {
     public ResponseEntity sentRequest(@RequestBody RentRequestDTO requestDTO) {
 
         try {
-
+            System.out.println("Posal zahtjev " + requestDTO);
+            System.out.println("Posal zahtjev " + requestDTO.toString());
 //            User user = this.userService.findOne(requestDTO.getSender_email());
 //            Set<Advertisement> advertisements = new HashSet<>();
 //
@@ -55,7 +56,6 @@ public class RentRequestController {
     public ResponseEntity<List<RentRequestDTO>> getHistoryRentRequests(@PathVariable String id) {
 
         try {
-            System.out.println("boze me sacuvaj gospode");
             return new ResponseEntity<>(rentRequestService.getHistoryRentRequests(Long.parseLong(id)), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
@@ -68,7 +68,6 @@ public class RentRequestController {
     public ResponseEntity<List<RentRequestDTO>> getCancelableRentRequests(@PathVariable String id) {
 
         try {
-            System.out.println("boze me sacuvaj gospode");
             return new ResponseEntity<>(rentRequestService.getCancelableRentRequests(Long.parseLong(id)), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);

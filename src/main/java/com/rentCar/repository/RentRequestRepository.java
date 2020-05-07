@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface RentRequestRepository extends JpaRepository<RentRequest, Long> {
 
-    List<RentRequest> findByClientIdAndRentRequestStatusAndEndDateTimeGreaterThanEqual(long id, RentRequestStatus status, LocalDateTime dateTime);
+    List<RentRequest> findBySenderIdAndRentRequestStatusAndEndDateTimeGreaterThanEqual(long id, RentRequestStatus status, LocalDateTime dateTime);
 
-    List<RentRequest> findByClientIdAndRentRequestStatusIn(long id, List<RentRequestStatus> statuses);
+    List<RentRequest> findBySenderIdAndRentRequestStatusIn(long id, List<RentRequestStatus> statuses);
 
 }
