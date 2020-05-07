@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,11 +18,11 @@ public class RentRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="startDate",nullable = false)
-    private LocalDate startDate;
+    @Column(name = "startDateTime", nullable = false)
+    private LocalDateTime startDateTime;
 
-    @Column(name="endDate", nullable = false)
-    private LocalDate endDate;
+    @Column(name = "endDateTime", nullable = false)
+    private LocalDateTime endDateTime;
 
     @Enumerated(EnumType.STRING)
     private RentRequestStatus rentRequestStatus;

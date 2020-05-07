@@ -1,23 +1,17 @@
 package com.rentCar.controller;
 
-import com.rentCar.dto.AdvertisementDTO;
-import com.rentCar.model.Advertisement;
-import com.rentCar.model.RentRequest;
-import com.rentCar.model.User;
+import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.service.AdvertisementService;
+import com.rentCar.service.RentRequestService;
 import com.rentCar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.List;
 @Controller
 @RequestMapping(value = "rentRequests")
 @CrossOrigin("http://localhost:4200")
@@ -40,14 +34,14 @@ public class RentRequestController {
 
         try {
 
-            User user = this.userService.findOne(requestDTO.getSender_email());
-            Set<Advertisement> advertisements = new HashSet<>();
-
-            for(AdvertisementDTO ad: requestDTO.getAdvertisements()){
-                advertisements.add(this.advertisementService.find(ad.getId()));
-            }
-
-            this.rentRequestService.save(new RentRequest(requestDTO,user,advertisements));
+//            User user = this.userService.findOne(requestDTO.getSender_email());
+//            Set<Advertisement> advertisements = new HashSet<>();
+//
+//            for(AdvertisementDTO ad: requestDTO.getAdvertisements()){
+//                advertisements.add(this.advertisementService.find(ad.getId()));
+//            }
+//
+//            this.rentRequestService.save(new RentRequest(requestDTO,user,advertisements));
 
             return new ResponseEntity(HttpStatus.OK);
 
@@ -55,4 +49,31 @@ public class RentRequestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping(value = "/history/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<List<RentRequestDTO>> getHistoryRentRequests(@PathVariable String id) {
+
+        try {
+            System.out.println("boze me sacuvaj gospode");
+            return new ResponseEntity<>(rentRequestService.getHistoryRentRequests(Long.parseLong(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/cancelable/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<List<RentRequestDTO>> getCancelableRentRequests(@PathVariable String id) {
+
+        try {
+            System.out.println("boze me sacuvaj gospode");
+            return new ResponseEntity<>(rentRequestService.getCancelableRentRequests(Long.parseLong(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
