@@ -1,6 +1,5 @@
 package com.rentCar.model;
 
-import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.enumerations.RentRequestStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,16 +31,12 @@ public class RentRequest {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User sender;
 
-    @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Advertisement> advertisements;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Advertisement advertisement;
+
+//    @ManyToMany(mappedBy = "rentRequests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Set<RequestsHolder> requests;
 
 
-    public RentRequest(RentRequestDTO dto,User user, Set<Advertisement> advertisements){
-        this.id = dto.getId();
-        this.startDate = dto.getStartDate();
-        this.endDate = dto.getEndDate();
-        this.rentRequestStatus = RentRequestStatus.valueOf(dto.getRentRequestStatus());
-        this.sender = user;
-        this.advertisements = advertisements;
-    }
+
 }

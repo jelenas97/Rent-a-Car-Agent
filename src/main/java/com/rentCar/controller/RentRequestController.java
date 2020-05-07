@@ -1,12 +1,10 @@
 package com.rentCar.controller;
 
 import com.rentCar.dto.AdvertisementDTO;
-import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.model.Advertisement;
 import com.rentCar.model.RentRequest;
 import com.rentCar.model.User;
 import com.rentCar.service.AdvertisementService;
-import com.rentCar.service.RentRequestService;
 import com.rentCar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -50,7 +46,7 @@ public class RentRequestController {
             for(AdvertisementDTO ad: requestDTO.getAdvertisements()){
                 advertisements.add(this.advertisementService.find(ad.getId()));
             }
-            
+
             this.rentRequestService.save(new RentRequest(requestDTO,user,advertisements));
 
             return new ResponseEntity(HttpStatus.OK);
