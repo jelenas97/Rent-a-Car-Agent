@@ -9,7 +9,6 @@ import com.rentCar.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -87,5 +86,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
         System.out.println("Filtrated : " + ads);
         return ads;
+    }
+
+    @Override
+    public Advertisement find(Long id) {
+
+        return this.advertisementRepository.find(id);
     }
 }

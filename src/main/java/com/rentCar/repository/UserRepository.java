@@ -1,7 +1,5 @@
 package com.rentCar.repository;
 
-import com.rentCar.dto.UserDTO;
-import com.rentCar.model.Advertisement;
 import com.rentCar.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +12,7 @@ public interface UserRepository  extends JpaRepository<User, Long> {
     List<User> findAllUsers();
 
     User findByEmail(String email);
+
+    @Query(value = "select u from User u where u.id = ?1")
+    User find(Long id);
 }

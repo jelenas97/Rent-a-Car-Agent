@@ -1,6 +1,5 @@
 package com.rentCar.repository;
 
-import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +12,7 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
 
     @Query(value = "select a from Advertisement a where a.place = ?1 and a.startDate <= ?2 and a.endDate >= ?3")
     List<Advertisement> findAdvertisements(String place, LocalDate startDate, LocalDate endDate);
+
+    @Query(value = "select a from Advertisement a where a.id = ?1")
+    Advertisement find(Long id);
 }

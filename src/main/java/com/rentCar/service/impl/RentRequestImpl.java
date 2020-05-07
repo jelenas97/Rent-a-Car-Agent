@@ -25,7 +25,7 @@ public class RentRequestImpl implements RentRequestService {
 
         LocalDateTime dateTime = LocalDateTime.now();
         RentRequestStatus status = RentRequestStatus.PAID;
-        List<RentRequest> historyListR =   rentRequestRepository.findByClientIdAndRentRequestStatusAndEndDateTimeGreaterThanEqual(id, status, dateTime);
+        List<RentRequest> historyListR = rentRequestRepository.findBySenderIdAndRentRequestStatusAndEndDateTimeGreaterThanEqual(id, status, dateTime);
 
         System.out.println(historyListR);
         for (RentRequest rr : historyListR) {
@@ -44,14 +44,18 @@ public class RentRequestImpl implements RentRequestService {
         List<RentRequestStatus> statuses = new ArrayList<>();
         statuses.add(RentRequestStatus.PENDING);
         statuses.add(RentRequestStatus.RESERVED);
-        List<RentRequest> cancelableListR = rentRequestRepository.findByClientIdAndRentRequestStatusIn(id, statuses);
+        List<RentRequest> cancelableListR = rentRequestRepository.findBySenderIdAndRentRequestStatusIn(id, statuses);
 
         System.out.println(cancelableListR);
-        for(RentRequest rr : cancelableListR){
+        for (RentRequest rr : cancelableListR) {
             cancelableList.add(new RentRequestDTO(rr));
         }
 
         return cancelableList;
     }
 
+    @Override
+    public void save(RentRequest rentRequest) {
+        this.rentRequestRepository.save(rentRequest);
+    }
 }
