@@ -22,4 +22,8 @@ public class RequestsHolder {
 
     @OneToMany(mappedBy = "requests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<RentRequest> rentRequests;
+
+    public RequestsHolder(Boolean bundle) {
+        this.bundle = bundle;
+    }
 }

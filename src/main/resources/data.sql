@@ -48,6 +48,10 @@ values (1, 'https://media.nu.nl/m/zsbx1zkaavd4_sqr256.jpg/lamborghini-onthult-zi
 insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id, transmission_type_id,car_model_id)
 values (1, 'https://liquipedia.net/commons/images/7/74/RL_%2789_Batmobile.jpg', 0, 10000, 'Batmobile', 10.0, 2, 2, 2, 2,
         2);
+insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
+                transmission_type_id, car_model_id)
+values (1, 'https://liquipedia.net/commons/images/7/74/RL_%2789.jpg', 0, 10000, 'NOVO', 10.0, 2, 2, 2, 2,
+        2);
 
 
 insert into price_list(price_per_day, price_per_km, agent_id) values (1000,20,3);
@@ -55,10 +59,11 @@ insert into price_list(price_per_day, price_per_km, agent_id) values (2000,50,3)
 
 insert into advertisement(cdw, discount,place, kilometres_limit, car_id, owner_id, price_list_id,start_date,end_date)
 values (1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-06-03');
-insert into advertisement(cdw, discount,place, kilometres_limit, car_id, owner_id, price_list_id,start_date,end_date)
-values (0, 20, 'Novi Sad', 5000, 1, 1, 1, '2020-05-03', '2020-06-03');
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 20, 'Beograd', 5000, 2, 1, 1, '2020-05-03', '2020-06-03');
+values (0, 20, 'Novi Sad', 5000, 2, 1, 1, '2020-05-03', '2020-06-03');
+insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
+values (0, 20, 'Beograd', 5000, 3, 1, 1, '2020-05-03', '2020-06-03');
+
 
 insert into car_fuel_type(car_id, fuel_type_id) values (1,3);
 insert into car_fuel_type(car_id, fuel_type_id) values (2,3);
