@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Controller
 @RequestMapping(value = "rentRequest")
 @CrossOrigin("http://localhost:4200")
@@ -39,7 +40,6 @@ public class RentRequestController {
 //    privat
 
 
-
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('CLIENT') and hasRole('AGENT')")
     public ResponseEntity sentRequest(@RequestBody RequestsHolderDTO holderDTO) {
@@ -58,8 +58,6 @@ public class RentRequestController {
                 this.rentRequestService.save(rentRequest);
 
             }
-
-
 
 
 //            User user = this.userService.findOne(requestDTO.getSender_email());

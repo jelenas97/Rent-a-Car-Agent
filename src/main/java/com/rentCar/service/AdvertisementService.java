@@ -1,6 +1,5 @@
 package com.rentCar.service;
 
-import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
 
