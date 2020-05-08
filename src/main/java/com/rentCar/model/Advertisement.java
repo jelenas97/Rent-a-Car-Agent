@@ -3,6 +3,7 @@ package com.rentCar.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,9 @@ public class Advertisement {
     public PriceList priceList;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<RentRequest> rentRequests;
+
+    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Term> terms;
 
 
 
