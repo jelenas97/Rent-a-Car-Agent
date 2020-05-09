@@ -20,9 +20,16 @@ public class Term {
     private LocalDate startDate;
     @Column(name="endDate", nullable = false)
     private LocalDate endDate;
-    @Column(name="period", nullable = false)
+    @Column(name = "period")
     private Period period;
     @ManyToOne
-    @JoinColumn(name="car_id", nullable=false)
-    private Car car;
+    @JoinColumn(name = "advertisement_id", nullable = false)
+    private Advertisement advertisement;
+
+    public Term(LocalDate startDate, LocalDate endDate, Advertisement advertisement) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.period = Period.between(startDate, endDate);
+        this.advertisement = advertisement;
+    }
 }

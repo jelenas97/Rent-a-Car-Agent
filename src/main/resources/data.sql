@@ -85,3 +85,5 @@ values (3, 8, '2021-05-05 05:05:05', 'PAID', '2021-04-04 04:04:04');
 # values (2, 2);
 # insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
 # values (3, 3);
+
+# insert into term(end_date, period, start_date, advertisement_id) VALUES ('2021-05-18',null,'2021-05-05',1);
