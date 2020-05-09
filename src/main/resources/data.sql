@@ -62,7 +62,7 @@ values (1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-06-03');
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
 values (0, 20, 'Novi Sad', 5000, 2, 1, 1, '2020-05-03', '2020-06-03');
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 20, 'Beograd', 5000, 3, 1, 1, '2020-05-03', '2020-06-03');
+values (0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-06-03');
 
 
 insert into car_fuel_type(car_id, fuel_type_id) values (1,3);
@@ -72,18 +72,10 @@ insert into comment(content, date, advertisement_id, user_id, status) values ('R
 insert into comment(content, date, advertisement_id, user_id, status) values ('Awesome car!','2020-05-04',1,1,'UNPROCESSED');
 insert into comment(content, date, advertisement_id, user_id, status) values ('STUPID CAR!!!!','2020-05-05',1,2,'UNPROCESSED');
 
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (1, 8, '2020-05-03 05:05:05', 'PENDING', '2021-05-15 04:04:04');
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (2, 8, '2020-05-12 05:05:05', 'RESERVED', '2020-05-22 04:04:04');
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (3, 8, '2021-05-05 05:05:05', 'PAID', '2021-04-04 04:04:04');
+# insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
+# values (1, 8, '2020-05-03 05:05:05', 'PENDING', '2021-05-15 04:04:04');
+# insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
+# values (2, 8, '2020-05-12 05:05:05', 'RESERVED', '2020-05-22 04:04:04');
+# insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
+# values (3, 8, '2021-05-05 05:05:05', 'PAID', '2021-04-04 04:04:04');
 
-# insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
-# values (1, 1);
-# insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
-# values (2, 2);
-# insert into advertisement_rent_requests(advertisements_id, rent_requests_id)
-# values (3, 3);
-
-# insert into term(end_date, period, start_date, advertisement_id) VALUES ('2021-05-18',null,'2021-05-05',1);

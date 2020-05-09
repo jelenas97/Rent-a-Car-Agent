@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "rentRequest")
@@ -46,28 +48,28 @@ public class RentRequestController {
 
         try {
             System.out.println("Posal zahtjev " + holderDTO);
-            System.out.println("Posal zahtjev " + holderDTO.toString());
-            RequestsHolder rq = new RequestsHolder(holderDTO.getBundle());
+
+            Set<Long> usersIds = new HashSet<>();
             for (RentRequestDTO requestDTO : holderDTO.getRentRequests()) {
                 Advertisement advertisement = this.advertisementService.find(requestDTO.getAdvertisementId());
-                User sender = this.userService.find(requestDTO.getSenderId());
-
-                RentRequest rentRequest = new RentRequest(requestDTO, sender, advertisement, rq);
-                System.out.println(rentRequest);
-                //treba i holder snimiti!!
-                this.rentRequestService.save(rentRequest);
-
+                usersIds.add(advertisement.getOwner().getId());
             }
+            for (Long id : usersIds) {
+                RequestsHolder rq = new RequestsHolder(holderDTO.getBundle());
+                System.out.println("Vlasnik = " + id);
+                for (RentRequestDTO requestDTO : holderDTO.getRentRequests()) {
 
+                    Advertisement advertisement = this.advertisementService.find(requestDTO.getAdvertisementId());
+                    if (id.equals(advertisement.getOwner().getId())) {
+                        User sender = this.userService.find(requestDTO.getSenderId());
 
-//            User user = this.userService.findOne(requestDTO.getSender_email());
-//            Set<Advertisement> advertisements = new HashSet<>();
-//
-//            for(AdvertisementDTO ad: requestDTO.getAdvertisements()){
-//                advertisements.add(this.advertisementService.find(ad.getId()));
-//            }
-//
-//            this.rentRequestService.save(new RentRequest(requestDTO,user,advertisements));
+                        RentRequest rentRequest = new RentRequest(requestDTO, sender, advertisement, rq);
+                        System.out.println(rentRequest);
+                        //treba i holder snimiti!!
+                        this.rentRequestService.save(rentRequest);
+                    }
+                }
+            }
 
             return new ResponseEntity(HttpStatus.OK);
 
