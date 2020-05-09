@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface TermRepository extends JpaRepository<Term, Long> {
 
-    @Query(value = "select t from Term t where t.advertisement.id = ?1 and t.startDate <= ?2 and t.endDate >= ?2 " +
-            "or t.startDate <= ?3 and t.endDate >= ?3 " +
-            "or t.startDate >= ?2 and t.endDate <= ?3")
+    @Query(value = "select t from Term t where t.advertisement.id = ?1 and t.canceled=false and t.startDate <= ?2 and t.endDate >= ?2 " +
+            "or t.advertisement.id = ?1 and t.canceled=false and t.startDate <= ?3 and t.endDate >= ?3 " +
+            "or t.advertisement.id = ?1 and t.canceled=false and t.startDate >= ?2 and t.endDate <= ?3")
     List<Term> findTakenTerm(Long id, LocalDate startDate, LocalDate endDate);
 }

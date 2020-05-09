@@ -141,13 +141,14 @@ public class RentRequestController {
     // @PreAuthorize("hasRole('')")
     public ResponseEntity<?> processRequest(@PathVariable String confirm, @RequestBody RentRequestDTO rentDTO) {
 
-        try {//promjeni i status
+        try {
             if (confirm.equals("YES")) {
                 System.out.println(rentDTO);
                 List<Term> term = this.termService.findTakenTerm(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
                 if (term.size() == 0) {
                     System.out.println("NEMA TERMINA SA PREKLAPANJEM!!!!");
                     this.rentRequestService.changeStatus(rentDTO.getId(), "RESERVED");
+                    //POSLOVNA INFORMATIKA??? -> RESERVED -> PAID !! Ako se odbije onda status TERM (canceled ide u TRUE)!!!
                     this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
                 } else {
                     System.out.println(term.size());
