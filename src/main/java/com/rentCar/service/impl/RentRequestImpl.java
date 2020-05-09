@@ -58,4 +58,11 @@ public class RentRequestImpl implements RentRequestService {
     public void save(RentRequest rentRequest) {
         this.rentRequestRepository.save(rentRequest);
     }
+
+    @Override
+    public void changeStatus(Long id, String status) {
+        RentRequest rentRequest = this.rentRequestRepository.find(id);
+        rentRequest.setRentRequestStatus(RentRequestStatus.valueOf(status));
+        this.rentRequestRepository.save(rentRequest);
+    }
 }

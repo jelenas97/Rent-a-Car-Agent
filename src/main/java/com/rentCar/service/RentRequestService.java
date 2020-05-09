@@ -12,4 +12,6 @@ public interface RentRequestService {
     List<RentRequestDTO> getCancelableRentRequests(long id);
 
     void save(RentRequest requestDTO);
+
+    void changeStatus(Long id, String status);
 }

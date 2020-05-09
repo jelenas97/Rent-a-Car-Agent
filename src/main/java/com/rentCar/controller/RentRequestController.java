@@ -102,4 +102,47 @@ public class RentRequestController {
         }
     }
 
+    @PostMapping(value = "/bundle/{confirm}", produces = "application/json")
+    // @PreAuthorize("hasRole('')")
+    public ResponseEntity<?> processRequestsBundle(@PathVariable String confirm, @RequestBody RequestsHolderDTO holderDTO) {
+
+        try {
+            if (confirm.equals("YES")) {
+                for (RentRequestDTO rentRequestDTO : holderDTO.getRentRequests()) {
+                    System.out.println(rentRequestDTO.getId());
+                }
+
+            } else {
+                for (RentRequestDTO r : holderDTO.getRentRequests()) {
+                    this.rentRequestService.changeStatus(r.getId(), "CANCELED");
+                }
+
+            }
+
+            return new ResponseEntity(null, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
+        }
+    }
+
+    @PostMapping(value = "/request/{confirm}", produces = "application/json")
+    // @PreAuthorize("hasRole('')")
+    public ResponseEntity<?> processRequest(@PathVariable String confirm, @RequestBody RentRequestDTO rentDTO) {
+
+        try {
+            if (confirm.equals("YES")) {
+
+
+            } else {
+                this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+
+            }
+
+            return new ResponseEntity(null, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
+        }
+    }
+
+
 }
