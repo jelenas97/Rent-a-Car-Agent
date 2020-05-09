@@ -1,5 +1,7 @@
 package com.rentCar.controller;
 
+import com.rentCar.model.RentRequest;
+import com.rentCar.model.RequestsHolder;
 import com.rentCar.repository.RequestsHolderRepository;
 import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.TermService;
@@ -39,11 +41,19 @@ public class TermController {
 //            LocalDate endDate2 = LocalDate.of(2020, 5, 23);
 //            this.termService.save(new Term(startDate, endDate, this.advertisementService.find(1L)));
 //            this.termService.save(new Term(startDate2, endDate2, this.advertisementService.find(1L)));
-            System.out.println(this.requestsHolderRepository.getAllPending(1L));
+            for (RequestsHolder req : this.requestsHolderRepository.getAllPending(3L)) {
+                System.out.println("Request holder:" + req.getId());
+                for (RentRequest rent : req.getRentRequests()) {
+                    System.out.println("Zahtjev id: " + rent.getId() + "Od : " + rent.getStartDateTime() + " do: " + rent.getEndDateTime());
+                }
+            }
+
             return new ResponseEntity(null, HttpStatus.OK);
 //select * from advertisement inner join term on advertisement.id = term.advertisement_id where period
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during searching");
         }
     }
+
+
 }
