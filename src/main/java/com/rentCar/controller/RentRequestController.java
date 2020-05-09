@@ -2,14 +2,8 @@ package com.rentCar.controller;
 
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.dto.RequestsHolderDTO;
-import com.rentCar.model.Advertisement;
-import com.rentCar.model.RentRequest;
-import com.rentCar.model.RequestsHolder;
-import com.rentCar.model.User;
-import com.rentCar.service.AdvertisementService;
-import com.rentCar.service.RentRequestService;
-import com.rentCar.service.RequestsHolderService;
-import com.rentCar.service.UserService;
+import com.rentCar.model.*;
+import com.rentCar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +31,9 @@ public class RentRequestController {
 
     @Autowired
     private RequestsHolderService requestsHolderService;
+
+    @Autowired
+    private TermService termService;
 
 //    @Autowired
 //    privat
@@ -108,10 +105,25 @@ public class RentRequestController {
 
         try {
             if (confirm.equals("YES")) {
-                for (RentRequestDTO rentRequestDTO : holderDTO.getRentRequests()) {
-                    System.out.println(rentRequestDTO.getId());
+                //true = nema preklapanja  u jednom terminu! Dodaj ih sve!
+                //false = ima preklapanja u jednom/vise! Sve odbij!
+                Boolean yes = true;
+                for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
+                    List<Term> term = this.termService.findTakenTerm(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                    if (term.size() != 0) {
+                        yes = false;
+                    }
                 }
-
+                if (yes) {
+                    for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
+                        this.rentRequestService.changeStatus(rentDTO.getId(), "RESERVED");
+                        this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                    }
+                } else {
+                    for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
+                        this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+                    }
+                }
             } else {
                 for (RentRequestDTO r : holderDTO.getRentRequests()) {
                     this.rentRequestService.changeStatus(r.getId(), "CANCELED");
@@ -129,9 +141,18 @@ public class RentRequestController {
     // @PreAuthorize("hasRole('')")
     public ResponseEntity<?> processRequest(@PathVariable String confirm, @RequestBody RentRequestDTO rentDTO) {
 
-        try {
+        try {//promjeni i status
             if (confirm.equals("YES")) {
-
+                System.out.println(rentDTO);
+                List<Term> term = this.termService.findTakenTerm(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                if (term.size() == 0) {
+                    System.out.println("NEMA TERMINA SA PREKLAPANJEM!!!!");
+                    this.rentRequestService.changeStatus(rentDTO.getId(), "RESERVED");
+                    this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                } else {
+                    System.out.println(term.size());
+                    this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+                }
 
             } else {
                 this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
