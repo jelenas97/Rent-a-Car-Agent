@@ -1,14 +1,11 @@
 package com.rentCar.service.impl;
 
-import com.rentCar.model.CarModel;
 import com.rentCar.model.FuelType;
 import com.rentCar.repository.FuelTypeRepository;
-import com.rentCar.service.CarModelService;
 import com.rentCar.service.FuelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -52,5 +49,10 @@ public class FuelTypeServiceImpl implements FuelTypeService {
         FuelType fuelType = this.fuelTypeRepository.findByName(name);
         fuelType.setActive(true);
         this.fuelTypeRepository.save(fuelType);
+    }
+
+    @Override
+    public List<FuelType> findAll() {
+        return this.fuelTypeRepository.getActiveFuelTypes();
     }
 }

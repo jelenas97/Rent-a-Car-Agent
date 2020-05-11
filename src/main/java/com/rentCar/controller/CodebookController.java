@@ -2,9 +2,12 @@ package com.rentCar.controller;
 
 
 import com.rentCar.dto.CodeBookDTO;
-import com.rentCar.model.*;
+import com.rentCar.dto.CodeBookModelDTO;
+import com.rentCar.model.CarBrand;
+import com.rentCar.model.CarClass;
+import com.rentCar.model.FuelType;
+import com.rentCar.model.TransmissionType;
 import com.rentCar.service.*;
-import com.rentCar.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +44,30 @@ public class CodebookController {
             List<String> carClasses = this.carClassService.findAllStringList();
             List<String> fuelTypes = this.fuelTypeService.findAllStringList();
             List<String> transmissionTypes = this.transTypeService.findAllStringList();
-            CodeBookDTO codeBook = new  CodeBookDTO(carBrands,carClasses, fuelTypes,transmissionTypes);
+            CodeBookDTO codeBook = new CodeBookDTO(carBrands, carClasses, fuelTypes, transmissionTypes);
 
             return new ResponseEntity(codeBook, HttpStatus.OK);
 
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
+
+    @GetMapping(value = "/getCodeBookInfoModel", produces = "application/json")
+    //@PreAuthorize("hasRole('ADMIN')"
+    public ResponseEntity<?> getCodeBookInfoModel() {
+        try {
+            List<CarBrand> carBrands = this.carBrandService.findAll();
+            List<CarClass> carClasses = this.carClassService.findAll();
+            List<FuelType> fuelTypes = this.fuelTypeService.findAll();
+            List<TransmissionType> transmissionTypes = this.transTypeService.findAll();
+            CodeBookModelDTO codeBook = new CodeBookModelDTO(carBrands, carClasses, fuelTypes, transmissionTypes);
+
+            return new ResponseEntity(codeBook, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

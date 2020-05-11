@@ -6,7 +6,6 @@ import com.rentCar.service.CarBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +26,15 @@ public class CarBrandServiceImpl implements CarBrandService {
     }
 
     @Override
-    public List<String> findAllStringList()
-    {
+    public List<String> findAllStringList() {
         return carBrandRepository.getActiveCarBrands().stream()
-                .map( Object::toString )
-                .collect( Collectors.toList());
+                .map(Object::toString)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CarBrand> findAll() {
+        return carBrandRepository.getActiveCarBrands();
     }
 
     @Override
