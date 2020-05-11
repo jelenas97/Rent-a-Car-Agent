@@ -1,5 +1,6 @@
 package com.rentCar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class TransmissionType {
     @Column
     private Boolean active = true;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "transmissionType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Car> car;
 
