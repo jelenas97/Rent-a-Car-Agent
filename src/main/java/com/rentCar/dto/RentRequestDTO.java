@@ -15,6 +15,8 @@ public class RentRequestDTO {
     private Long id;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private String startDateString;
+    private String endDateString;
     private String rentRequestStatus;
     private String cars;
     private Long advertisementId;
@@ -23,11 +25,11 @@ public class RentRequestDTO {
     public RentRequestDTO(RentRequest rr) {
 
         this.id = rr.getId();
-        //   String[] dateTime = rr.getStartDateTime().toString().split("T");
-        //  this.startDateTime = dateTime[0] + "\r\n" + dateTime[1];
+        String[] dateTime = rr.getStartDateTime().toString().split("T");
+        this.startDateString = dateTime[0] + " at " + dateTime[1] + "h";
         this.startDateTime = rr.getStartDateTime();
-        //  String[] dateTime1 = rr.getEndDateTime().toString().split("T");
-        //  this.endDateTime = dateTime1[0] + " " + dateTime1[1];
+        String[] dateTime1 = rr.getEndDateTime().toString().split("T");
+        this.endDateString = dateTime1[0] + " at " + dateTime1[1] + "h";
         this.endDateTime = rr.getEndDateTime();
         this.rentRequestStatus = rr.getRentRequestStatus().toString();
 
