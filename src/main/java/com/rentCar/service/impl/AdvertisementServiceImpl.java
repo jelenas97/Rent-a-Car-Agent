@@ -9,6 +9,7 @@ import com.rentCar.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -110,5 +111,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public Advertisement find(Long id) {
 
         return this.advertisementRepository.find(id);
+    }
+
+    @Override
+    public List<Advertisement> findAll() {
+        LocalDate today = LocalDate.now();
+        this.advertisementRepository.findAll(today);
+        return null;
     }
 }

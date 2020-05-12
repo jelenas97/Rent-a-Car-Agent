@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +41,24 @@ public class AdvertisementController {
 
         }catch(NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during searching");
+        }
+    }
+
+
+    @GetMapping(produces = "application/json")
+    //@PreAuthorize("hasRole('ADMIN')"
+    public ResponseEntity<?> getAllAdvertisements() {
+        try {
+            List<Advertisement> ads = this.advertisementService.findAll();
+            List<AdvertisementDTO> adsDto = new ArrayList<>();
+            for (Advertisement ad : ads) {
+                adsDto.add(new AdvertisementDTO(ad));
+            }
+
+            return new ResponseEntity(ads, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
