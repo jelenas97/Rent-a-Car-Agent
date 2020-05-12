@@ -38,14 +38,14 @@ values ('Semi-Automatic', 1);
 insert into users(type, password, username, email,status) values ('CLIENT',123456789,'petar', 'pera@gmail.com','ACTIVE');
 insert into users(type, password, username, email,status) values ('CLIENT',123456789,'nikola', 'nikola@gmail.com','ACTIVE');
 insert into users(type, password, username, email, status)
-values ('AGENT GG', 123456789, 'agent', 'agent@gmail.com', 'ACTIVE');
+values ('AGENT', 123456789, 'agent', 'agent@gmail.com', 'ACTIVE');
 insert into users(type, password, username, email, status)
-values ('AA', 123456789, 'agent1', 'agent2@gmail.com', 'ACTIVE');
+values ('AGENT', 123456789, 'agent1', 'agent2@gmail.com', 'ACTIVE');
 insert into users(type, password, username, email, status)
-values ('AA', 123456789, 'agent2', 'agent3@gmail.com', 'ACTIVE');
+values ('AGENT', 123456789, 'agent2', 'agent3@gmail.com', 'ACTIVE');
 insert into users(type, password, username, email,status) values ('ADMIN',123456789,'admin', 'admin@gmail.com','ACTIVE');
 insert into users(type, password, username, email, status)
-values ('AA', 123456789, 'admin2', 'admin2@gmail.com', 'ACTIVE');
+values ('AGENT', 123456789, 'admin2', 'admin2@gmail.com', 'ACTIVE');
 insert into users(type, password, username, email, status)
 values ('CLIENT', 123456789, 'client', 'client@gmail.com', 'ACTIVE');
 

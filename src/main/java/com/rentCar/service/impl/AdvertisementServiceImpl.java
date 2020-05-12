@@ -116,7 +116,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public List<Advertisement> findAll() {
         LocalDate today = LocalDate.now();
-        this.advertisementRepository.findAll(today);
-        return null;
+        return this.advertisementRepository.findAll(today);
     }
 }

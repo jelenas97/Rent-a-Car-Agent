@@ -49,13 +49,15 @@ public class AdvertisementController {
     //@PreAuthorize("hasRole('ADMIN')"
     public ResponseEntity<?> getAllAdvertisements() {
         try {
+            System.out.println("DDDDD");
             List<Advertisement> ads = this.advertisementService.findAll();
+            System.out.println(ads);
             List<AdvertisementDTO> adsDto = new ArrayList<>();
             for (Advertisement ad : ads) {
                 adsDto.add(new AdvertisementDTO(ad));
             }
-
-            return new ResponseEntity(ads, HttpStatus.OK);
+            System.out.println(adsDto);
+            return new ResponseEntity(adsDto, HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
