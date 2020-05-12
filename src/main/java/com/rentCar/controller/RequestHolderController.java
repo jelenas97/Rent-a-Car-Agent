@@ -26,6 +26,11 @@ public class RequestHolderController {
     public ResponseEntity<?> getRequestHolders(@PathVariable Long id) {
         try {
             List<RequestsHolderDTO> holders = this.requestsHolderService.getAllPending(id);
+            for (RequestsHolderDTO holder : holders) {
+                if (holder.getRentRequests().size() <= 1) {
+                    holder.setBundle(false);
+                }
+            }
             return new ResponseEntity(holders, HttpStatus.OK);
 
         } catch (NullPointerException e) {

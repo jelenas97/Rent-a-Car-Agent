@@ -41,6 +41,8 @@ public class RentRequest {
     public RentRequest(RentRequestDTO requestDTO, User sender, Advertisement advertisement, RequestsHolder holder) {
         this.startDateTime = requestDTO.getStartDateTime();
         this.endDateTime = requestDTO.getEndDateTime();
+        System.out.println("OVOOOOOO");
+        System.out.println(requestDTO.getStartDateTime());
         this.rentRequestStatus = RentRequestStatus.PENDING;
         this.sender = sender;
         this.advertisement = advertisement;

@@ -35,10 +35,6 @@ public class RentRequestController {
     @Autowired
     private TermService termService;
 
-//    @Autowired
-//    privat
-
-
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('CLIENT') and hasRole('AGENT')")
     public ResponseEntity sentRequest(@RequestBody RequestsHolderDTO holderDTO) {
@@ -100,7 +96,7 @@ public class RentRequestController {
     }
 
     @PostMapping(value = "/bundle/{confirm}", produces = "application/json")
-    // @PreAuthorize("hasRole('')")
+    // @PreAuthorize("hasRole('AGENT')")
     public ResponseEntity<?> processRequestsBundle(@PathVariable String confirm, @RequestBody RequestsHolderDTO holderDTO) {
 
         try {
