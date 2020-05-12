@@ -22,6 +22,8 @@ public class Term {
     private LocalDate endDate;
     @Column(name = "period")
     private Period period;
+    @Column(name = "canceled")
+    private Boolean canceled;
     @ManyToOne
     @JoinColumn(name = "advertisement_id", nullable = false)
     private Advertisement advertisement;
@@ -31,5 +33,6 @@ public class Term {
         this.endDate = endDate;
         this.period = Period.between(startDate, endDate);
         this.advertisement = advertisement;
+        this.canceled = false;
     }
 }
