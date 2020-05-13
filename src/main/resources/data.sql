@@ -30,22 +30,58 @@ values ('Automatic', 1);
 insert into transmission_type(name, active)
 values ('Semi-Automatic', 1);
 
-insert into users(type, password, username, email,status) values ('CLIENT',123456789,'petar', 'pera@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('CLIENT',123456789,'nikola', 'nikola@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('AGENT',123456789,'agent', 'agent@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('AGENT',123456789,'agent2', 'agent2@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('AGENT',123456789,'agent3', 'agent3@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('ADMIN',123456789,'admin', 'admin@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('ADMIN',123456789,'admin2', 'admin2@gmail.com','ACTIVE');
+
+insert into authority (name)
+values ('ROLE_CLIENT');
+insert into authority (name)
+values ('ROLE_AGENT');
+insert into authority (name)
+values ('ROLE_COMPANY');
+insert into authority (name)
+values ('ROLE_ADMIN');
+
 insert into users(type, password, username, email, status)
-values ('CLIENT', 123456789, 'client', 'client@gmail.com', 'ACTIVE');
+values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'petar', 'pera@gmail.com', 'ACTIVE');
+insert into users(type, password, username, email, status)
+values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'nikola', 'nikola@gmail.com',
+        'ACTIVE');
+insert into users(type, password, username, email, status)
+values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'agent@gmail.com', 'ACTIVE');
+insert into users(type, password, username, email, status)
+values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent2', 'agent2@gmail.com',
+        'ACTIVE');
+insert into users(type, password, username, email, status)
+values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent3', 'agent3@gmail.com',
+        'ACTIVE');
+insert into users(type, password, username, email, status)
+values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin', 'admin@gmail.com', 'ACTIVE');
+insert into users(type, password, username, email, status)
+values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin2', 'admin2@gmail.com',
+        'ACTIVE');
 
+INSERT into user_authority
+set user_id      = 1,
+    authority_id = 1;
+INSERT into user_authority
+set user_id      = 2,
+    authority_id = 1;
+INSERT into user_authority
+set user_id      = 3,
+    authority_id = 2;
+INSERT into user_authority
+set user_id      = 4,
+    authority_id = 2;
+INSERT into user_authority
+set user_id      = 6,
+    authority_id = 4;
 
-insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id, transmission_type_id,car_model_id)
+insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
+                transmission_type_id, car_model_id)
 values (1, 'https://media.nu.nl/m/zsbx1zkaavd4_sqr256.jpg/lamborghini-onthult-zijn-eerste-hybride-sportwagen-sian.jpg',
         2, 1000, 'Sián', 5.0, 1, 1, 1, 3, 1);
 
-insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id, transmission_type_id,car_model_id)
+insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
+                transmission_type_id, car_model_id)
 values (1, 'https://liquipedia.net/commons/images/7/74/RL_%2789_Batmobile.jpg', 0, 10000, 'Batmobile', 10.0, 2, 2, 2, 2,
         2);
 insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,

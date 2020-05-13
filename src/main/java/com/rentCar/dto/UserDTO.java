@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,12 +21,15 @@ public class UserDTO {
     private String confirmPassword;
     private String firstName;
     private String lastName;
+    private List<String> roles;
 
     public UserDTO(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.status = user.getStatus().toString();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
     }
 
 }
