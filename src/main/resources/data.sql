@@ -55,17 +55,6 @@ values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK',
 insert into users(type, password, username, email, status)
 values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent2', 'agent2@gmail.com',
         'ACTIVE');
-insert into users(type, password, username, email,status) values ('CLIENT',123456789,'petar', 'pera@gmail.com','ACTIVE');
-insert into users(type, password, username, email,status) values ('CLIENT',123456789,'nikola', 'nikola@gmail.com','ACTIVE');
-insert into users(type, password, username, email, status)
-values ('AGENT', 123456789, 'agent', 'agent@gmail.com', 'ACTIVE');
-insert into users(type, password, username, email, status)
-values ('AGENT', 123456789, 'agent1', 'agent2@gmail.com', 'ACTIVE');
-insert into users(type, password, username, email, status)
-values ('AGENT', 123456789, 'agent2', 'agent3@gmail.com', 'ACTIVE');
-insert into users(type, password, username, email,status) values ('ADMIN',123456789,'admin', 'admin@gmail.com','ACTIVE');
-insert into users(type, password, username, email, status)
-values ('AGENT', 123456789, 'admin2', 'admin2@gmail.com', 'ACTIVE');
 insert into users(type, password, username, email, status)
 values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent3', 'agent3@gmail.com',
         'ACTIVE');
@@ -90,6 +79,7 @@ set user_id      = 4,
 INSERT into user_authority
 set user_id      = 6,
     authority_id = 4;
+
 insert into price_list(price_per_day, price_per_km, agent_id)
 values (1000, 20, 3);
 insert into price_list(price_per_day, price_per_km, agent_id)
