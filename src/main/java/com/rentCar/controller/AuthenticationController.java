@@ -13,26 +13,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
-
     @Autowired
-    TokenUtils tokenUtils;
+    private TokenUtils tokenUtils;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -43,41 +39,73 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // Prvi endpoint koji pogadja korisnik kada se loguje.
+    // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
+    @PostMapping("/login")
+    public ResponseEntity<UserTokenState> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
+                                                                    HttpServletResponse response) {
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
-                                                       HttpServletResponse response) throws AuthenticationException, IOException {
-
-        final Authentication authentication = authenticationManager
+        //
+        Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
 
-        // Ubaci email + password u kontext
-        SecurityContextHolder.getContext().setAuthentication(authentication);// ako su ispravni, korisnika treba da upisemo u security context holder
-        //odnosno da nasa aplikacija bude svesna da je korisnik ulogovan
-        // Kreiraj token
+        // Ubaci korisnika u trenutni security kontekst
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
-        List<String> roles = new ArrayList<>();
+        String jwt = tokenUtils.generateToken(user.getUsername());
+        int expiresIn = tokenUtils.getExpiredIn();
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName(user.getFirstName());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
-        userDTO.setStatus(user.getStatus().name());
+        userDTO.setStatus(user.getStatus().toString());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+
+        ArrayList<String> roles = new ArrayList<>();
 
         for (GrantedAuthority authority : user.getAuthorities()) {
             roles.add(authority.getAuthority());
         }
-
         userDTO.setRoles(roles);
 
-        String jwt = tokenUtils.generateToken(user.getUsername()); //kreiranje tokena je odredjeno u ovoj tokenUtils klasi, koju smo mi napisali
-        int expiresIn = tokenUtils.getExpiredIn(); //koja ima funkcije za generisanje i validiranje jwt tokena
+        // Vrati token kao odgovor na uspesnu autentifikaciju
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, userDTO));
+    }
 
+    @PostMapping(value = "/refresh")
+    public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, userDTO)); //kroz ovaj dto objekat se salje token na klijent
+        String token = tokenUtils.getToken(request);
+        String username = this.tokenUtils.getUsernameFromToken(token);
+        User user = (User) this.userDetailsService.loadUserByUsername(username);
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setStatus(user.getStatus().toString());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+
+        ArrayList<String> roles = new ArrayList<>();
+
+        for (GrantedAuthority authority : user.getAuthorities()) {
+            roles.add(authority.getAuthority());
+        }
+        userDTO.setRoles(roles);
+
+        if (this.tokenUtils.canTokenBeRefreshed(token)) {
+            String refreshedToken = tokenUtils.refreshToken(token);
+            int expiresIn = tokenUtils.getExpiredIn();
+
+            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, userDTO));
+        } else {
+            UserTokenState userTokenState = new UserTokenState();
+            return ResponseEntity.badRequest().body(userTokenState);
+        }
     }
 
 }

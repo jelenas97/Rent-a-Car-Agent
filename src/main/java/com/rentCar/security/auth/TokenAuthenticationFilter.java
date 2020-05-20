@@ -1,9 +1,9 @@
 package com.rentCar.security.auth;
 
 import com.rentCar.security.TokenUtils;
+import com.rentCar.service.impl.CustomUserDetailsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -16,9 +16,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenUtils tokenUtils;
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
-    public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService) {
+    public TokenAuthenticationFilter(TokenUtils tokenHelper, CustomUserDetailsService userDetailsService) {
         this.tokenUtils = tokenHelper;
         this.userDetailsService = userDetailsService;
     }
@@ -32,11 +32,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String authToken = tokenUtils.getToken(httpServletRequest);
 
         if (authToken != null) {
-            // uzmi email iz tokena
             username = tokenUtils.getUsernameFromToken(authToken); //prima jwt token
 
             if (username != null) {
-                // uzmi user-a na osnovu email-a
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 // proveri da li je prosledjeni token validan
