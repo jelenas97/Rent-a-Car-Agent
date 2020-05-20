@@ -59,7 +59,8 @@
       - /priceList POST: Add price list
       - /priceList/{id} PUT: Update price list
       - /priceList/{id} GET: Get price list
-      
+
+
 ### Rent service
 
   - RentRequest
@@ -76,10 +77,9 @@
       
   
 ### Search advertisement service
-    
-    #### Endpoints:
-       
-      - /advertisement/search POST: Advertisement search
+  
+   #### Endpoints:
+   - /advertisement/search POST: Advertisement search
 
 ### Statistics service
 
@@ -93,7 +93,8 @@
      - /comment/{id} PUT: Update status
      - /rate POST: Add rate
      - /statistic/{id} GET: Get statistic
-      
+
+
 ### Message service
 
   - Messages
@@ -101,9 +102,10 @@
      #### Endpoints:
       - /message/owner/{id} GET: Get owner messages
       - /message POST: Send message
-      
+ 
+ 
 ### Car location Service
 
-     #### Endpoints:
-       - /carLocation GET: Get car location
-       - /carLocation POST: Add car location
+   #### Endpoints:
+   - /carLocation GET: Get car location
+   - /carLocation POST: Add car location
