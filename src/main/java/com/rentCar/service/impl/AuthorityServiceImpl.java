@@ -3,17 +3,17 @@ package com.rentCar.service.impl;
 import com.rentCar.model.Authority;
 import com.rentCar.repository.AuthorityRepository;
 import com.rentCar.service.AuthorityService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class AuthorityServiceImpl implements AuthorityService {
 
-    private final AuthorityRepository authorityRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @Override
     public List<Authority> findById(Long id) {
