@@ -7,9 +7,11 @@ import com.rentCar.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class AdvertisementController {
 
     //alternativa je 10+ parametar u arg
     @PostMapping(value = "/searchAds", produces="application/json")
-    // @PreAuthorize("hasRole('')")
+    @PermitAll
     public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto){
 
         try {
@@ -45,9 +47,25 @@ public class AdvertisementController {
     }
 
 
+    @GetMapping(value = "/{id}", produces = "application/json")
+    @PermitAll
+    public ResponseEntity<?> getAllAdvertisements(@PathVariable String id) {
+        try {
+            List<Advertisement> ads = this.advertisementService.findAll();
+            System.out.println(ads);
+            List<AdvertisementDTO> adsDto = new ArrayList<>();
+            for (Advertisement ad : ads) {
+                adsDto.add(new AdvertisementDTO(ad));
+            }
+            return new ResponseEntity(adsDto, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @GetMapping(produces = "application/json")
-    //@PreAuthorize("hasRole('ADMIN')"
-    public ResponseEntity<?> getAllAdvertisements() {
+    @PreAuthorize("hasRole('AGENT')")
+    public ResponseEntity<?> getAgentAds() {
         try {
             System.out.println("DDDDD");
             List<Advertisement> ads = this.advertisementService.findAll();
@@ -63,6 +81,5 @@ public class AdvertisementController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }

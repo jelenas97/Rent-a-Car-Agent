@@ -118,4 +118,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         LocalDate today = LocalDate.now();
         return this.advertisementRepository.findAll(today);
     }
+
+    @Override
+    public List<Advertisement> findAll(Long agentID) {
+        LocalDate today = LocalDate.now();
+        return this.advertisementRepository.findAll(today, agentID);
+    }
 }
