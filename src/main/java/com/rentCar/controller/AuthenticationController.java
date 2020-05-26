@@ -64,7 +64,7 @@ public class AuthenticationController {
         userDTO.setStatus(user.getStatus().toString());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
-
+        userDTO.setId(user.getId());
         ArrayList<String> roles = new ArrayList<>();
 
         for (GrantedAuthority authority : user.getAuthorities()) {
