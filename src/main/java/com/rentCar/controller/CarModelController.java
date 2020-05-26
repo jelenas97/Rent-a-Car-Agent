@@ -1,18 +1,20 @@
 package com.rentCar.controller;
 
+import com.rentCar.dto.CarModelDto;
 import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarModel;
 import com.rentCar.service.CarBrandService;
 import com.rentCar.service.CarModelService;
-import com.rentCar.service.impl.CarBrandServiceImpl;
-import com.rentCar.service.impl.CarModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "model")
@@ -23,33 +25,33 @@ public class CarModelController {
     @Autowired
     private CarBrandService carBrandService;
 
-    @PostMapping(value = "/{brand}",produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity newModel(@RequestBody String name,@PathVariable String brand) {
+    @PostMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<?> newModel(@RequestBody String name, @PathVariable String id) {
 
         try {
             CarModel carModel = this.carModelService.findOneByName(name);
-            CarBrand carBrand = this.carBrandService.findOneByName(brand);
+            CarBrand carBrand = this.carBrandService.findOne(Long.parseLong(id));
             if (carModel != null) {
                 this.carModelService.setActive(name);
             } else {
-                this.carModelService.save(name,carBrand);
+                this.carModelService.save(name, carBrand);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping(value = "/{name}")
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity deleteModel(@PathVariable String name) {
+    @DeleteMapping(value = "/{id}")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity deleteModel(@PathVariable String id) {
 
         try {
-            CarModel carModel = this.carModelService.findOneByName(name);
+            CarModel carModel = this.carModelService.findOne(Long.parseLong(id));
             if (carModel != null) {
-                this.carModelService.delete(name);
+                this.carModelService.delete(carModel);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
@@ -57,16 +59,19 @@ public class CarModelController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping(value="/{brand}", produces="application/json")
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getModels(@PathVariable("brand") String brand){
+    @GetMapping(value = "/{id}", produces = "application/json")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getModels(@PathVariable String id) {
 
         try {
-            CarBrand carBrand =  this.carBrandService.findOneByName(brand);
-            List<String> list = this.carModelService.findAllStringList(carBrand.getId());
-            System.out.println(carBrand);
-            System.out.println(list);
-            return new ResponseEntity(list, HttpStatus.OK);
+            CarBrand carBrand = this.carBrandService.findOne(Long.parseLong(id));
+            List<CarModel> list = this.carModelService.findAllActive(carBrand.getId());
+
+            List<CarModelDto> carModelDtos = list.stream()
+                    .map(carModel -> new CarModelDto(carModel.getId(), carModel.getName()))
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity(carModelDtos, HttpStatus.OK);
 
         }catch(NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Missing brand name");
