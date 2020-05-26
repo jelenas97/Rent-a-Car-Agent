@@ -4,7 +4,6 @@ import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
 import com.rentCar.service.AdvertisementService;
-import com.rentCar.service.impl.AdvertisementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +43,26 @@ public class AdvertisementController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during searching");
         }
     }
+
+
+    @GetMapping(produces = "application/json")
+    //@PreAuthorize("hasRole('ADMIN')"
+    public ResponseEntity<?> getAllAdvertisements() {
+        try {
+            System.out.println("DDDDD");
+            List<Advertisement> ads = this.advertisementService.findAll();
+            System.out.println(ads);
+            List<AdvertisementDTO> adsDto = new ArrayList<>();
+            for (Advertisement ad : ads) {
+                adsDto.add(new AdvertisementDTO(ad));
+            }
+            System.out.println(adsDto);
+            return new ResponseEntity(adsDto, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }

@@ -2,10 +2,15 @@ package com.rentCar.service.impl;
 
 import com.rentCar.dto.UserDTO;
 import com.rentCar.enumerations.AccountStatus;
+import com.rentCar.model.Authority;
+import com.rentCar.model.Client;
 import com.rentCar.model.User;
 import com.rentCar.repository.UserRepository;
+import com.rentCar.service.AuthorityService;
 import com.rentCar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +18,13 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthorityService authorityService;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -20,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findAllUsers() {
         this.userRepository.findAllUsers();
         List<UserDTO> users = new ArrayList<>();
-        for(User u : this.userRepository.findAllUsers()){
+        for (User u : this.userRepository.findAllUsers()) {
             users.add(new UserDTO(u));
         }
         return users;
@@ -36,8 +48,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOne(String email) {
-
         return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Client save(UserDTO userDTO) {
+        Client client = new Client();
+        client.setFirstName(userDTO.getFirstName());
+        client.setLastName(userDTO.getLastName());
+        client.setStatus(AccountStatus.ACTIVE);
+        client.setEmail(userDTO.getEmail());
+        client.setUsername(userDTO.getUsername());
+
+        if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+            client.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+
+        List<Authority> auth = authorityService.findByName("ROLE_CLIENT");
+        client.setAuthorities(auth);
+
+        userRepository.save(client);
+
+        return client;
     }
 
     @Override

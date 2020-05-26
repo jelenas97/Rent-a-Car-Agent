@@ -2,14 +2,8 @@ package com.rentCar.controller;
 
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.dto.RequestsHolderDTO;
-import com.rentCar.model.Advertisement;
-import com.rentCar.model.RentRequest;
-import com.rentCar.model.RequestsHolder;
-import com.rentCar.model.User;
-import com.rentCar.service.AdvertisementService;
-import com.rentCar.service.RentRequestService;
-import com.rentCar.service.RequestsHolderService;
-import com.rentCar.service.UserService;
+import com.rentCar.model.*;
+import com.rentCar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "rentRequest")
@@ -36,9 +32,8 @@ public class RentRequestController {
     @Autowired
     private RequestsHolderService requestsHolderService;
 
-//    @Autowired
-//    privat
-
+    @Autowired
+    private TermService termService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('CLIENT') and hasRole('AGENT')")
@@ -46,28 +41,28 @@ public class RentRequestController {
 
         try {
             System.out.println("Posal zahtjev " + holderDTO);
-            System.out.println("Posal zahtjev " + holderDTO.toString());
-            RequestsHolder rq = new RequestsHolder(holderDTO.getBundle());
+
+            Set<Long> usersIds = new HashSet<>();
             for (RentRequestDTO requestDTO : holderDTO.getRentRequests()) {
                 Advertisement advertisement = this.advertisementService.find(requestDTO.getAdvertisementId());
-                User sender = this.userService.find(requestDTO.getSenderId());
-
-                RentRequest rentRequest = new RentRequest(requestDTO, sender, advertisement, rq);
-                System.out.println(rentRequest);
-                //treba i holder snimiti!!
-                this.rentRequestService.save(rentRequest);
-
+                usersIds.add(advertisement.getOwner().getId());
             }
+            for (Long id : usersIds) {
+                RequestsHolder rq = new RequestsHolder(holderDTO.getBundle());
+                System.out.println("Vlasnik = " + id);
+                for (RentRequestDTO requestDTO : holderDTO.getRentRequests()) {
 
+                    Advertisement advertisement = this.advertisementService.find(requestDTO.getAdvertisementId());
+                    if (id.equals(advertisement.getOwner().getId())) {
+                        User sender = this.userService.find(requestDTO.getSenderId());
 
-//            User user = this.userService.findOne(requestDTO.getSender_email());
-//            Set<Advertisement> advertisements = new HashSet<>();
-//
-//            for(AdvertisementDTO ad: requestDTO.getAdvertisements()){
-//                advertisements.add(this.advertisementService.find(ad.getId()));
-//            }
-//
-//            this.rentRequestService.save(new RentRequest(requestDTO,user,advertisements));
+                        RentRequest rentRequest = new RentRequest(requestDTO, sender, advertisement, rq);
+                        System.out.println(rentRequest);
+                        //treba i holder snimiti!!
+                        this.rentRequestService.save(rentRequest);
+                    }
+                }
+            }
 
             return new ResponseEntity(HttpStatus.OK);
 
@@ -99,5 +94,73 @@ public class RentRequestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping(value = "/bundle/{confirm}", produces = "application/json")
+    // @PreAuthorize("hasRole('AGENT')")
+    public ResponseEntity<?> processRequestsBundle(@PathVariable String confirm, @RequestBody RequestsHolderDTO holderDTO) {
+
+        try {
+            if (confirm.equals("YES")) {
+                //true = nema preklapanja  u jednom terminu! Dodaj ih sve!
+                //false = ima preklapanja u jednom/vise! Sve odbij!
+                Boolean yes = true;
+                for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
+                    List<Term> term = this.termService.findTakenTerm(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                    if (term.size() != 0) {
+                        yes = false;
+                    }
+                }
+                if (yes) {
+                    for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
+                        this.rentRequestService.changeStatus(rentDTO.getId(), "RESERVED");
+                        this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                    }
+                } else {
+                    for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
+                        this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+                    }
+                }
+            } else {
+                for (RentRequestDTO r : holderDTO.getRentRequests()) {
+                    this.rentRequestService.changeStatus(r.getId(), "CANCELED");
+                }
+
+            }
+
+            return new ResponseEntity(null, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
+        }
+    }
+
+    @PostMapping(value = "/request/{confirm}", produces = "application/json")
+    // @PreAuthorize("hasRole('')")
+    public ResponseEntity<?> processRequest(@PathVariable String confirm, @RequestBody RentRequestDTO rentDTO) {
+
+        try {
+            if (confirm.equals("YES")) {
+                System.out.println(rentDTO);
+                List<Term> term = this.termService.findTakenTerm(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                if (term.size() == 0) {
+                    System.out.println("NEMA TERMINA SA PREKLAPANJEM!!!!");
+                    this.rentRequestService.changeStatus(rentDTO.getId(), "RESERVED");
+                    //POSLOVNA INFORMATIKA??? -> RESERVED -> PAID !! Ako se odbije onda status TERM (canceled ide u TRUE)!!!
+                    this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+                } else {
+                    System.out.println(term.size());
+                    this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+                }
+
+            } else {
+                this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+
+            }
+
+            return new ResponseEntity(null, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
+        }
+    }
+
 
 }

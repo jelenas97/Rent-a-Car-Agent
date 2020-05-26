@@ -9,6 +9,7 @@ import com.rentCar.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -26,8 +27,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public List<Advertisement> search(SearchDTO dto) {
         List<Advertisement> ads = this.advertisementRepository.findAdvertisements(dto.getPlace(),dto.getStartDate(),dto.getEndDate());
-        System.out.println(dto);
-        System.out.println(ads);
+
         FuelType fuelType = this.fuelTypeRepository.findByName(dto.getFuelType());
 
         List<Predicate<Advertisement> > predicates = new ArrayList<>();
@@ -84,13 +84,38 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             ads = result;
         }
 
-        System.out.println("Filtrated : " + ads);
-        return ads;
+
+        List<Advertisement> takenAds = this.advertisementRepository.findTakenAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
+
+
+        List<Advertisement> retAds = new ArrayList<>();
+        System.out.println("DTO:" + dto.getStartDate() + dto.getEndDate());
+        for (Advertisement adv : ads) {
+            System.out.println("OGLASI : " + adv.getId());
+        }
+        for (Advertisement adv : takenAds) {
+            System.out.println("ZAUZETI OGLASI : " + adv.getId());
+        }
+        for (Advertisement adv : ads) {
+            if (takenAds.contains(adv)) {
+                System.out.println("Zauzet je oglas:  " + adv.getId());
+            } else {
+                retAds.add(adv);
+            }
+        }
+
+        return retAds;
     }
 
     @Override
     public Advertisement find(Long id) {
 
         return this.advertisementRepository.find(id);
+    }
+
+    @Override
+    public List<Advertisement> findAll() {
+        LocalDate today = LocalDate.now();
+        return this.advertisementRepository.findAll(today);
     }
 }

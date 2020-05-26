@@ -2,10 +2,10 @@ package com.rentCar.controller;
 
 import com.rentCar.model.CarClass;
 import com.rentCar.service.CarClassService;
-import com.rentCar.service.impl.CarClassServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class CarClassController {
     private CarClassService carClassService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity newClass(@RequestBody String name) {
 
         try {
