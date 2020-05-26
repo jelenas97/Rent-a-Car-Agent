@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -154,6 +155,27 @@ public class RentRequestController {
             } else {
                 this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
 
+            }
+
+            return new ResponseEntity(null, HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
+        }
+    }
+
+    @PostMapping(value = "/physical", produces = "application/json")
+    @PreAuthorize("hasRole('AGENT')")
+    public ResponseEntity<?> physicalRent(@RequestBody RentRequestDTO rentDTO) {
+
+        try {
+            this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
+            this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+
+            //automatsko odbijanje
+
+            List<RentRequest> rentRequests = this.rentRequestService.findPending(rentDTO.getId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+            for (RentRequest request : rentRequests) {
+                this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
             }
 
             return new ResponseEntity(null, HttpStatus.OK);

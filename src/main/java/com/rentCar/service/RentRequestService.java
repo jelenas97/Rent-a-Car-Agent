@@ -3,6 +3,7 @@ package com.rentCar.service;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.model.RentRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RentRequestService {
@@ -14,4 +15,6 @@ public interface RentRequestService {
     void save(RentRequest requestDTO);
 
     void changeStatus(Long id, String status);
+
+    List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate);
 }
