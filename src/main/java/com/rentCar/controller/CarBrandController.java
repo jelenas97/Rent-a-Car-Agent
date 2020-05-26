@@ -18,7 +18,7 @@ public class CarBrandController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity newBrand(@RequestBody String name) {
+    public ResponseEntity<?> newBrand(@RequestBody String name) {
 
         try {
             CarBrand brand = this.carBrandService.findOneByName(name);
@@ -27,7 +27,7 @@ public class CarBrandController {
             } else {
                 this.carBrandService.save(name);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
@@ -36,7 +36,7 @@ public class CarBrandController {
 
     @DeleteMapping(value = "/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity deleteBrand(@PathVariable String id) {
+    public ResponseEntity<?> deleteBrand(@PathVariable String id) {
 
         try {
             CarBrand brand = this.carBrandService.findOne(Long.parseLong(id));
@@ -46,6 +46,6 @@ public class CarBrandController {
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -18,7 +18,7 @@ public class FuelTypeController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity newFuel(@RequestBody String name) {
+    public ResponseEntity<?> newFuel(@RequestBody String name) {
 
         try {
             FuelType fuelType = this.fuelTypeService.findOneByName(name);
@@ -27,7 +27,7 @@ public class FuelTypeController {
             } else {
                 this.fuelTypeService.save(name);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
@@ -36,7 +36,7 @@ public class FuelTypeController {
 
     @DeleteMapping(value = "/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity deleteFuel(@PathVariable String id) {
+    public ResponseEntity<?> deleteFuel(@PathVariable String id) {
 
         try {
             FuelType fuelType = this.fuelTypeService.findOne(Long.parseLong(id));
@@ -46,6 +46,6 @@ public class FuelTypeController {
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

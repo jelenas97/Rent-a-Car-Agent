@@ -19,7 +19,7 @@ public class CarClassController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity newClass(@RequestBody String name) {
+    public ResponseEntity<?> newClass(@RequestBody String name) {
 
         try {
             CarClass carClass = this.carClassService.findOneByName(name);
@@ -28,7 +28,7 @@ public class CarClassController {
             } else {
                 this.carClassService.save(name);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
@@ -37,7 +37,7 @@ public class CarClassController {
 
     @DeleteMapping(value = "/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity deleteClass(@PathVariable String id) {
+    public ResponseEntity<?> deleteClass(@PathVariable String id) {
 
         try {
             CarClass carClass = this.carClassService.findOne(Long.parseLong(id));
@@ -47,7 +47,7 @@ public class CarClassController {
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

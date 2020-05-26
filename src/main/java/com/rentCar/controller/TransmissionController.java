@@ -20,7 +20,7 @@ public class TransmissionController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity newTransmission(@RequestBody String name) {
+    public ResponseEntity<?> newTransmission(@RequestBody String name) {
 
         try {
             TransmissionType transmissionType = this.transTypeService.findOneByName(name);
@@ -29,7 +29,7 @@ public class TransmissionController {
             } else {
                 this.transTypeService.save(name);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
@@ -38,7 +38,7 @@ public class TransmissionController {
 
     @DeleteMapping(value = "/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity deleteTransmission(@PathVariable String id) {
+    public ResponseEntity<?> deleteTransmission(@PathVariable String id) {
 
         try {
             TransmissionType transmissionType = this.transTypeService.findOne(Long.parseLong(id));
@@ -48,6 +48,6 @@ public class TransmissionController {
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
