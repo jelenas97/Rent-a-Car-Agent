@@ -7,9 +7,11 @@ import com.rentCar.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,20 +25,16 @@ public class AdvertisementController {
 
     //alternativa je 10+ parametar u arg
     @PostMapping(value = "/searchAds", produces="application/json")
-    // @PreAuthorize("hasRole('')")
+    @PermitAll
     public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto){
 
         try {
-            //DTO ADVERTISEMENT NEMOJ ZABORAVITI!!!!
-
             System.out.println("SearchDto: : "  + searchDto.toString());
             List<Advertisement> ads = this.advertisementService.search(searchDto);
             List<AdvertisementDTO> adsDto = new ArrayList<>();
             for(Advertisement ad : ads){
                 adsDto.add(new AdvertisementDTO(ad));
             }
-
-            System.out.println("PRONADJENI OGLASI" + adsDto);
             return new ResponseEntity(adsDto, HttpStatus.OK);
 
         }catch(NullPointerException e){
@@ -46,12 +44,27 @@ public class AdvertisementController {
 
 
     @GetMapping(produces = "application/json")
-    //@PreAuthorize("hasRole('ADMIN')"
+    @PermitAll
     public ResponseEntity<?> getAllAdvertisements() {
         try {
-            System.out.println("DDDDD");
             List<Advertisement> ads = this.advertisementService.findAll();
             System.out.println(ads);
+            List<AdvertisementDTO> adsDto = new ArrayList<>();
+            for (Advertisement ad : ads) {
+                adsDto.add(new AdvertisementDTO(ad));
+            }
+            return new ResponseEntity(adsDto, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "/{id}", produces = "application/json")
+    @PreAuthorize("hasRole('AGENT')")
+    public ResponseEntity<?> getAgentAds(@PathVariable Long id) {
+        try {
+            List<Advertisement> ads = this.advertisementService.findAll(id);
             List<AdvertisementDTO> adsDto = new ArrayList<>();
             for (Advertisement ad : ads) {
                 adsDto.add(new AdvertisementDTO(ad));
@@ -63,6 +76,5 @@ public class AdvertisementController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }

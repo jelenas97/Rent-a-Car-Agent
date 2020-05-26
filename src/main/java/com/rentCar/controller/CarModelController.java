@@ -4,14 +4,13 @@ import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarModel;
 import com.rentCar.service.CarBrandService;
 import com.rentCar.service.CarModelService;
-import com.rentCar.service.impl.CarBrandServiceImpl;
-import com.rentCar.service.impl.CarModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @Controller
@@ -58,7 +57,7 @@ public class CarModelController {
     }
 
     @GetMapping(value="/{brand}", produces="application/json")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PermitAll
     public ResponseEntity<?> getModels(@PathVariable("brand") String brand){
 
         try {

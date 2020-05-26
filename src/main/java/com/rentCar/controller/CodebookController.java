@@ -2,9 +2,7 @@ package com.rentCar.controller;
 
 
 import com.rentCar.dto.CodeBookDTO;
-import com.rentCar.model.*;
 import com.rentCar.service.*;
-import com.rentCar.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @Controller
@@ -33,7 +32,7 @@ public class CodebookController {
 
 
     @GetMapping(value="/getCodeBookInfo", produces="application/json")
-    //@PreAuthorize("hasRole('ADMIN')"
+    @PermitAll
     public ResponseEntity<?> getCodeBookInfo()
     {
         try {

@@ -106,7 +106,7 @@ values (1, 'https://www.extremetech.com/wp-content/uploads/2019/12/SONATA-hero-o
         'NOVO', 10.0, 3, 1, 1, 1,
         1);
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 20, 'Novi Sad', 5000, 3, 3, 1, '2020-05-03', '2020-10-03');
+values (0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
 --
 insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
