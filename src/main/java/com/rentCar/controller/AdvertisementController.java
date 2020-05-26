@@ -29,16 +29,12 @@ public class AdvertisementController {
     public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto){
 
         try {
-            //DTO ADVERTISEMENT NEMOJ ZABORAVITI!!!!
-
             System.out.println("SearchDto: : "  + searchDto.toString());
             List<Advertisement> ads = this.advertisementService.search(searchDto);
             List<AdvertisementDTO> adsDto = new ArrayList<>();
             for(Advertisement ad : ads){
                 adsDto.add(new AdvertisementDTO(ad));
             }
-
-            System.out.println("PRONADJENI OGLASI" + adsDto);
             return new ResponseEntity(adsDto, HttpStatus.OK);
 
         }catch(NullPointerException e){
@@ -47,9 +43,9 @@ public class AdvertisementController {
     }
 
 
-    @GetMapping(value = "/{id}", produces = "application/json")
+    @GetMapping(produces = "application/json")
     @PermitAll
-    public ResponseEntity<?> getAllAdvertisements(@PathVariable String id) {
+    public ResponseEntity<?> getAllAdvertisements() {
         try {
             List<Advertisement> ads = this.advertisementService.findAll();
             System.out.println(ads);
@@ -63,13 +59,12 @@ public class AdvertisementController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping(produces = "application/json")
+
+    @GetMapping(value = "/{id}", produces = "application/json")
     @PreAuthorize("hasRole('AGENT')")
-    public ResponseEntity<?> getAgentAds() {
+    public ResponseEntity<?> getAgentAds(@PathVariable Long id) {
         try {
-            System.out.println("DDDDD");
-            List<Advertisement> ads = this.advertisementService.findAll();
-            System.out.println(ads);
+            List<Advertisement> ads = this.advertisementService.findAll(id);
             List<AdvertisementDTO> adsDto = new ArrayList<>();
             for (Advertisement ad : ads) {
                 adsDto.add(new AdvertisementDTO(ad));
