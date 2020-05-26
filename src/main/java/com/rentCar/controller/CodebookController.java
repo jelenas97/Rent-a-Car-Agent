@@ -6,6 +6,7 @@ import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarClass;
 import com.rentCar.model.FuelType;
 import com.rentCar.model.TransmissionType;
+import com.rentCar.dto.CodeBookDTO;
 import com.rentCar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,6 @@ public class CodebookController {
 
 
     @GetMapping(value = "/getCodeBookInfo", produces = "application/json")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity<?> getCodeBookInfo() {
         try {
             List<CarBrand> carBrands = this.carBrandService.findAllActive();
@@ -63,7 +63,7 @@ public class CodebookController {
 
             CodeBookDTO codeBook = new CodeBookDTO(carBrandDtos, carClassDtos, fuelTypeDtos, transmissionTypeDtos);
 
-            return new ResponseEntity(codeBook, HttpStatus.OK);
+            return new ResponseEntity<>(codeBook, HttpStatus.OK);
 
         } catch(NullPointerException e){
             return ResponseEntity.notFound().build();

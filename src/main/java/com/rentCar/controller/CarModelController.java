@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "model")
 @CrossOrigin("http://localhost:4200")
 public class CarModelController {
+
     @Autowired
     private CarModelService carModelService;
     @Autowired
@@ -46,7 +47,7 @@ public class CarModelController {
 
     @DeleteMapping(value = "/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity deleteModel(@PathVariable String id) {
+    public ResponseEntity<?> deleteModel(@PathVariable String id) {
 
         try {
             CarModel carModel = this.carModelService.findOne(Long.parseLong(id));
@@ -56,7 +57,7 @@ public class CarModelController {
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
@@ -71,7 +72,7 @@ public class CarModelController {
                     .map(carModel -> new CarModelDto(carModel.getId(), carModel.getName()))
                     .collect(Collectors.toList());
 
-            return new ResponseEntity(carModelDtos, HttpStatus.OK);
+            return new ResponseEntity<>(carModelDtos, HttpStatus.OK);
 
         }catch(NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Missing brand name");

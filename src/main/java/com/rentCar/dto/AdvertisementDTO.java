@@ -4,8 +4,6 @@ import com.rentCar.model.Advertisement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,6 +25,7 @@ public class AdvertisementDTO {
     private Boolean availableTracking;
     private Double price;
     private String model;
+    private Long ownerID;
 
     public AdvertisementDTO(Advertisement ad){
         this.id = ad.getId();
@@ -45,6 +44,7 @@ public class AdvertisementDTO {
         this.availableTracking = ad.getCar().getAvailableTracking();
         this.price = ad.getPriceList().getPricePerDay();
         this.model = ad.getCar().getCarModel().getName();
+        this.ownerID = ad.getOwner().getId();
     }
 
 }

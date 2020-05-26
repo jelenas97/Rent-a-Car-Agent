@@ -2,10 +2,12 @@ package com.rentCar.service.impl;
 
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
+import com.rentCar.model.CarModel;
 import com.rentCar.model.FuelType;
 import com.rentCar.repository.AdvertisementRepository;
-import com.rentCar.repository.FuelTypeRepository;
 import com.rentCar.service.AdvertisementService;
+import com.rentCar.service.CarModelService;
+import com.rentCar.service.FuelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +24,17 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private AdvertisementRepository advertisementRepository;
 
     @Autowired
-    private FuelTypeRepository fuelTypeRepository;
+    private CarModelService carModelService;
+
+    @Autowired
+    private FuelTypeService fuelTypeService;
 
     @Override
     public List<Advertisement> search(SearchDTO dto) {
         List<Advertisement> ads = this.advertisementRepository.findAdvertisements(dto.getPlace(),dto.getStartDate(),dto.getEndDate());
 
-        FuelType fuelType = this.fuelTypeRepository.findByName(dto.getFuelType());
+        CarModel carModel = this.carModelService.findOneByName(dto.getCarModel());
+        FuelType fuelType = this.fuelTypeService.findOneByName(dto.getFuelType());
 
         List<Predicate<Advertisement> > predicates = new ArrayList<>();
 
@@ -64,10 +70,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             Predicate<Advertisement> byMileage = ad -> ad.getCar().getMileage().equals(dto.getMileage());
             predicates.add(byMileage);
         }
-        if(dto.getCarModel() != null){
-            Predicate<Advertisement> byModel = ad -> ad.getCar().getCarBrand().getName().equals(dto.getCarModel());
-            predicates.add(byModel);
-        }
         if(dto.getMaxPrice() != null){
             Predicate<Advertisement> byMaxPrice = ad -> ad.getPriceList().getPricePerDay() <= dto.getMaxPrice();
             predicates.add(byMaxPrice);
@@ -84,23 +86,22 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             ads = result;
         }
 
-
         List<Advertisement> takenAds = this.advertisementRepository.findTakenAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
 
 
         List<Advertisement> retAds = new ArrayList<>();
-        System.out.println("DTO:" + dto.getStartDate() + dto.getEndDate());
-        for (Advertisement adv : ads) {
-            System.out.println("OGLASI : " + adv.getId());
-        }
-        for (Advertisement adv : takenAds) {
-            System.out.println("ZAUZETI OGLASI : " + adv.getId());
-        }
         for (Advertisement adv : ads) {
             if (takenAds.contains(adv)) {
                 System.out.println("Zauzet je oglas:  " + adv.getId());
             } else {
-                retAds.add(adv);
+                if (carModel != null) {
+                    if (adv.getCar().getCarBrand().getCarModels().contains(carModel)) {
+                        retAds.add(adv);
+                    }
+                } else {
+                    retAds.add(adv);
+                }
+
             }
         }
 
@@ -117,5 +118,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<Advertisement> findAll() {
         LocalDate today = LocalDate.now();
         return this.advertisementRepository.findAll(today);
+    }
+
+    @Override
+    public List<Advertisement> findAll(Long agentID) {
+        LocalDate today = LocalDate.now();
+        return this.advertisementRepository.findAll(today, agentID);
     }
 }
