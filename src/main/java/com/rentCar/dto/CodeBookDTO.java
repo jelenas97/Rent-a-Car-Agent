@@ -1,27 +1,19 @@
 package com.rentCar.dto;
 
-import com.rentCar.model.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CodeBookDTO {
-    private List<String> carBrands;
-    private List<String> carClasses;
-    private List<String> fuelTypes;
-    private List<String> transmissionTypes;
-    public CodeBookDTO(List<String> carBrands,List<String> carClasses,
-                        List<String> fuelTypes,List<String> transmissionTypes){
-
-        this.carBrands = carBrands;
-        this.carClasses = carClasses;
-        this.fuelTypes = fuelTypes;
-        this.transmissionTypes = transmissionTypes;
-    }
+    private List<CarBrandDto> carBrands;
+    private List<CarClassDto> carClasses;
+    private List<FuelTypeDto> fuelTypes;
+    private List<TransmissionTypeDto> transmissionTypes;
 }
