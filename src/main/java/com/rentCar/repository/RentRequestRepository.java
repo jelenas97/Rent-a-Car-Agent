@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,8 +20,8 @@ public interface RentRequestRepository extends JpaRepository<RentRequest, Long> 
     @Query(value = "select a from RentRequest a where a.id = ?1")
     RentRequest find(Long id);
 
-    @Query(value = "select t from RentRequest t where t.advertisement.id = ?1 and t.rentRequestStatus='PENDING' and t.startDate <= ?2 and t.endDate >= ?2 " +
-            "or t.advertisement.id = ?1 and t.canceled=false and t.startDate <= ?3 and t.endDate >= ?3 " +
-            "or t.advertisement.id = ?1 and t.canceled=false and t.startDate >= ?2 and t.endDate <= ?3")
-    List<RentRequest> findPending(Long id, LocalDate startDate, LocalDate endDate);
+    @Query(value = "select t from RentRequest t where t.advertisement.id = ?1 and t.rentRequestStatus='PENDING' and t.startDateTime <= ?2 and t.endDateTime >= ?2 " +
+            "or t.rentRequestStatus='PENDING' and t.advertisement.id = ?1 and t.startDateTime <= ?3 and t.endDateTime >= ?3 " +
+            "or t.rentRequestStatus='PENDING' and t.advertisement.id = ?1 and t.startDateTime >= ?2 and t.endDateTime <= ?3")
+    List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate);
 }

@@ -8,7 +8,6 @@ import com.rentCar.service.RentRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +68,6 @@ public class RentRequestImpl implements RentRequestService {
 
     @Override
     public List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate) {
-        LocalDate start = LocalDate.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth());
-        LocalDate end = LocalDate.of(endDate.getYear(), endDate.getMonth(), endDate.getDayOfMonth());
-
-        return this.rentRequestRepository.findPending(id, start, end);
+        return this.rentRequestRepository.findPending(id, startDate, endDate);
     }
 }

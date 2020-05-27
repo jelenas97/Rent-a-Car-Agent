@@ -163,19 +163,41 @@ public class RentRequestController {
         }
     }
 
-    @PostMapping(value = "/physical", produces = "application/json")
-    @PreAuthorize("hasRole('AGENT')")
+    @PostMapping(value = "/physicalRent", produces = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public ResponseEntity<?> physicalRent(@RequestBody RentRequestDTO rentDTO) {
 
         try {
-            this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
+            System.out.println("Physical rent " + rentDTO);
+
+            //  this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
             this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
 
             //automatsko odbijanje
 
-            List<RentRequest> rentRequests = this.rentRequestService.findPending(rentDTO.getId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+            List<RentRequest> rentRequests = this.rentRequestService.findPending(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
+            System.out.println("OVI SU VEC POSTOJALI: " + rentRequests);
+
+
             for (RentRequest request : rentRequests) {
-                this.rentRequestService.changeStatus(rentDTO.getId(), "CANCELED");
+                if (request.getRequests().getBundle()) {
+                    List<RequestsHolderDTO> holders = this.requestsHolderService.getAllPending(request.getAdvertisement().getOwner().getId());
+
+                    System.out.println("Postojali su holderi : " + holders);
+                    for (RequestsHolderDTO hold : holders) {
+                        System.out.println("Postoji toliko request u holderu : " + hold);
+                        for (RentRequestDTO holderRentRequest : hold.getRentRequests()) {
+                            System.out.println("Ovo je bilo u bundle uklanjam!!!" + holderRentRequest.getId());
+                            this.rentRequestService.changeStatus(holderRentRequest.getId(), "CANCELED");
+
+
+                        }
+                    }
+
+                } else {
+                    this.rentRequestService.changeStatus(request.getId(), "CANCELED");
+                }
+
             }
 
             return new ResponseEntity(null, HttpStatus.OK);
