@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/user")
 @CrossOrigin("http://localhost:4200")
 public class UserController {
     @Autowired
