@@ -16,4 +16,7 @@ public class AgentServiceImpl implements AgentService {
     public Agent save(Agent agent) {
         return agentRepository.save(agent);
     }
+
+    @Override
+    public Agent findById(long id){ return agentRepository.findById(id);}
 }

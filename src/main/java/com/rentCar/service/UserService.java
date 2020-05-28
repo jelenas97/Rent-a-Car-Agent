@@ -16,6 +16,6 @@ public interface UserService {
 
     User save(UserDTO userDTO);
 
-    User find(Long id);
+    User findById(Long id);
 
 }
