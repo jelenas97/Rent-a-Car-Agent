@@ -1,18 +1,18 @@
 package com.rentCar.dto;
 
-import com.rentCar.model.User;
+import com.rentCar.model.Agent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class AgentDTO {
+
     private Long id;
     private String email;
     private String status;
@@ -23,15 +23,14 @@ public class UserDTO {
     private String lastName;
     private String address;
     private List<String> roles;
+    private String businessRegistrationNumber;
 
-    public UserDTO(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.status = user.getStatus().toString();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.address=user.getAddress();
+    public AgentDTO(Agent agent){
+        this.id=agent.getId();
+        this.email = agent.getEmail();
+        this.firstName=agent.getFirstName();
+        this.lastName=agent.getLastName();
+        this.address=agent.getAddress();
+        this.businessRegistrationNumber=agent.getBusinessRegistrationNumber();
     }
-
 }

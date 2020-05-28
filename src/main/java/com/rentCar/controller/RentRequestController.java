@@ -55,7 +55,7 @@ public class RentRequestController {
 
                     Advertisement advertisement = this.advertisementService.find(requestDTO.getAdvertisementId());
                     if (id.equals(advertisement.getOwner().getId())) {
-                        User sender = this.userService.find(requestDTO.getSenderId());
+                        User sender = this.userService.findById(requestDTO.getSenderId());
 
                         RentRequest rentRequest = new RentRequest(requestDTO, sender, advertisement, rq);
                         System.out.println(rentRequest);
