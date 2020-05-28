@@ -65,4 +65,9 @@ public class RentRequestImpl implements RentRequestService {
         rentRequest.setRentRequestStatus(RentRequestStatus.valueOf(status));
         this.rentRequestRepository.save(rentRequest);
     }
+
+    @Override
+    public List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+        return this.rentRequestRepository.findPending(id, startDate, endDate);
+    }
 }

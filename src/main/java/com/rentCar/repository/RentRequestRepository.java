@@ -19,4 +19,9 @@ public interface RentRequestRepository extends JpaRepository<RentRequest, Long> 
 
     @Query(value = "select a from RentRequest a where a.id = ?1")
     RentRequest find(Long id);
+
+    @Query(value = "select t from RentRequest t where t.advertisement.id = ?1 and t.rentRequestStatus='PENDING' and t.startDateTime <= ?2 and t.endDateTime >= ?2 " +
+            "or t.rentRequestStatus='PENDING' and t.advertisement.id = ?1 and t.startDateTime <= ?3 and t.endDateTime >= ?3 " +
+            "or t.rentRequestStatus='PENDING' and t.advertisement.id = ?1 and t.startDateTime >= ?2 and t.endDateTime <= ?3")
+    List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate);
 }
