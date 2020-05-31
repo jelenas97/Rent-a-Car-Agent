@@ -23,7 +23,7 @@ public class RequestHolderController {
     private RequestsHolderService requestsHolderService;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    @PreAuthorize("hasRole('AGENT') and hasRole('CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_AGENT')")
     public ResponseEntity<?> getRequestHolders(@PathVariable Long id) {
         try {
             List<RequestsHolderDTO> holders = this.requestsHolderService.getAllPending(id);

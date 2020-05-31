@@ -12,4 +12,5 @@ public interface AdvertisementService {
     List<Advertisement> findAll();
 
     List<Advertisement> findAll(Long agentID);
+
 }

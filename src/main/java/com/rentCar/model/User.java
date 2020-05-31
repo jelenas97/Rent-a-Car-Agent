@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column
     private String lastName;
 
+    @Column
+    private String address;
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Advertisement> advertisement;
 
@@ -177,6 +180,14 @@ public class User implements UserDetails {
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
 
