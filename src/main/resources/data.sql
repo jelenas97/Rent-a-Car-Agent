@@ -75,10 +75,10 @@ values(4, 2);
 insert into user_authority(user_id, authority_id)
 values(6, 4);
 
-insert into price_list(price_per_day, price_per_km, agent_id)
-values (1000, 20, 3);
-insert into price_list(price_per_day, price_per_km, agent_id)
-values (2000, 50, 3);
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (1000, 20, 100, 3);
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (2000, 50, 200, 3);
 
 
 insert into car(available_tracking, image, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
