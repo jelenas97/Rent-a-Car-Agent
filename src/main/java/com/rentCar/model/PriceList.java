@@ -18,15 +18,18 @@ public class PriceList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
+    @Column
     private Double pricePerDay;
 
     @Column
     private Double pricePerKm;
 
+    @Column
+    private Double cdw;
+
     @OneToMany(mappedBy = "priceList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Advertisement> advertisement;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Agent agent;
+    public User creator;
 }
