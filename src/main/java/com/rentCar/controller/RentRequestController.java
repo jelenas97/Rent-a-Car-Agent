@@ -73,7 +73,7 @@ public class RentRequestController {
     }
 
     @GetMapping(value = "/history/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    //@PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<List<RentRequestDTO>> getHistoryRentRequests(@PathVariable String id) {
 
         try {
@@ -85,7 +85,7 @@ public class RentRequestController {
     }
 
     @GetMapping(value = "/cancelable/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    //@PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public ResponseEntity<List<RentRequestDTO>> getCancelableRentRequests(@PathVariable String id) {
 
         try {
