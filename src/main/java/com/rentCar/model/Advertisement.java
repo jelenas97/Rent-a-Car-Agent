@@ -1,5 +1,6 @@
 package com.rentCar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,8 +42,9 @@ public class Advertisement {
     @OneToMany(mappedBy = "advertisement", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Rate> rate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Car car;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public User owner;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
