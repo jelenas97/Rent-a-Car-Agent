@@ -36,10 +36,6 @@ public class RentRequestDTO {
         this.cars = rr.getAdvertisement().getCar().getCarClass().toString();
         this.advertisementId = rr.getAdvertisement().getId();
         this.senderId = rr.getSender().getId();
-//        for (Advertisement a : rr.getAdvertisements()) {
-//            this.cars += a.getCar().getCarBrand().getName() + " / " + a.getCar().getCarClass().toString() + " / " + a.getCar().getCarModel().getName() + "\r\n";
-//            this.advertisementId = a.getId().toString();
-//        }
 
     }
 
