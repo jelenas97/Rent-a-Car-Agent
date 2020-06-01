@@ -4,6 +4,7 @@ import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
 import com.rentCar.service.AdvertisementService;
+import com.rentCar.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,18 @@ public class AdvertisementController {
     @Autowired
     private AdvertisementService advertisementService;
 
+    @Autowired
+    private CarService carService;
+
     //alternativa je 10+ parametar u arg
-    @PostMapping(value = "/searchAds", produces="application/json")
+    @PostMapping(value = "/searchAds", produces = "application/json")
     // @PreAuthorize("hasRole('')")
-    public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto){
+    public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto) {
 
         try {
             //DTO ADVERTISEMENT NEMOJ ZABORAVITI!!!!
 
-            System.out.println("SearchDto: : "  + searchDto.toString());
+            System.out.println("SearchDto: : " + searchDto.toString());
             List<Advertisement> ads = this.advertisementService.search(searchDto);
             List<AdvertisementDTO> adsDto = new ArrayList<>();
             for(Advertisement ad : ads){
@@ -64,5 +68,16 @@ public class AdvertisementController {
         }
     }
 
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<?> addAdvertisement(@RequestBody Advertisement ad) {
+        this.carService.add(ad.getCar());
+        this.advertisementService.add(ad);
+
+        return ResponseEntity.ok().build();
+    }
+
 
 }
+
+
+

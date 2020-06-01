@@ -25,10 +25,10 @@ public class CarBrand {
     private Boolean active = true;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "carBrand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "carBrand", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     public Set<Car> car;
 
-    @OneToMany(mappedBy = "carBrand",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "carBrand", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     public Set<CarModel> carModels;
 
     public CarBrand(String name) {

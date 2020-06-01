@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class AdvertisementDTO {
 
     private Long id;
+    private Long carId;
     private String name;
     private String carBrand;
     private String fuelType;
@@ -23,13 +25,14 @@ public class AdvertisementDTO {
     private Integer mileage;
     private Double rate;
     private Integer discount;
-    private String image;
+    private List<String> imageGallery;
     private Boolean availableTracking;
     private Double price;
     private String model;
 
     public AdvertisementDTO(Advertisement ad){
         this.id = ad.getId();
+        this.carId = ad.getCar().getId();
         this.name = ad.getCar().getName();
         this.carBrand = ad.getCar().getCarBrand().getName();
         this.fuelType = ad.getCar().getFuelType().toString();
@@ -41,10 +44,11 @@ public class AdvertisementDTO {
         this.mileage = ad.getCar().getMileage();
         this.rate = 10.0;
         this.discount = ad.getDiscount();
-        this.image = ad.getCar().getImage();
+        this.imageGallery = ad.getCar().getImageGallery();
         this.availableTracking = ad.getCar().getAvailableTracking();
-        this.price = ad.getPriceList().getPricePerDay();
+        this.price = 1000.0;
         this.model = ad.getCar().getCarModel().getName();
     }
+
 
 }

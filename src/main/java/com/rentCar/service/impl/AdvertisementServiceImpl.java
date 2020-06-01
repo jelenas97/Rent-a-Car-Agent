@@ -9,6 +9,10 @@ import com.rentCar.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +120,34 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public List<Advertisement> findAll() {
         LocalDate today = LocalDate.now();
-        return this.advertisementRepository.findAll(today);
+        List<Advertisement> ads = this.advertisementRepository.findAll(today);
+        ads = loadImages(ads);
+        return ads;
+    }
+
+    private List<Advertisement> loadImages(List<Advertisement> ads) {
+        for (int i = 0; i < ads.size(); i++) {
+            String rootPath = System.getProperty("user.dir");
+            String resourceFile = rootPath + "\\images\\" + ads.get(i).getCar().getId() + ".txt";
+            ads.get(i).getCar().setImageGallery(new ArrayList<String>());
+
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(resourceFile))) {
+                String line = bufferedReader.readLine();
+                while (line != null) {
+                    ads.get(i).getCar().getImageGallery().add(line);
+                    line = bufferedReader.readLine();
+                }
+            } catch (FileNotFoundException e) {
+                // Exception handling
+            } catch (IOException e) {
+                // Exception handling
+            }
+        }
+        return ads;
+    }
+
+    @Override
+    public void add(Advertisement ad) {
+        this.advertisementRepository.save(ad);
     }
 }
