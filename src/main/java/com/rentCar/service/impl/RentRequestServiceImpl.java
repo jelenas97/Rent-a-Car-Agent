@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RentRequestImpl implements RentRequestService {
+public class RentRequestServiceImpl implements RentRequestService {
 
     @Autowired
     private RentRequestRepository rentRequestRepository;
@@ -70,4 +70,17 @@ public class RentRequestImpl implements RentRequestService {
     public List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate) {
         return this.rentRequestRepository.findPending(id, startDate, endDate);
     }
+
+    @Override
+    public RentRequestDTO cancelRentRequest(long id) {
+
+        RentRequest rr =this.rentRequestRepository.find(id);
+        rr.setRentRequestStatus(RentRequestStatus.CANCELED);
+        this.rentRequestRepository.save(rr);
+        RentRequestDTO rrDTO= new RentRequestDTO(rr);
+
+        return rrDTO;
+    }
+
+
 }

@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -206,5 +207,17 @@ public class RentRequestController {
         }
     }
 
+    @PutMapping("/cancel/{id}")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public ResponseEntity cancelRentRequest(@PathVariable long id){
+
+        System.out.println("CAO");
+        try{
+            RentRequestDTO rrDTO = rentRequestService.cancelRentRequest(id);
+            return  new ResponseEntity(rrDTO, HttpStatus.OK);
+        }catch(Exception e){
+                return new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
 
 }
