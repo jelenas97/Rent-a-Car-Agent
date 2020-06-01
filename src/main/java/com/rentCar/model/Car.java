@@ -36,7 +36,7 @@ public class Car {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public CarClass carClass;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Advertisement advertisement;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public CarBrand carBrand;

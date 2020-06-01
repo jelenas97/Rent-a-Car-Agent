@@ -59,11 +59,13 @@ public class AuthenticationController {
         int expiresIn = tokenUtils.getExpiredIn();
 
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setStatus(user.getStatus().toString());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
+        userDTO.setAddress(user.getAddress());
 
         ArrayList<String> roles = new ArrayList<>();
 

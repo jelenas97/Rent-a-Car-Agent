@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @Controller
@@ -36,7 +37,7 @@ public class CodebookController {
 
 
     @GetMapping(value="/getCodeBookInfo", produces="application/json")
-    //@PreAuthorize("hasRole('ADMIN')"
+    @PermitAll
     public ResponseEntity<?> getCodeBookInfo()
     {
         try {
@@ -44,7 +45,7 @@ public class CodebookController {
             List<String> carClasses = this.carClassService.findAllStringList();
             List<String> fuelTypes = this.fuelTypeService.findAllStringList();
             List<String> transmissionTypes = this.transTypeService.findAllStringList();
-            CodeBookDTO codeBook = new CodeBookDTO(carBrands, carClasses, fuelTypes, transmissionTypes);
+            CodeBookDTO codeBook = new  CodeBookDTO(carBrands,carClasses, fuelTypes,transmissionTypes);
 
             return new ResponseEntity(codeBook, HttpStatus.OK);
 

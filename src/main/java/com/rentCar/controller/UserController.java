@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/user")
 @CrossOrigin("http://localhost:4200")
 public class UserController {
     @Autowired
@@ -48,7 +48,7 @@ public class UserController {
 
 
     @GetMapping("/whoami")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_CLIENT','ROLE_AGENT')")
     public User user(Principal user) {
         return this.userService.findByUsername(user.getName());
     }

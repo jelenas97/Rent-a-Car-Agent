@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface AdvertisementService {
     List<Advertisement> search(SearchDTO dto);
-
     Advertisement find(Long id);
 
     List<Advertisement> findAll();
 
     void add(Advertisement ad);
+
+    List<Advertisement> findAll(Long agentID);
+
 }

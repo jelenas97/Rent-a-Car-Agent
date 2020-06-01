@@ -45,45 +45,40 @@ values ('ROLE_COMPANY');
 insert into authority (name)
 values ('ROLE_ADMIN');
 
-insert into users(type, password, username, email, status)
-values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'petar', 'pera@gmail.com', 'ACTIVE');
-insert into users(type, password, username, email, status)
+insert into users(type, password, username, email, status, first_name, last_name, address)
+values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'petar', 'pera@gmail.com', 'ACTIVE', 'Petar', 'Petrovic', 'Balzakova 15');
+insert into users(type, password, username, email, status, first_name, last_name, address)
 values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'nikola', 'nikola@gmail.com',
-        'ACTIVE');
-insert into users(type, password, username, email, status)
-values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'agent@gmail.com', 'ACTIVE');
-insert into users(type, password, username, email, status)
+        'ACTIVE', 'Nikola', 'Nikolic', 'Balzakova 70');
+insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
+values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'agent@gmail.com', 'ACTIVE', 'Agent', 'Agentski', 'Balzakova 30', '555');
+insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
 values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent2', 'agent2@gmail.com',
-        'ACTIVE');
-insert into users(type, password, username, email, status)
+        'ACTIVE', 'Nenad', 'Nenadovic', 'Balzakova 15', '161');
+insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
 values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent3', 'agent3@gmail.com',
-        'ACTIVE');
-insert into users(type, password, username, email, status)
-values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin', 'admin@gmail.com', 'ACTIVE');
-insert into users(type, password, username, email, status)
+        'ACTIVE', 'Marko', 'Markovic', 'Balzakova 15', '873');
+insert into users(type, password, username, email, status, first_name, last_name, address)
+values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin', 'admin@gmail.com', 'ACTIVE', 'Bojan', 'Bojanic', 'Balzakova 15');
+insert into users(type, password, username, email, status, first_name, last_name, address)
 values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin2', 'admin2@gmail.com',
-        'ACTIVE');
+        'ACTIVE', 'Damir', 'Damirovic', 'Balzakova 45');
 
-INSERT into user_authority
-set user_id      = 1,
-    authority_id = 1;
-INSERT into user_authority
-set user_id      = 2,
-    authority_id = 1;
-INSERT into user_authority
-set user_id      = 3,
-    authority_id = 2;
-INSERT into user_authority
-set user_id      = 4,
-    authority_id = 2;
-INSERT into user_authority
-set user_id      = 6,
-    authority_id = 4;
+insert into user_authority(user_id, authority_id)
+values(1, 1);
+insert into user_authority(user_id, authority_id)
+values(2, 1);
+insert into user_authority(user_id, authority_id)
+values(3, 2);
+insert into user_authority(user_id, authority_id)
+values(4, 2);
+insert into user_authority(user_id, authority_id)
+values(6, 4);
 
-insert into price_list(price_per_day, price_per_km, agent_id)
-values (1000, 20, 3);
-insert into price_list(price_per_day, price_per_km, agent_id)
-values (2000, 50, 3);
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (1000, 20, 100, 3);
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (2000, 50, 200, 3);
 
 
 insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
@@ -105,7 +100,7 @@ values (1, 0, 10000,
         'NOVO', 10.0, 3, 1, 1, 1,
         1);
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 20, 'Novi Sad', 5000, 3, 3, 1, '2020-05-03', '2020-10-03');
+values (0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
 --
 
 insert into car_fuel_type(car_id, fuel_type_id)

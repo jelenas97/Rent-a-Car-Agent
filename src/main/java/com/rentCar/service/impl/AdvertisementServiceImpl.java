@@ -2,10 +2,12 @@ package com.rentCar.service.impl;
 
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
+import com.rentCar.model.CarModel;
 import com.rentCar.model.FuelType;
 import com.rentCar.repository.AdvertisementRepository;
-import com.rentCar.repository.FuelTypeRepository;
 import com.rentCar.service.AdvertisementService;
+import com.rentCar.service.CarModelService;
+import com.rentCar.service.FuelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,87 +28,102 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private AdvertisementRepository advertisementRepository;
 
     @Autowired
-    private FuelTypeRepository fuelTypeRepository;
+    private CarModelService carModelService;
+
+    @Autowired
+    private FuelTypeService fuelTypeService;
 
     @Override
     public List<Advertisement> search(SearchDTO dto) {
         List<Advertisement> ads = this.advertisementRepository.findAdvertisements(dto.getPlace(),dto.getStartDate(),dto.getEndDate());
 
-        FuelType fuelType = this.fuelTypeRepository.findByName(dto.getFuelType());
+        List<Advertisement> takenAds = this.advertisementRepository.findTakenAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
+        List<Advertisement> freeAds = this.advertisementRepository.findFree(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
 
-        List<Predicate<Advertisement> > predicates = new ArrayList<>();
+        System.out.println("Ovo su svi: " + ads);
+        for (Advertisement ad : ads) {
 
-        if(dto.getLimitMileage() != null){
+            System.out.println("SVI: " + ad.getId());
+        }
+        System.out.println("Ovo su zauzeti: " + takenAds);
+        for (Advertisement ad : takenAds) {
+
+            System.out.println("Zauzeti: " + ad.getId());
+        }
+        System.out.println("Ovo su slobodni: " + freeAds);
+        for (Advertisement ad : freeAds) {
+
+            System.out.println("Slobodni: " + ad.getId());
+        }
+
+
+        CarModel carModel = this.carModelService.findOneByName(dto.getCarModel());
+        FuelType fuelType = this.fuelTypeService.findOneByName(dto.getFuelType());
+
+        List<Predicate<Advertisement>> predicates = new ArrayList<>();
+
+        if (dto.getLimitMileage() != null) {
             Predicate<Advertisement> byLimitMileage = ad -> ad.getKilometresLimit() >= dto.getLimitMileage();
             predicates.add(byLimitMileage);
         }
-        if(dto.getDmg() != null){
+        if (dto.getDmg() != null) {
             Predicate<Advertisement> byCwd = ad -> ad.getCdw() == dto.getDmg();
             predicates.add(byCwd);
         }
-        if(dto.getBrand() != null){
+        if (dto.getBrand() != null) {
             Predicate<Advertisement> byBrand = ad -> ad.getCar().getCarBrand().getName().equals(dto.getBrand());
             predicates.add(byBrand);
         }
-        if(dto.getFuelType() != null){
+        if (dto.getFuelType() != null) {
             Predicate<Advertisement> byFuel = ad -> ad.getCar().getFuelType().contains(fuelType);
             predicates.add(byFuel);
         }
-        if(dto.getCarClass() != null){
+        if (dto.getCarClass() != null) {
             Predicate<Advertisement> byClass = ad -> ad.getCar().getCarClass().getName().equals(dto.getCarClass());
             predicates.add(byClass);
         }
-        if(dto.getTransmissionType() != null){
+        if (dto.getTransmissionType() != null) {
             Predicate<Advertisement> byTrans = ad -> ad.getCar().getTransmissionType().getName().equals(dto.getTransmissionType());
             predicates.add(byTrans);
         }
-        if(dto.getSeats() != null){
+        if (dto.getSeats() != null) {
             Predicate<Advertisement> byKidSeats = ad -> ad.getCar().getKidSeats().equals(dto.getSeats());
             predicates.add(byKidSeats);
         }
-        if(dto.getMileage() != null){
+        if (dto.getMileage() != null) {
             Predicate<Advertisement> byMileage = ad -> ad.getCar().getMileage().equals(dto.getMileage());
             predicates.add(byMileage);
         }
-        if(dto.getCarModel() != null){
-            Predicate<Advertisement> byModel = ad -> ad.getCar().getCarBrand().getName().equals(dto.getCarModel());
-            predicates.add(byModel);
-        }
-        if(dto.getMaxPrice() != null){
+        if (dto.getMaxPrice() != null) {
             Predicate<Advertisement> byMaxPrice = ad -> ad.getPriceList().getPricePerDay() <= dto.getMaxPrice();
             predicates.add(byMaxPrice);
         }
-        if(dto.getMinPrice() != null){
+        if (dto.getMinPrice() != null) {
             Predicate<Advertisement> byMinPrice = ad -> ad.getPriceList().getPricePerDay() >= dto.getMinPrice();
             predicates.add(byMinPrice);
         }
 
-        for(Predicate<Advertisement> predicate : predicates){
-            List<Advertisement> result = ads.stream()
+        for (Predicate<Advertisement> predicate : predicates) {
+            List<Advertisement> result = freeAds.stream()
                     .filter(predicate)
                     .collect(Collectors.toList());
-            ads = result;
+            freeAds = result;
         }
 
-
-        List<Advertisement> takenAds = this.advertisementRepository.findTakenAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
+        // List<Advertisement> takenAds = this.advertisementRepository.findTakenAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
 
 
         List<Advertisement> retAds = new ArrayList<>();
-        System.out.println("DTO:" + dto.getStartDate() + dto.getEndDate());
-        for (Advertisement adv : ads) {
-            System.out.println("OGLASI : " + adv.getId());
-        }
-        for (Advertisement adv : takenAds) {
-            System.out.println("ZAUZETI OGLASI : " + adv.getId());
-        }
-        for (Advertisement adv : ads) {
-            if (takenAds.contains(adv)) {
-                System.out.println("Zauzet je oglas:  " + adv.getId());
+        for (Advertisement adv : freeAds) {
+            if (carModel != null) {
+                if (adv.getCar().getCarBrand().getCarModels().contains(carModel)) {
+                    retAds.add(adv);
+                }
             } else {
                 retAds.add(adv);
             }
         }
+
 
         return retAds;
     }
@@ -149,5 +166,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public void add(Advertisement ad) {
         this.advertisementRepository.save(ad);
+    }
+
+    @Override
+    public List<Advertisement> findAll(Long agentID) {
+        LocalDate today = LocalDate.now();
+        return this.advertisementRepository.findAll(today, agentID);
     }
 }

@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column
     private String lastName;
 
+    @Column
+    private String address;
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Advertisement> advertisement;
 
@@ -49,6 +52,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RentRequest> rentRequests;
+
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PriceList> priceLists;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
@@ -146,6 +152,14 @@ public class User implements UserDetails {
         this.rentRequests = rentRequests;
     }
 
+    public Set<PriceList> getPriceLists() {
+        return priceLists;
+    }
+
+    public void setPriceList(Set<PriceList> priceLists) {
+        this.priceLists = priceLists;
+    }
+
     @Override
     public List<Authority> getAuthorities() {
         return authorities;
@@ -177,6 +191,14 @@ public class User implements UserDetails {
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
 

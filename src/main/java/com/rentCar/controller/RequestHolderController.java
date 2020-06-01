@@ -5,6 +5,7 @@ import com.rentCar.service.RequestsHolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class RequestHolderController {
     private RequestsHolderService requestsHolderService;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    //@PreAuthorize("hasRole('AGENT') and hasRole('CLIENT')"
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_AGENT')")
     public ResponseEntity<?> getRequestHolders(@PathVariable Long id) {
         try {
             List<RequestsHolderDTO> holders = this.requestsHolderService.getAllPending(id);

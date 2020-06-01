@@ -29,6 +29,7 @@ public class AdvertisementDTO {
     private Boolean availableTracking;
     private Double price;
     private String model;
+    private Long ownerID;
 
     public AdvertisementDTO(Advertisement ad){
         this.id = ad.getId();
@@ -46,9 +47,9 @@ public class AdvertisementDTO {
         this.discount = ad.getDiscount();
         this.imageGallery = ad.getCar().getImageGallery();
         this.availableTracking = ad.getCar().getAvailableTracking();
-        this.price = 1000.0;
+        this.price = ad.getPriceList().getPricePerDay();
         this.model = ad.getCar().getCarModel().getName();
+        this.ownerID = ad.getOwner().getId();
     }
-
 
 }
