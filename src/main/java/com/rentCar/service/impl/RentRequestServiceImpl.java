@@ -2,7 +2,11 @@ package com.rentCar.service.impl;
 
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.enumerations.RentRequestStatus;
+import com.rentCar.model.Comment;
+import com.rentCar.model.Rate;
 import com.rentCar.model.RentRequest;
+import com.rentCar.repository.CommentRepository;
+import com.rentCar.repository.RateRepository;
 import com.rentCar.repository.RentRequestRepository;
 import com.rentCar.service.RentRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,12 @@ public class RentRequestServiceImpl implements RentRequestService {
     @Autowired
     private RentRequestRepository rentRequestRepository;
 
+    @Autowired
+    private RateRepository rateRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
     @Override
     public List<RentRequestDTO> getHistoryRentRequests(long id) {
 
@@ -25,11 +35,15 @@ public class RentRequestServiceImpl implements RentRequestService {
 
         LocalDateTime dateTime = LocalDateTime.now();
         RentRequestStatus status = RentRequestStatus.PAID;
-        List<RentRequest> historyListR = rentRequestRepository.findBySenderIdAndRentRequestStatusAndEndDateTimeGreaterThanEqual(id, status, dateTime);
+        List<RentRequest> historyListR = rentRequestRepository.findBySenderIdAndRentRequestStatusAndEndDateTimeLessThanEqual(id, status, dateTime);
+
+        List<Rate> rates =rateRepository.findByClientId(id);
+        List<Comment> comments = commentRepository.findByUserId(id);
 
         System.out.println(historyListR);
         for (RentRequest rr : historyListR) {
-            historyList.add(new RentRequestDTO(rr));
+
+            historyList.add(new RentRequestDTO(rr, rates, comments));
         }
 
         System.out.println(historyList);
