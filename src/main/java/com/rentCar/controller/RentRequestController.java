@@ -211,7 +211,6 @@ public class RentRequestController {
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
     public ResponseEntity cancelRentRequest(@PathVariable long id){
 
-        System.out.println("CAO");
         try{
             RentRequestDTO rrDTO = rentRequestService.cancelRentRequest(id);
             return  new ResponseEntity(rrDTO, HttpStatus.OK);
