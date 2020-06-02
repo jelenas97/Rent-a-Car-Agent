@@ -12,4 +12,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "select c from Comment c where c.status = 'UNPROCESSED'")
     List<Comment> findUnprocessed();
+    Comment findById(long id);
+    List<Comment> findByUserId(long id);
 }
