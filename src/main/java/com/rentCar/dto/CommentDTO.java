@@ -14,8 +14,10 @@ public class CommentDTO {
     private LocalDate date;
     private String content;
     private String status;
-    public Long advertisement_id;
-    public Long client_id;
+    private Long advertisement_id;
+    private Long client_id;
+    private Long rent_request_id;
+
 
     public CommentDTO(Comment comment){
         this.id = comment.getId();
@@ -24,5 +26,6 @@ public class CommentDTO {
         this.status = comment.getStatus().toString();
         this.advertisement_id = comment.getAdvertisement().getId();
         this.client_id = comment.getUser().getId();
+        this.rent_request_id= comment.getRentRequest().getId();
     }
 }
