@@ -18,11 +18,13 @@ public class CodeBookModelDTO {
     private List<CarClass> carClasses;
     private List<FuelType> fuelTypes;
     private List<TransmissionType> transmissionTypes;
+    private List<PricelistDTO> priceLists;
 
-    public CodeBookModelDTO(List<CarBrand> carBrands, List<CarClass> carClasses, List<FuelType> fuelTypes, List<TransmissionType> transmissionTypes) {
+    public CodeBookModelDTO(List<CarBrand> carBrands, List<CarClass> carClasses, List<FuelType> fuelTypes, List<TransmissionType> transmissionTypes, List<PricelistDTO> priceLists) {
         this.carBrands = carBrands;
         this.carClasses = carClasses;
         this.fuelTypes = fuelTypes;
         this.transmissionTypes = transmissionTypes;
+        this.priceLists = priceLists;
     }
 }

@@ -38,4 +38,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     @Query(value = "select a from Advertisement a where a.endDate >= ?1 and a.owner.id = ?2 ")
     List<Advertisement> findAll(LocalDate today, Long agentID);
 
+    @Query(value = "select count(a) from Advertisement a where a.owner.id = ?1 ")
+    int findAllCount(Long id);
 }

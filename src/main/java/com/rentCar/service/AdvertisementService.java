@@ -15,4 +15,5 @@ public interface AdvertisementService {
 
     List<Advertisement> findAll(Long agentID);
 
+    int findAllCount(Long id);
 }

@@ -173,4 +173,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         LocalDate today = LocalDate.now();
         return this.advertisementRepository.findAll(today, agentID);
     }
+
+    @Override
+    public int findAllCount(Long id) {
+        return this.advertisementRepository.findAllCount(id);
+    }
 }
