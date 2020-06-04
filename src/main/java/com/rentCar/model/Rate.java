@@ -17,11 +17,14 @@ public class Rate {
     private Long id;
 
     @Column
-    private Integer value;
+    private Long value;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Client client;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Advertisement advertisement;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public RentRequest rentRequest;
 }

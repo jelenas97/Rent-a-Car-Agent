@@ -32,4 +32,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public User user;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    RentRequest rentRequest;
 }

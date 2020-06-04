@@ -37,6 +37,12 @@ public class RentRequest {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private RequestsHolder requests;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Rate rate;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Comment comment;
+
     //new RentRequest with pending status
     public RentRequest(RentRequestDTO requestDTO, User sender, Advertisement advertisement, RequestsHolder holder) {
         this.startDateTime = requestDTO.getStartDateTime();
