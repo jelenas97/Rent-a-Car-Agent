@@ -1,15 +1,11 @@
 package com.rentCar.service.impl;
 
-import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarClass;
-import com.rentCar.repository.CarBrandRepository;
 import com.rentCar.repository.CarClassRepository;
-import com.rentCar.service.CarBrandService;
 import com.rentCar.service.CarClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -53,5 +49,10 @@ public class CarClassServiceImpl implements CarClassService {
         CarClass carClass = this.carClassRepository.findByName(name);
         carClass.setActive(true);
         this.carClassRepository.save(carClass);
+    }
+
+    @Override
+    public List<CarClass> findAll() {
+        return carClassRepository.getActiveCarClasses();
     }
 }

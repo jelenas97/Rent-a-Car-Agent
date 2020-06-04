@@ -48,4 +48,5 @@ public class PricelistServiceImpl implements PricelistService {
         }
         return dtoList;
     }
+
 }

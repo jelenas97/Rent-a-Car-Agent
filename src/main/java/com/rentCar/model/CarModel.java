@@ -1,5 +1,6 @@
 package com.rentCar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,9 +24,11 @@ public class CarModel {
     @Column
     private Boolean active = true;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public CarBrand carBrand;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "carModel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Car> car;
 

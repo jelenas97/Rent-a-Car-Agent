@@ -1,6 +1,5 @@
 package com.rentCar.service;
 
-import com.rentCar.model.CarBrand;
 import com.rentCar.model.CarClass;
 
 import java.util.List;
@@ -13,4 +12,5 @@ public interface CarClassService {
     void delete(String name);
     void setActive(String name);
 
+    List<CarClass> findAll();
 }
