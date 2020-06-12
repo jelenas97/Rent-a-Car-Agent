@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 @Service
 public class FuelTypeServiceImpl implements FuelTypeService {
 
@@ -18,12 +18,10 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     public FuelType findOne(Long id) {
         return fuelTypeRepository.findById(id).orElse(null);
     }
+
     @Override
-    public List<String> findAllStringList()
-    {
-        return fuelTypeRepository.getActiveFuelTypes().stream()
-                .map( Object::toString )
-                .collect( Collectors.toList());
+    public List<FuelType> findAll() {
+        return fuelTypeRepository.findAll();
     }
 
     @Override
@@ -37,8 +35,7 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     }
 
     @Override
-    public void delete(String name) {
-        FuelType fuelType = this.fuelTypeRepository.findByName(name);
+    public void delete(FuelType fuelType) {
         fuelType.setActive(false);
         this.fuelTypeRepository.save(fuelType);
 
@@ -52,7 +49,7 @@ public class FuelTypeServiceImpl implements FuelTypeService {
     }
 
     @Override
-    public List<FuelType> findAll() {
-        return this.fuelTypeRepository.getActiveFuelTypes();
+    public List<FuelType> findAllActive() {
+        return fuelTypeRepository.getActiveFuelTypes();
     }
 }

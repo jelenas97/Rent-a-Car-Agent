@@ -11,12 +11,14 @@ public interface CarBrandService {
 
     List<String> findAllStringList();
 
+    List<CarBrand> findAllActive();
+
     List<CarBrand> findAll();
 
     void save(String name);
 
-    void delete(String name);
-
     void setActive(String name);
+
+    void delete(CarBrand carBrand);
 
 }

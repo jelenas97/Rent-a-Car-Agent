@@ -5,9 +5,10 @@ import com.rentCar.service.CarClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequestMapping(value = "class")
@@ -17,8 +18,8 @@ public class CarClassController {
     private CarClassService carClassService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity newClass(@RequestBody String name) {
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<?> newClass(@RequestBody String name) {
 
         try {
             CarClass carClass = this.carClassService.findOneByName(name);
@@ -27,26 +28,26 @@ public class CarClassController {
             } else {
                 this.carClassService.save(name);
             }
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping(value = "/{name}")
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity deleteClass(@PathVariable String name) {
+    @DeleteMapping(value = "/{id}")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<?> deleteClass(@PathVariable String id) {
 
         try {
-            CarClass carClass = this.carClassService.findOneByName(name);
+            CarClass carClass = this.carClassService.findOne(Long.parseLong(id));
             if (carClass != null) {
-                this.carClassService.delete(name);
+                this.carClassService.delete(carClass);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

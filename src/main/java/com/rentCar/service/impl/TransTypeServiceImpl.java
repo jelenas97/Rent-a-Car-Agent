@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 @Service
 public class TransTypeServiceImpl implements TransmissionTypeService {
@@ -17,15 +18,17 @@ public class TransTypeServiceImpl implements TransmissionTypeService {
     @Override
     public TransmissionType findOne(Long id) {
         return transmissionTypeRepository.findById(id).orElse(null);
-}
+    }
+
 
     @Override
-    public List<String> findAllStringList()
-    {
-        List<String> stringList = transmissionTypeRepository.getActiveTransTypes().stream()
-                .map( Object::toString )
-                .collect( Collectors.toList() );
-        return stringList;
+    public List<TransmissionType> findAll() {
+        return transmissionTypeRepository.findAll();
+    }
+
+    @Override
+    public List<TransmissionType> findAllActive() {
+        return transmissionTypeRepository.getActiveTransTypes();
     }
 
     @Override
@@ -39,8 +42,7 @@ public class TransTypeServiceImpl implements TransmissionTypeService {
     }
 
     @Override
-    public void delete(String name) {
-        TransmissionType transmissionType = this.transmissionTypeRepository.findByName(name);
+    public void delete(TransmissionType transmissionType) {
         transmissionType.setActive(false);
         this.transmissionTypeRepository.save(transmissionType);
 
@@ -53,8 +55,4 @@ public class TransTypeServiceImpl implements TransmissionTypeService {
         this.transmissionTypeRepository.save(transmissionType);
     }
 
-    @Override
-    public List<TransmissionType> findAll() {
-        return this.transmissionTypeRepository.getActiveTransTypes();
-    }
 }

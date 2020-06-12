@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CarBrandServiceImpl implements CarBrandService {
@@ -25,17 +24,17 @@ public class CarBrandServiceImpl implements CarBrandService {
         return carBrandRepository.findByName(name);
     }
 
-    @Override
-    public List<String> findAllStringList() {
-        return carBrandRepository.getActiveCarBrands().stream()
-                .map(Object::toString)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<CarBrand> findAll() {
+        return carBrandRepository.findAll();
+    }
+
+    @Override
+    public List<CarBrand> findAllActive() {
         return carBrandRepository.getActiveCarBrands();
     }
+
 
     @Override
     public void save(String name) {
@@ -43,8 +42,7 @@ public class CarBrandServiceImpl implements CarBrandService {
     }
 
     @Override
-    public void delete(String name) {
-        CarBrand carBrand = this.carBrandRepository.findByName(name);
+    public void delete(CarBrand carBrand) {
         carBrand.setActive(false);
         this.carBrandRepository.save(carBrand);
     }
