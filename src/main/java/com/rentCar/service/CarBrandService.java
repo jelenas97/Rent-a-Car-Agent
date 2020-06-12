@@ -9,8 +9,6 @@ public interface CarBrandService {
 
     CarBrand findOneByName(String name);
 
-    List<String> findAllStringList();
-
     List<CarBrand> findAllActive();
 
     List<CarBrand> findAll();
