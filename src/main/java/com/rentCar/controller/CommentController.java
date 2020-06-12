@@ -7,13 +7,14 @@ import com.rentCar.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "comments")
+@RequestMapping(value = "comment")
 @CrossOrigin("http://localhost:4200")
 public class CommentController {
     @Autowired
@@ -44,5 +45,18 @@ public class CommentController {
         } catch (NullPointerException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public ResponseEntity<?> newModel(@RequestBody CommentDTO dto) {
+
+       try {
+           long id = this.commentService.addComment(dto);
+           return new ResponseEntity(id, HttpStatus.CREATED);
+       } catch (Exception e) {
+           System.out.println(e);
+           return new ResponseEntity(HttpStatus.CONFLICT);
+       }
     }
 }

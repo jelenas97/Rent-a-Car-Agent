@@ -52,4 +52,5 @@ public class CarClassServiceImpl implements CarClassService {
     public List<CarClass> findAllActive() {
         return carClassRepository.getActiveCarClasses();
     }
+
 }

@@ -9,9 +9,11 @@ public interface CarBrandService {
 
     CarBrand findOneByName(String name);
 
-    List<CarBrand> findAll();
+    List<String> findAllStringList();
 
     List<CarBrand> findAllActive();
+
+    List<CarBrand> findAll();
 
     void save(String name);
 

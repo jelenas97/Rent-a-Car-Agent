@@ -17,4 +17,6 @@ public interface RentRequestService {
     void changeStatus(Long id, String status);
 
     List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate);
+
+    RentRequestDTO cancelRentRequest(long id);
 }

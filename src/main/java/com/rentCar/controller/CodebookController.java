@@ -7,6 +7,12 @@ import com.rentCar.model.CarClass;
 import com.rentCar.model.FuelType;
 import com.rentCar.model.TransmissionType;
 import com.rentCar.dto.CodeBookDTO;
+import com.rentCar.dto.CodeBookModelDTO;
+import com.rentCar.dto.PricelistDTO;
+import com.rentCar.model.CarBrand;
+import com.rentCar.model.CarClass;
+import com.rentCar.model.FuelType;
+import com.rentCar.model.TransmissionType;
 import com.rentCar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +21,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -35,6 +42,8 @@ public class CodebookController {
     private FuelTypeService fuelTypeService;
     @Autowired
     private TransmissionTypeService transTypeService;
+    @Autowired
+    private PricelistService priceListService;
 
 
     @GetMapping(value = "/getCodeBookInfo", produces = "application/json")
@@ -65,9 +74,27 @@ public class CodebookController {
 
             return new ResponseEntity<>(codeBook, HttpStatus.OK);
 
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
+
+    @GetMapping(value = "/getCodeBookInfoModel/{id}", produces = "application/json")
+    //@PreAuthorize("hasRole('ADMIN')"
+    public ResponseEntity<?> getCodeBookInfoModel(@PathVariable Long id) {
+        try {
+            List<CarBrand> carBrands = this.carBrandService.findAll();
+            List<CarClass> carClasses = this.carClassService.findAll();
+            List<FuelType> fuelTypes = this.fuelTypeService.findAll();
+            List<TransmissionType> transmissionTypes = this.transTypeService.findAll();
+            List<PricelistDTO> priceLists = this.priceListService.getCreatorsPricelists(id);
+            CodeBookModelDTO codeBook = new CodeBookModelDTO(carBrands, carClasses, fuelTypes, transmissionTypes, priceLists);
+
+            return new ResponseEntity(codeBook, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

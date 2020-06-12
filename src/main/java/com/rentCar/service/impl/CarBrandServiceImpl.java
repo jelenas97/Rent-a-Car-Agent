@@ -35,6 +35,7 @@ public class CarBrandServiceImpl implements CarBrandService {
         return carBrandRepository.getActiveCarBrands();
     }
 
+
     @Override
     public void save(String name) {
         this.carBrandRepository.save(new CarBrand(name));
