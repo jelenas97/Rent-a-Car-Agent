@@ -9,5 +9,6 @@ public interface CommentService {
     List<CommentDTO> findUnprocessed();
     void changeStatus(CommentDTO comment);
     Long addComment(CommentDTO dto);
+    List<CommentDTO> findProcessedAdvertisementComments(long id);
 
 }

@@ -40,7 +40,6 @@ public class CommentServiceImpl implements CommentService {
         for(Comment com : comments){
             commentDTOS.add(new CommentDTO(com));
         }
-
         return commentDTOS;
     }
 
@@ -69,4 +68,17 @@ public class CommentServiceImpl implements CommentService {
 
         return c.getId();
     }
+
+    @Override
+    public List<CommentDTO> findProcessedAdvertisementComments(long id) {
+
+        List<Comment> comments = this.commentRepository.findByAdvertisementCarIdAndStatus(id, ApproveStatus.APPROVED);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for(Comment com : comments){
+            commentDTOS.add(new CommentDTO(com));
+        }
+        
+        return commentDTOS;
+    }
+
 }
