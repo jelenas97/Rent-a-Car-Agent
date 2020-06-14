@@ -22,7 +22,7 @@ public class RequestsHolderDTO {
         this.bundle = requestsHolder.getBundle();
         this.rentRequests = new HashSet<>();
         for (RentRequest req : requestsHolder.getRentRequests()) {
-            this.rentRequests.add(new RentRequestDTO(req));
+            this.rentRequests.add(new RentRequestDTO(req, 0));
         }
     }
 
