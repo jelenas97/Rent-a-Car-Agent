@@ -21,12 +21,11 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping(produces="application/json")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getUnComments(){
 
         try {
             List<CommentDTO> users = this.commentService.findUnprocessed();
-
             return new ResponseEntity(users, HttpStatus.OK);
 
         }catch(NullPointerException e){
@@ -58,5 +57,19 @@ public class CommentController {
            System.out.println(e);
            return new ResponseEntity(HttpStatus.CONFLICT);
        }
+    }
+
+    @GetMapping(value="/{id}", produces="application/json")
+    @PreAuthorize("hasAuthority('ROLE_CLIENT','ROLE_AGENT')")
+    public ResponseEntity<?> getProcessedAdvertisementComments(@PathVariable Long id){
+
+        try {
+            List<CommentDTO> comments = this.commentService.findProcessedAdvertisementComments(id);
+
+            return new ResponseEntity(comments, HttpStatus.OK);
+
+        }catch(NullPointerException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error while loading comments");
+        }
     }
 }
