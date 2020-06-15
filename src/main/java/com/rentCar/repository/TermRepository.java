@@ -15,4 +15,8 @@ public interface TermRepository extends JpaRepository<Term, Long> {
             "or t.advertisement.id = ?1 and t.canceled=false and t.startDate <= ?3 and t.endDate >= ?3 " +
             "or t.advertisement.id = ?1 and t.canceled=false and t.startDate >= ?2 and t.endDate <= ?3")
     List<Term> findTakenTerm(Long id, LocalDate startDate, LocalDate endDate);
+
+
+    @Query(value = "SELECT t FROM Term t inner join t.advertisement adv where adv.owner= ?1 ")
+    List<Term> getAllRentedByAgentId(Long id);
 }

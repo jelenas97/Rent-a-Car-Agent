@@ -38,5 +38,10 @@ public class TermServiceImpl implements TermService {
 
     }
 
+    @Override
+    public List<Term> getAllRentedFromCurrentAgent(Long id) {
+        return termRepository.getAllRentedByAgentId(id);
+    }
+
 
 }

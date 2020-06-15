@@ -124,7 +124,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             }
         }
 
-
+        retAds = loadImages(retAds);
         return retAds;
     }
 
