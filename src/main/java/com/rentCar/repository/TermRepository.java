@@ -17,6 +17,6 @@ public interface TermRepository extends JpaRepository<Term, Long> {
     List<Term> findTakenTerm(Long id, LocalDate startDate, LocalDate endDate);
 
 
-    @Query(value = "SELECT t FROM Term t inner join t.advertisement adv where adv.owner= ?1 ")
+    @Query(value = "SELECT term from Term term inner join Advertisement adv ON term.advertisement = adv where adv.owner.id = ?1")
     List<Term> getAllRentedByAgentId(Long id);
 }
