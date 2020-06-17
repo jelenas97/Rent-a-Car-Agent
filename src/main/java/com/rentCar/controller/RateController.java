@@ -34,7 +34,7 @@ public class RateController {
     }
 
     @GetMapping(value="/{id}", produces="application/json")
-    @PreAuthorize("hasAuthority('ROLE_CLIENT', 'ROLE_AGENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT', 'ROLE_AGENT')")
     public ResponseEntity<?> getAverageAdvertisementRate(@PathVariable Long id){
 
         try {
