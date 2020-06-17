@@ -1,5 +1,6 @@
 package com.rentCar.repository;
 
+import com.rentCar.enumerations.ApproveStatus;
 import com.rentCar.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findUnprocessed();
     Comment findById(long id);
     List<Comment> findByUserId(long id);
+    List<Comment> findByAdvertisementCarIdAndStatus(long id , ApproveStatus a);
 }

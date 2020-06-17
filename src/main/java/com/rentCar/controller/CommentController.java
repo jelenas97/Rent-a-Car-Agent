@@ -21,12 +21,11 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping(produces="application/json")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getUnComments(){
 
         try {
             List<CommentDTO> users = this.commentService.findUnprocessed();
-
             return new ResponseEntity(users, HttpStatus.OK);
 
         }catch(NullPointerException e){
@@ -49,7 +48,7 @@ public class CommentController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public ResponseEntity<?> newModel(@RequestBody CommentDTO dto) {
+    public ResponseEntity<?> addComment(@RequestBody CommentDTO dto) {
 
        try {
            long id = this.commentService.addComment(dto);
@@ -58,5 +57,32 @@ public class CommentController {
            System.out.println(e);
            return new ResponseEntity(HttpStatus.CONFLICT);
        }
+    }
+
+    @PostMapping(value="/owner", produces = "application/json", consumes = "application/json")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_AGENT')")
+    public ResponseEntity<?> addCommentOwner(@RequestBody CommentDTO dto) {
+
+        try {
+            long id = this.commentService.addCommentOwner(dto);
+            return new ResponseEntity(id, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(value="/{id}", produces="application/json")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_AGENT')")
+    public ResponseEntity<?> getProcessedAdvertisementComments(@PathVariable Long id){
+
+        try {
+            List<CommentDTO> comments = this.commentService.findProcessedAdvertisementComments(id);
+
+            return new ResponseEntity(comments, HttpStatus.OK);
+
+        }catch(NullPointerException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error while loading comments");
+        }
     }
 }

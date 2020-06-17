@@ -24,6 +24,8 @@ public class CarDTO {
     private List<String> imageGallery;
     private Boolean availableTracking;
     private String carModel;
+    private Long advertisementId;
+    private Long ownerId;
 
     public CarDTO(Car car) {
         this.id = car.getId();
@@ -36,5 +38,7 @@ public class CarDTO {
         this.imageGallery = car.getImageGallery();
         this.availableTracking = car.getAvailableTracking();
         this.carModel = car.getCarModel().getName();
+        this.advertisementId= car.getAdvertisement().getId();
+        this.ownerId=car.getAdvertisement().getOwner().getId();
     }
 }

@@ -40,7 +40,6 @@ public class CommentServiceImpl implements CommentService {
         for(Comment com : comments){
             commentDTOS.add(new CommentDTO(com));
         }
-
         return commentDTOS;
     }
 
@@ -60,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setAdvertisement(ad);
         comment.setContent(dto.getContent());
         comment.setDate(dto.getDate());
-        User user = this.userRepository.findOneById(dto.getClient_id());
+        User user = this.userRepository.findOneById(dto.getCommenter_id());
         comment.setUser(user);
         RentRequest rr = this.rentRequestRepository.find(dto.getRent_request_id());
         comment.setRentRequest(rr);
@@ -69,4 +68,34 @@ public class CommentServiceImpl implements CommentService {
 
         return c.getId();
     }
+
+    @Override
+    public Long addCommentOwner(CommentDTO dto) {
+
+        Comment comment = new Comment();
+        comment.setStatus(ApproveStatus.APPROVED);
+        Advertisement ad = advertisementRepository.find( dto.getAdvertisement_id());
+        comment.setAdvertisement(ad);
+        comment.setContent(dto.getContent());
+        comment.setDate(dto.getDate());
+        User user = this.userRepository.findOneById(dto.getCommenter_id());
+        comment.setUser(user);
+
+        Comment c =this.commentRepository.save(comment);
+
+        return c.getId();
+    }
+
+    @Override
+    public List<CommentDTO> findProcessedAdvertisementComments(long id) {
+
+        List<Comment> comments = this.commentRepository.findByAdvertisementCarIdAndStatus(id, ApproveStatus.APPROVED);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for(Comment com : comments){
+            commentDTOS.add(new CommentDTO(com ,0));
+        }
+        
+        return commentDTOS;
+    }
+
 }
