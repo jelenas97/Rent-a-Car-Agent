@@ -79,7 +79,10 @@ insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (1000, 20, 100, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (2000, 50, 200, 3);
-
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (1500, 30, 200,1);
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (1200, 25, 0 ,1);
 
 insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
@@ -89,25 +92,20 @@ values (1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-10-03');
 
 insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
-values (1, 0, 10000, 'Batmobile', 10.0, 2, 2, 2, 2,
-        2);
+values (1, 0, 10000, 'Batmobile', 10.0, 2, 2, 2, 2, 2);
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
 values (0, 10, 'Novi Sad', 5000, 2, 4, 2, '2020-05-03', '2020-10-03');
 --
 insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
-values (1, 0, 10000,
-        'NOVO', 10.0, 3, 1, 1, 1,
-        1);
+values (1, 0, 10000, 'NOVO', 10.0, 3, 1, 1, 1, 1);
 insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
+values (0, 20, 'Novi Sad', 5000, 3, 2, 4, '2020-05-03', '2020-10-03');
 --
 
-insert into car_fuel_type(car_id, fuel_type_id)
-values (1, 3);
+insert into car_fuel_type(car_id, fuel_type_id) values (1, 3);
 insert into car_fuel_type(car_id, fuel_type_id) values (2,3);
-insert into car_fuel_type(car_id, fuel_type_id)
-values (3, 3);
+insert into car_fuel_type(car_id, fuel_type_id) values (3, 3);
 
 insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Really good car!','2020-06-13',3,3,1,'APPROVED');
 #insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Awesome car!','2020-05-04',1, ,1,'UNPROCESSED');
