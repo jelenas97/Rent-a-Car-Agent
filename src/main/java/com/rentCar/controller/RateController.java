@@ -22,7 +22,7 @@ public class RateController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public ResponseEntity<?> newModel(@RequestBody RateDTO dto) {
+    public ResponseEntity<?> rateAdvertisement(@RequestBody RateDTO dto) {
 
         try {
             long id = this.rateService.rateAdvertisement(dto);
