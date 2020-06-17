@@ -48,7 +48,7 @@ public class CommentController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public ResponseEntity<?> newModel(@RequestBody CommentDTO dto) {
+    public ResponseEntity<?> addComment(@RequestBody CommentDTO dto) {
 
        try {
            long id = this.commentService.addComment(dto);
@@ -59,8 +59,21 @@ public class CommentController {
        }
     }
 
+    @PostMapping(value="/owner", produces = "application/json", consumes = "application/json")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_AGENT')")
+    public ResponseEntity<?> addCommentOwner(@RequestBody CommentDTO dto) {
+
+        try {
+            long id = this.commentService.addCommentOwner(dto);
+            return new ResponseEntity(id, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+    }
+
     @GetMapping(value="/{id}", produces="application/json")
-    @PreAuthorize("hasAuthority('ROLE_CLIENT','ROLE_AGENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_AGENT')")
     public ResponseEntity<?> getProcessedAdvertisementComments(@PathVariable Long id){
 
         try {
