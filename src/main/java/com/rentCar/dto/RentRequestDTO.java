@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -28,6 +26,7 @@ public class RentRequestDTO {
     private Long senderId;
     private boolean rated;
     private boolean commented;
+    private AdvertisementDTO advertisementDTO;
 
     public RentRequestDTO(RentRequest rr) {
 
@@ -61,26 +60,26 @@ public class RentRequestDTO {
         this.advertisementId = rr.getAdvertisement().getId();
         this.senderId = rr.getSender().getId();
 
-        this.rated=true;
-        for(Rate r : rates){
-            if(r.getRentRequest()!=null){
-                if(r.getRentRequest().getId()==rr.getId()){
-                        this.rated=false;
-                        break;
-                    }
-                this.rated=true;
+        this.rated = true;
+        for (Rate r : rates) {
+            if (r.getRentRequest() != null) {
+                if (r.getRentRequest().getId() == rr.getId()) {
+                    this.rated = false;
+                    break;
+                }
+                this.rated = true;
             }
 
         }
 
-        this.commented=true;
-        for(Comment c : comments){
-            if(c.getRentRequest()!=null){
-                if(c.getRentRequest().getId()==rr.getId()){
-                    this.commented=false;
+        this.commented = true;
+        for (Comment c : comments) {
+            if (c.getRentRequest() != null) {
+                if (c.getRentRequest().getId() == rr.getId()) {
+                    this.commented = false;
                     break;
                 }
-                this.commented=true;
+                this.commented = true;
             }
 
         }
