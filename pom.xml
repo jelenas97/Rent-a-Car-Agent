@@ -13,6 +13,7 @@
     <groupId>com.rentCar</groupId>
     <artifactId>RentCar</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>agent-web-service</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -70,13 +71,52 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-support</artifactId>
+            <version>2.1.4.RELEASE</version>
+        </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.14.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>com.rentCar.RentCar.wsdl</generatePackage>
+                    <schemas>
+                        <schema>
+                            <url>http://localhost:8084/ws/schema1.wsdl</url>
+                        </schema>
+                    </schemas>
+                </configuration>
             </plugin>
         </plugins>
     </build>

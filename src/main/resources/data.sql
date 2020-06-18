@@ -73,7 +73,7 @@ values(3, 2);
 insert into user_authority(user_id, authority_id)
 values(4, 2);
 insert into user_authority(user_id, authority_id)
-values(6, 4);
+values (6, 4);
 
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (1000, 20, 100, 3);
@@ -84,23 +84,29 @@ values (1500, 30, 200,1);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (1200, 25, 0 ,1);
 
-insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
+insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
-values (1, 2, 1000, 'Sián', 5.0, 1, 1, 1, 3, 1);
-insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-10-03');
+values (1, 1, 2, 1000, 'Sián', 5.0, 1, 1, 3, 1);
+insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
+                          end_date)
+values (1, 1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-10-03');
 
-insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
+insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
-values (1, 0, 10000, 'Batmobile', 10.0, 2, 2, 2, 2, 2);
-insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 10, 'Novi Sad', 5000, 2, 4, 2, '2020-05-03', '2020-10-03');
+values (2, 1, 0, 10000, 'Batmobile', 10.0, 2, 2, 2,
+        2);
+insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
+                          end_date)
+values (2, 0, 10, 'Novi Sad', 5000, 2, 4, 2, '2020-05-03', '2020-10-03');
 --
-insert into car(available_tracking, kid_seats, mileage, name, rate, advertisement_id, car_brand_id, car_class_id,
+insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
-values (1, 0, 10000, 'NOVO', 10.0, 3, 1, 1, 1, 1);
-insert into advertisement(cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date, end_date)
-values (0, 20, 'Novi Sad', 5000, 3, 2, 4, '2020-05-03', '2020-10-03');
+values (3, 1, 0, 10000,
+        'NOVO', 10.0, 1, 1, 1,
+        1);
+insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
+                          end_date)
+values (3, 0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
 --
 
 insert into car_fuel_type(car_id, fuel_type_id) values (1, 3);

@@ -18,6 +18,11 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    public Advertisement advertisement;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    public CarBrand carBrand;
+
     @Column
     private String name;
 
@@ -35,11 +40,8 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public CarClass carClass;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Advertisement advertisement;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    public CarBrand carBrand;
+    @Column
+    private Long microId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public CarModel carModel;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

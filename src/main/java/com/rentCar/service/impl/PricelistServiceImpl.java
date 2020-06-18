@@ -49,4 +49,9 @@ public class PricelistServiceImpl implements PricelistService {
         return dtoList;
     }
 
+    @Override
+    public PriceList findById(Long id) {
+        return this.priceListRepository.findById(id).orElse(null);
+    }
+
 }
