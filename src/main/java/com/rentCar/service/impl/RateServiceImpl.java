@@ -45,7 +45,7 @@ public class RateServiceImpl implements RateService {
     @Override
     public List<RateDTO> findAverageAdvRate(long id){
 
-        List<Rate> rates = this.rateRepository.findByAdvertisementCarId(id);
+        List<Rate> rates = this.rateRepository.findByAdvertisementId(id);
         List<RateDTO> rateDTOS = new ArrayList<>();
         long i=0;
         long sum=0;
