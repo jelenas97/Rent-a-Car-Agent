@@ -38,7 +38,7 @@ public class CarDTO {
         this.imageGallery = car.getImageGallery();
         this.availableTracking = car.getAvailableTracking();
         this.carModel = car.getCarModel().getName();
-        this.advertisementId= car.getAdvertisement().getId();
-        this.ownerId=car.getAdvertisement().getOwner().getId();
+//        this.advertisementId= car.getAdvertisement().getId();
+//        this.ownerId=car.getAdvertisement().getOwner().getId();
     }
 }
