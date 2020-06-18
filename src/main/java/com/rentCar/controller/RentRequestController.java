@@ -12,7 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.ValidationException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -91,6 +90,18 @@ public class RentRequestController {
 
         try {
             return new ResponseEntity<>(rentRequestService.getCancelableRentRequests(Long.parseLong(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/user/{id}/reserved", produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasAuthority('ROLE_CLIENT')")
+    public ResponseEntity<List<RentRequestDTO>> getRentRequestsReserved(@PathVariable String id) {
+
+        try {
+            return new ResponseEntity<>(rentRequestService.getRentRequestReserved(Long.parseLong(id)), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

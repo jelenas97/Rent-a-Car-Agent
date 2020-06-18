@@ -20,6 +20,9 @@ public class Advertisement {
     private Long id;
 
     @Column
+    private Long microId;
+
+    @Column
     private Integer kilometresLimit;
 
     @Column

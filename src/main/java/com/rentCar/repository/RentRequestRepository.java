@@ -8,12 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface RentRequestRepository extends JpaRepository<RentRequest, Long> {
 
     List<RentRequest> findBySenderIdAndRentRequestStatusAndEndDateTimeLessThanEqual(long id, RentRequestStatus status, LocalDateTime dateTime);
+
     List<RentRequest> findBySenderIdAndRentRequestStatusIn(long id, List<RentRequestStatus> statuses);
 
     @Query(value = "select a from RentRequest a where a.id = ?1")
@@ -23,4 +25,10 @@ public interface RentRequestRepository extends JpaRepository<RentRequest, Long> 
             "or t.rentRequestStatus='PENDING' and t.advertisement.id = ?1 and t.startDateTime <= ?3 and t.endDateTime >= ?3 " +
             "or t.rentRequestStatus='PENDING' and t.advertisement.id = ?1 and t.startDateTime >= ?2 and t.endDateTime <= ?3")
     List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate);
+
+    @Query(value = "select t from RentRequest t where t.sender.id = ?1 and t.rentRequestStatus='RESERVED'")
+    List<RentRequest> findBySenderIdAndStatus(long id);
+
+    @Query(value = "select t from RentRequest t where t.advertisement.owner.id = ?1 and t.rentRequestStatus='RESERVED'")
+    Collection<? extends RentRequest> findByOwnerIdAndStatus(long id);
 }

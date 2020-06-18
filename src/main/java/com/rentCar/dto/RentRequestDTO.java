@@ -26,9 +26,10 @@ public class RentRequestDTO {
     private Long senderId;
     private boolean rated;
     private boolean commented;
+    private int numberOfUnseen;
     private AdvertisementDTO advertisementDTO;
 
-    public RentRequestDTO(RentRequest rr) {
+    public RentRequestDTO(RentRequest rr, int numberOfUnseen) {
 
         this.id = rr.getId();
         String[] dateTime = rr.getStartDateTime().toString().split("T");
@@ -42,6 +43,7 @@ public class RentRequestDTO {
         this.cars = rr.getAdvertisement().getCar().getCarClass().toString();
         this.advertisementId = rr.getAdvertisement().getId();
         this.senderId = rr.getSender().getId();
+        this.numberOfUnseen = numberOfUnseen;
 
     }
 
