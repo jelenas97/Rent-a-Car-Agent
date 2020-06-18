@@ -1,14 +1,22 @@
 package com.rentCar.soap;
 
+import com.rentCar.RentCar.wsdl.*;
+import com.rentCar.model.Advertisement;
+import com.rentCar.model.FuelType;
 import com.rentCar.service.AdvertisementService;
+import com.rentCar.service.PricelistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
+import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 public class AdClient extends WebServiceGatewaySupport {
     @Autowired
     private AdvertisementService advertisementService;
 
-//    public PostAdResponse postAd(AdvertisementDTO adDTO){
+    @Autowired
+    private PricelistService priceListService;
+
+    public PostAdResponse postAd(Advertisement ad) {
         /*
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("agent@gmail.com");
@@ -33,77 +41,79 @@ public class AdClient extends WebServiceGatewaySupport {
             e.printStackTrace();
         }*/
 
-//        PostAdRequest request = new PostAdRequest();
+        PostAdRequest request = new PostAdRequest();
 
 
-    //request.setOwnerId(2);
-//        request.setStartDate(startDateStr);
-//        request.setEndDate(endDateStr);
-//        request.setCdw(adDTO.isCdw());
-//        request.setLimitKm(adDTO.getLimitKm());
-//        request.setLocation(adDTO.getLocation());
-//        request.setLimitKm(adDTO.getLimitKm());
-//
-//        PriceList priceList = new PriceList();
-//
-//
-//        com.example.team19.model.PriceList existingPl = priceListService.findById(adDTO.getPriceList().getId());
-//
-//        if(existingPl.getMainId() != null){
-//            priceList.setId(existingPl.getMainId());
-//        }else{
-//            priceList.setId(0);
-//            priceList.setAlias(existingPl.getAlias());
-//            priceList.setDiscount20Days(existingPl.getDiscount20Days());
-//            priceList.setDiscount30Days(existingPl.getDiscount30Days());
-//            priceList.setPricePerDay(existingPl.getPricePerDay());
-//            priceList.setPricePerKm(existingPl.getPricePerKm());
-//        }
-//
-//
-//        request.setPriceList(priceList);
-//
-//
-//
-//        Car car = new Car();
-//        System.out.println("Car BRAND: "+adDTO.getCar().getCarModel().getCarBrand().getName());
-//        car.setCarBrand(adDTO.getCar().getCarModel().getCarBrand().getName());
-//        car.setCarModel(adDTO.getCar().getCarModel().getName());
-//        car.setCarClass(adDTO.getCar().getCarClass().name());
-//        car.setChildrenSeats(adDTO.getCar().getChildrenSeats());
-//        car.setFeulType(adDTO.getCar().getFuelType().name());
-//        car.setHasAndroidApp(adDTO.getCar().isHasAndroidApp());
-//        car.setMileage(adDTO.getCar().getMileage());
-//        car.setTransType(adDTO.getCar().getTransType().name());
-//
-//        for(String img: adDTO.getCar().getPhotos64()) {
-//            car.getPhotos64().add(img);
-//        }
-//
-//        if(adDTO.getCar().getId() != null){
-//            com.example.team19.model.Car existingCar = carService.findById(adDTO.getCar().getId());
-//            if(existingCar.getMainId() != null) {
-//                car.setId(existingCar.getMainId());
-//            }else{
-//                car.setId(0);
-//            }
-//
-//        }else{
-//            car.setId(0);
-//        }
-//
-//
-//        request.setCar(car);
-//
-//
-//
-//
-//
-//        PostAdResponse response = (PostAdResponse) getWebServiceTemplate()
-//                .marshalSendAndReceive(request,
-//                        new SoapRequestHeaderModifier(loginResponse.getToken()));
-//
-//
-//    return response;
-//    }
+        request.setOwnerId(3l);
+        request.setStartDate(ad.getStartDate().toString());
+        request.setEndDate(ad.getEndDate().toString());
+        request.setCdw(ad.getCdw());
+        request.setLimitKm(ad.getKilometresLimit());
+        request.setLocation(ad.getPlace());
+
+
+        com.rentCar.model.PriceList existingPl = priceListService.findById(ad.getPriceList().getId());
+
+        PriceList priceList = new PriceList();
+
+        priceList.setId(existingPl.getId());
+        priceList.setCreatorId(existingPl.getCreator().getId());
+        priceList.setCdw(existingPl.getCdw());
+        priceList.setPricePerDay(existingPl.getPricePerDay());
+        priceList.setPricePerKm(existingPl.getPricePerKm());
+
+        request.setPriceList(priceList);
+
+
+        Car car = new Car();
+
+        CarBrand carBrandSoap = new CarBrand();
+        carBrandSoap.setActive(ad.getCar().getCarBrand().getActive());
+        carBrandSoap.setId(ad.getCar().getCarBrand().getId());
+        carBrandSoap.setName(ad.getCar().getCarBrand().getName());
+        car.setCarBrand(carBrandSoap);
+
+        CarModel carModelSoap = new CarModel();
+        carModelSoap.setActive(ad.getCar().getCarModel().getActive());
+        carModelSoap.setId(ad.getCar().getCarModel().getId());
+        carModelSoap.setName(ad.getCar().getCarModel().getName());
+        car.setCarModel(carModelSoap);
+
+        CarClass carClassSoap = new CarClass();
+        carClassSoap.setActive(ad.getCar().getCarClass().getActive());
+        carClassSoap.setId(ad.getCar().getCarClass().getId());
+        carClassSoap.setName(ad.getCar().getCarClass().getName());
+        car.setCarClass(carClassSoap);
+
+        car.setKidSeats(ad.getCar().getKidSeats());
+        for (FuelType type : ad.getCar().getFuelType()) {
+            com.rentCar.RentCar.wsdl.FuelType fuelType = new com.rentCar.RentCar.wsdl.FuelType();
+            fuelType.setActive(type.getActive());
+            fuelType.setId(type.getId());
+            fuelType.setName(type.getName());
+            car.getFuelType().add(fuelType);
+        }
+
+        car.setAvailableTracking(ad.getCar().getAvailableTracking());
+        car.setMileage(ad.getCar().getMileage());
+
+        TransmissionType transmissionTypeSoap = new TransmissionType();
+        transmissionTypeSoap.setActive(ad.getCar().getTransmissionType().getActive());
+        transmissionTypeSoap.setId(ad.getCar().getTransmissionType().getId());
+        transmissionTypeSoap.setName(ad.getCar().getTransmissionType().getName());
+        car.setTransmissionType(transmissionTypeSoap);
+
+        for (String image : ad.getCar().getImageGallery()) {
+            car.getImageGallery().add(image);
+        }
+
+        request.setCar(car);
+
+        PostAdResponse response = (PostAdResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8084/ws/advertisement", request,
+                        new SoapActionCallback(
+                                "http://localhost:8084/ws/advertisement/PostAdRequest"));
+
+        return response;
+    }
 }
