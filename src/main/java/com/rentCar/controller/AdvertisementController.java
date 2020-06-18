@@ -11,14 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "advertisement")
 @CrossOrigin("http://localhost:4200")
 public class AdvertisementController {
@@ -32,7 +31,6 @@ public class AdvertisementController {
     @Autowired
     private UserService userService;
 
-    //alternativa je 10+ parametar u arg
     @PostMapping(value = "/searchAds", produces = "application/json")
     @PermitAll
     public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto) {
