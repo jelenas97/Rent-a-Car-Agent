@@ -19,4 +19,8 @@ public interface RentRequestService {
     List<RentRequest> findPending(Long id, LocalDateTime startDate, LocalDateTime endDate);
 
     RentRequestDTO cancelRentRequest(long id);
+
+    RentRequest findById(long rentRequestId);
+
+    List<RentRequestDTO> getRentRequestReserved(long id);
 }

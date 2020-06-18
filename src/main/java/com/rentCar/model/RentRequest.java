@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,6 +45,9 @@ public class RentRequest {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Comment comment;
 
+    @OneToMany(mappedBy = "rentRequest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<Message> messages;
+
     //new RentRequest with pending status
     public RentRequest(RentRequestDTO requestDTO, User sender, Advertisement advertisement, RequestsHolder holder) {
         this.startDateTime = requestDTO.getStartDateTime();
@@ -53,6 +58,7 @@ public class RentRequest {
         this.sender = sender;
         this.advertisement = advertisement;
         this.requests = holder;
+        this.messages = new HashSet<>();
 
     }
 

@@ -3,6 +3,7 @@ package com.rentCar.service.impl;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.enumerations.RentRequestStatus;
 import com.rentCar.model.Comment;
+import com.rentCar.model.Message;
 import com.rentCar.model.Rate;
 import com.rentCar.model.RentRequest;
 import com.rentCar.repository.CommentRepository;
@@ -62,7 +63,7 @@ public class RentRequestServiceImpl implements RentRequestService {
 
         System.out.println(cancelableListR);
         for (RentRequest rr : cancelableListR) {
-            cancelableList.add(new RentRequestDTO(rr));
+            cancelableList.add(new RentRequestDTO(rr, 0));
         }
 
         return cancelableList;
@@ -88,12 +89,36 @@ public class RentRequestServiceImpl implements RentRequestService {
     @Override
     public RentRequestDTO cancelRentRequest(long id) {
 
-        RentRequest rr =this.rentRequestRepository.find(id);
+        RentRequest rr = this.rentRequestRepository.find(id);
         rr.setRentRequestStatus(RentRequestStatus.CANCELED);
         this.rentRequestRepository.save(rr);
-        RentRequestDTO rrDTO= new RentRequestDTO(rr);
+        RentRequestDTO rrDTO = new RentRequestDTO(rr, 0);
 
         return rrDTO;
+    }
+
+    @Override
+    public RentRequest findById(long rentRequestId) {
+        return this.rentRequestRepository.findById(rentRequestId).orElse(null);
+    }
+
+    @Override
+    public List<RentRequestDTO> getRentRequestReserved(long id) {
+        List<RentRequestDTO> reserved = new ArrayList<>();
+
+        List<RentRequest> listReserved = this.rentRequestRepository.findBySenderIdAndStatus(id);
+        listReserved.addAll(this.rentRequestRepository.findByOwnerIdAndStatus(id));
+        for (RentRequest rr : listReserved) {
+            int numberOfUnseen = 0;
+            for (Message m : rr.getMessages()) {
+                if (m.getRecepient().getId().equals(id) && m.getSeen().equals(false)) {
+                    numberOfUnseen++;
+                }
+            }
+            reserved.add(new RentRequestDTO(rr, numberOfUnseen));
+        }
+
+        return reserved;
     }
 
 
