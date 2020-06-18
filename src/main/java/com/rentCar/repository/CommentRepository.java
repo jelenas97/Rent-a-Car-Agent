@@ -15,5 +15,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findUnprocessed();
     Comment findById(long id);
     List<Comment> findByUserId(long id);
-    List<Comment> findByAdvertisementCarIdAndStatus(long id , ApproveStatus a);
+    List<Comment> findByAdvertisementIdAndStatus(long id , ApproveStatus a);
 }
