@@ -19,4 +19,7 @@ public interface TermRepository extends JpaRepository<Term, Long> {
 
     @Query(value = "SELECT term from Term term inner join Advertisement adv ON term.advertisement = adv where adv.owner.id = ?1")
     List<Term> getAllRentedByAgentId(Long id);
+
+    @Query(value = "SELECT term FROM Term term where term.reportWritten = true")
+    List<Term> getAllWithReports();
 }

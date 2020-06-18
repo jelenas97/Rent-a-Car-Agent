@@ -12,4 +12,7 @@ public interface TermService {
 
     List<Term> getAllRentedFromCurrentAgent(Long id);
 
+    List<Term> getAllWithReports();
+
+    void save(Term term);
 }

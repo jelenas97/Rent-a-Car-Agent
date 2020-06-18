@@ -26,6 +26,9 @@ public class Term {
     @Column(name = "canceled")
     private Boolean canceled;
 
+    @Column
+    private Boolean reportWritten;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "advertisement_id", nullable = false)
