@@ -1,5 +1,6 @@
 package com.rentCar.controller;
 
+import com.rentCar.RentCar.wsdl.PostAdResponse;
 import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.SearchDTO;
 import com.rentCar.model.Advertisement;
@@ -7,6 +8,7 @@ import com.rentCar.model.User;
 import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.CarService;
 import com.rentCar.service.UserService;
+import com.rentCar.soap.AdClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,9 @@ public class AdvertisementController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdClient adClient;
 
     //alternativa je 10+ parametar u arg
     @PostMapping(value = "/searchAds", produces = "application/json")
@@ -89,13 +94,23 @@ public class AdvertisementController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> addAdvertisement(@RequestBody Advertisement ad) {
         try {
-            User user = this.userService.findById(ad.getOwner().getId());
+            User user = this.userService.findById(3l);
             if (user.getAuthorities().get(0).getName().equals("ROLE_CLIENT")) {
                 int numberOfAds = this.advertisementService.findAllCount(ad.getOwner().getId());
                 if (numberOfAds >= 3) {
                     return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body("You can not create more than 3 advertisement");
                 }
             }
+            PostAdResponse adPosted = adClient.postAd(ad);
+
+            if (adPosted.getIdAd() == 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Soap error");
+            }
+
+            ad.setMicroId(adPosted.getIdAd());
+            ad.getCar().setMicroId(adPosted.getIdCar());
+            ad.setOwner(user);
+
             this.carService.add(ad.getCar());
             this.advertisementService.add(ad);
 
