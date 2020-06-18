@@ -12,20 +12,36 @@ import java.time.LocalDate;
 public class CommentDTO {
     private Long id;
     private LocalDate date;
+    private String dateString;
     private String content;
     private String status;
     private Long advertisement_id;
-    private Long client_id;
+    private Long commenter_id;
+    private String commenter;
     private Long rent_request_id;
 
 
     public CommentDTO(Comment comment){
         this.id = comment.getId();
         this.date = comment.getDate();
+        this.dateString=comment.getDate().toString();
         this.content = comment.getContent();
         this.status = comment.getStatus().toString();
         this.advertisement_id = comment.getAdvertisement().getId();
-        this.client_id = comment.getUser().getId();
+        this.commenter_id = comment.getUser().getId();
+        this.commenter= comment.getUser().getFirstName()+" "+ comment.getUser().getLastName();
         this.rent_request_id= comment.getRentRequest().getId();
+    }
+
+    public CommentDTO(Comment comment, long a){
+        this.id = comment.getId();
+        this.date = comment.getDate();
+        this.dateString=comment.getDate().toString();
+        this.content = comment.getContent();
+        this.status = comment.getStatus().toString();
+        this.advertisement_id = comment.getAdvertisement().getId();
+        this.commenter_id = comment.getUser().getId();
+        this.commenter= comment.getUser().getFirstName()+" "+ comment.getUser().getLastName();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.rentCar.controller;
 
+import com.rentCar.dto.CommentDTO;
 import com.rentCar.dto.RateDTO;
 import com.rentCar.service.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "rate")
@@ -22,7 +22,7 @@ public class RateController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_CLIENT')")
-    public ResponseEntity<?> newModel(@RequestBody RateDTO dto) {
+    public ResponseEntity<?> rateAdvertisement(@RequestBody RateDTO dto) {
 
         try {
             long id = this.rateService.rateAdvertisement(dto);
@@ -30,6 +30,20 @@ public class RateController {
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value="/{id}", produces="application/json")
+    @PreAuthorize("hasAnyAuthority('ROLE_CLIENT', 'ROLE_AGENT')")
+    public ResponseEntity<?> getAverageAdvertisementRate(@PathVariable Long id){
+
+        try {
+            List<RateDTO> rates = this.rateService.findAverageAdvRate(id);
+
+            return new ResponseEntity(rates, HttpStatus.OK);
+
+        }catch(NullPointerException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error while loading rates");
         }
     }
 }
