@@ -79,7 +79,10 @@ insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (1000, 20, 100, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (2000, 50, 200, 3);
-
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (1500, 30, 200,1);
+insert into price_list(price_per_day, price_per_km, cdw, creator_id)
+values (1200, 25, 0 ,1);
 
 insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
@@ -106,11 +109,9 @@ insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_
 values (3, 0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
 --
 
-insert into car_fuel_type(car_id, fuel_type_id)
-values (1, 3);
+insert into car_fuel_type(car_id, fuel_type_id) values (1, 3);
 insert into car_fuel_type(car_id, fuel_type_id) values (2,3);
-insert into car_fuel_type(car_id, fuel_type_id)
-values (3, 3);
+insert into car_fuel_type(car_id, fuel_type_id) values (3, 3);
 
 insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Really good car!','2020-06-13',3,3,1,'APPROVED');
 #insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Awesome car!','2020-05-04',1, ,1,'UNPROCESSED');

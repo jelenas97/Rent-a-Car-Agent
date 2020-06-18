@@ -16,8 +16,8 @@ public class CommentDTO {
     private String content;
     private String status;
     private Long advertisement_id;
-    private Long client_id;
-    private String client;
+    private Long commenter_id;
+    private String commenter;
     private Long rent_request_id;
 
 
@@ -28,8 +28,20 @@ public class CommentDTO {
         this.content = comment.getContent();
         this.status = comment.getStatus().toString();
         this.advertisement_id = comment.getAdvertisement().getId();
-        this.client_id = comment.getUser().getId();
-        this.client= comment.getUser().getFirstName()+" "+ comment.getUser().getLastName();
+        this.commenter_id = comment.getUser().getId();
+        this.commenter= comment.getUser().getFirstName()+" "+ comment.getUser().getLastName();
         this.rent_request_id= comment.getRentRequest().getId();
+    }
+
+    public CommentDTO(Comment comment, long a){
+        this.id = comment.getId();
+        this.date = comment.getDate();
+        this.dateString=comment.getDate().toString();
+        this.content = comment.getContent();
+        this.status = comment.getStatus().toString();
+        this.advertisement_id = comment.getAdvertisement().getId();
+        this.commenter_id = comment.getUser().getId();
+        this.commenter= comment.getUser().getFirstName()+" "+ comment.getUser().getLastName();
+
     }
 }
