@@ -31,7 +31,7 @@ public class SoapConfig {
     @Bean
     public RentClient rentClient(Jaxb2Marshaller marshaller) {
         RentClient client = new RentClient();
-        client.setDefaultUri("http://localhost:8095/rent/ws");
+        client.setDefaultUri("http://localhost:8095/microservices/rent/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;

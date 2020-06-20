@@ -54,7 +54,7 @@ public class RentClient extends WebServiceGatewaySupport {
         PhysicalRentResponse response = (PhysicalRentResponse) getWebServiceTemplate()
                 .marshalSendAndReceive("http://localhost:8095/ws/rent", request,
                         new SoapActionCallback(
-                                "http://localhost:8084/ws/advertisement/PhysicalRentRequest"));
+                                "http://localhost:8095/ws/rent/PhysicalRentRequest"));
 
         return response;
     }
