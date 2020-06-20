@@ -10,4 +10,5 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
 
     List<Rate> findByClientId(long id);
     List<Rate> findByAdvertisementId(long id);
+    boolean findByRentRequestId(long id);
 }

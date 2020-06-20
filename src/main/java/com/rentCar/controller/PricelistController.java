@@ -34,7 +34,7 @@ public class PricelistController {
 
     @GetMapping(value = "/creator/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('ROLE_AGENT') or hasAuthority('ROLE_CLIENT')")
-    public ResponseEntity<List<PricelistDTO>> getHistoryRentRequests(@PathVariable String id) {
+    public ResponseEntity<List<PricelistDTO>> getOwnersPricelists(@PathVariable String id) {
 
         try {
             List<PricelistDTO> list = new ArrayList<>();
