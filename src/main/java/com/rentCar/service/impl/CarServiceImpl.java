@@ -64,7 +64,8 @@ public class CarServiceImpl implements CarService {
 
     private void saveImages(List<String> imageGallery, Car car) {
         String rootPath = System.getProperty("user.dir");
-        String resourceFile = rootPath + "/images/" + car.getId() + ".txt";
+       //LINUX String resourceFile = rootPath + "/images/" + car.getId() + ".txt";
+        String resourceFile = rootPath + "\\images\\" + car.getId() + ".txt";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resourceFile))) {
             for (int i = 0; i < imageGallery.size(); i++) {
                 bufferedWriter.write(imageGallery.get(i));
