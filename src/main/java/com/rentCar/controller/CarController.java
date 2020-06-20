@@ -25,8 +25,8 @@ public class CarController {
     public ResponseEntity<?> getCar(@PathVariable("id") String id) {
 
         try {
-            Car car = this.carService.findById(id);
-            CarDTO carDTO = new CarDTO(car);
+            CarDTO carDTO = this.carService.findById(id);
+
             return new ResponseEntity(carDTO, HttpStatus.OK);
 
         } catch (NullPointerException e) {
