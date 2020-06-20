@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -30,8 +31,10 @@ public class AdvertisementDTO {
     private Double price;
     private String model;
     private Long ownerID;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public AdvertisementDTO(Advertisement ad){
+    public AdvertisementDTO(Advertisement ad) {
         this.id = ad.getId();
         this.carId = ad.getCar().getId();
         this.name = ad.getCar().getName();
