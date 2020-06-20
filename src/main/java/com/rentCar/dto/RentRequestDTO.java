@@ -27,6 +27,7 @@ public class RentRequestDTO {
     private boolean rated;
     private boolean commented;
     private int numberOfUnseen;
+    private AdvertisementDTO advertisementDTO;
 
     public RentRequestDTO(RentRequest rr, int numberOfUnseen) {
 
@@ -61,26 +62,26 @@ public class RentRequestDTO {
         this.advertisementId = rr.getAdvertisement().getId();
         this.senderId = rr.getSender().getId();
 
-        this.rated=true;
-        for(Rate r : rates){
-            if(r.getRentRequest()!=null){
-                if(r.getRentRequest().getId()==rr.getId()){
-                        this.rated=false;
-                        break;
-                    }
-                this.rated=true;
+        this.rated = true;
+        for (Rate r : rates) {
+            if (r.getRentRequest() != null) {
+                if (r.getRentRequest().getId() == rr.getId()) {
+                    this.rated = false;
+                    break;
+                }
+                this.rated = true;
             }
 
         }
 
-        this.commented=true;
-        for(Comment c : comments){
-            if(c.getRentRequest()!=null){
-                if(c.getRentRequest().getId()==rr.getId()){
-                    this.commented=false;
+        this.commented = true;
+        for (Comment c : comments) {
+            if (c.getRentRequest() != null) {
+                if (c.getRentRequest().getId() == rr.getId()) {
+                    this.commented = false;
                     break;
                 }
-                this.commented=true;
+                this.commented = true;
             }
 
         }
