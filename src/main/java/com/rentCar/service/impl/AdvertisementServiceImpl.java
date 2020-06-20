@@ -145,7 +145,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private List<Advertisement> loadImages(List<Advertisement> ads) {
         for (int i = 0; i < ads.size(); i++) {
             String rootPath = System.getProperty("user.dir");
-            String resourceFile = rootPath + "/images/" + ads.get(i).getCar().getId() + ".txt";
+            String resourceFile = rootPath + "\\images\\" + ads.get(i).getCar().getId() + ".txt";
+          // LINUX  String resourceFile = rootPath + "/images/" + ads.get(i).getCar().getId() + ".txt";
             ads.get(i).getCar().setImageGallery(new ArrayList<String>());
 
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(resourceFile))) {
