@@ -1,6 +1,7 @@
 package com.rentCar.config;
 
 import com.rentCar.soap.AdClient;
+import com.rentCar.soap.RentClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -26,5 +27,16 @@ public class SoapConfig {
         client.setUnmarshaller(marshaller);
         return client;
     }
+
+    @Bean
+    public RentClient rentClient(Jaxb2Marshaller marshaller) {
+        RentClient client = new RentClient();
+        client.setDefaultUri("http://localhost:8095/microservices/rent/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+
 
 }

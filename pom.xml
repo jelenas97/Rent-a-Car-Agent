@@ -115,6 +115,9 @@
                         <schema>
                             <url>http://localhost:8084/ws/schema1.wsdl</url>
                         </schema>
+                        <schema>
+                            <url>http://localhost:8095/ws/rent.wsdl</url>
+                        </schema>
                     </schemas>
                 </configuration>
             </plugin>
