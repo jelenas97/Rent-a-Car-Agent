@@ -1,9 +1,11 @@
 package com.rentCar.controller;
 
+import com.rentCar.RentCar.wsdl.PhysicalRentResponse;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.dto.RequestsHolderDTO;
 import com.rentCar.model.*;
 import com.rentCar.service.*;
+import com.rentCar.soap.RentClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +37,9 @@ public class RentRequestController {
 
     @Autowired
     private TermService termService;
+
+    @Autowired
+    private RentClient rentClient;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('CLIENT') and hasRole('AGENT')")
@@ -185,6 +190,7 @@ public class RentRequestController {
             //  this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
             this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
 
+            PhysicalRentResponse response = rentClient.physicalRent(rentDTO);
             //automatsko odbijanje
 
             List<RentRequest> rentRequests = this.rentRequestService.findPending(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
