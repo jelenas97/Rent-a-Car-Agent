@@ -38,8 +38,7 @@ public class RentRequestController {
     @Autowired
     private TermService termService;
 
-    @Autowired
-    private RentClient rentRequestClient;
+
 
     @Autowired
     private RentClient rentClient;
@@ -109,7 +108,7 @@ public class RentRequestController {
     public ResponseEntity<List<RentRequestDTO>> getRentRequestsReserved(@PathVariable String id) {
 
         try {
-            return rentRequestClient.getRentRequests(Long.parseLong(id));
+            return rentClient.getRentRequests(Long.parseLong(id));
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -190,7 +189,7 @@ public class RentRequestController {
         try {
             System.out.println("Physical rent " + rentDTO);
 
-            //  this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
+            //   this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
             this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
 
             PhysicalRentResponse response = rentClient.physicalRent(rentDTO);

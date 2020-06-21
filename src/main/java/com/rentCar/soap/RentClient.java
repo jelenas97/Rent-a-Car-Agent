@@ -1,8 +1,6 @@
 package com.rentCar.soap;
 
-import com.rentCar.RentCar.wsdl.GetRentRequestRequest;
-import com.rentCar.RentCar.wsdl.GetRentRequestResponse;
-import com.rentCar.RentCar.wsdl.RentRequest;
+import com.rentCar.RentCar.wsdl.*;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.service.MessageService;
 import com.rentCar.service.UserService;
@@ -53,31 +51,8 @@ public class RentClient extends WebServiceGatewaySupport {
         ResponseEntity<List<RentRequestDTO>> responseEntity = new ResponseEntity(listResponse, HttpStatus.OK);
         return responseEntity;
     }
-        //    public PostRentResponse sendRent(){}
-        public PhysicalRentResponse physicalRent (RentRequestDTO rentDTO){
-            /*
-            LoginRequest loginRequest = new LoginRequest();
-            loginRequest.setEmail("agent@gmail.com");
-            loginRequest.setPassword("agent");
-            getWebServiceTemplate().setMessageSender(sender);
-            LoginResponse loginResponse = (LoginResponse) getWebServiceTemplate()
-                    .marshalSendAndReceive("https://localhost:8083/user-service/ws/Ad", loginRequest,
-                            new SoapActionCallback(
-                                    "http://www.rent-a-car.com/ad-service/soap/LoginRequest"));
-    */
-            //  LoginResponse loginResponse = loginClient.login();
 
-    /*
-            XMLGregorianCalendar startDate = null;
-            XMLGregorianCalendar endDate = null;
-            try {
-                startDate =
-                        DatatypeFactory.newInstance().newXMLGregorianCalendar(adDTO.getStartDate().toString());
-                endDate =
-                        DatatypeFactory.newInstance().newXMLGregorianCalendar(adDTO.getEndDate().toString());
-            } catch (DatatypeConfigurationException e) {
-                e.printStackTrace();
-            }*/
+    public PhysicalRentResponse physicalRent (RentRequestDTO rentDTO){
 
             PhysicalRentRequest request = new PhysicalRentRequest();
 
