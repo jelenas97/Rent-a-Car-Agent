@@ -3,6 +3,7 @@ package com.rentCar.controller;
 import com.rentCar.RentCar.wsdl.PostAdResponse;
 import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.SearchDTO;
+import com.rentCar.dto.StatisticDTO;
 import com.rentCar.model.Advertisement;
 import com.rentCar.model.User;
 import com.rentCar.service.AdvertisementService;
@@ -114,6 +115,45 @@ public class AdvertisementController {
             this.advertisementService.add(ad);
 
             return ResponseEntity.ok().build();
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "comment/user/{id}", produces = "application/json")
+    public ResponseEntity<?> getMostComment(@PathVariable Long id) {
+        try {
+            List<StatisticDTO> ads = this.advertisementService.getMostComment(id);
+
+            System.out.println(ads);
+            return new ResponseEntity(ads, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "km/user/{id}", produces = "application/json")
+    public ResponseEntity<?> getMostKm(@PathVariable Long id) {
+        try {
+            List<StatisticDTO> ads = this.advertisementService.getMostKm(id);
+
+            System.out.println(ads);
+            return new ResponseEntity(ads, HttpStatus.OK);
+
+        } catch (NullPointerException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "rate/user/{id}", produces = "application/json")
+    public ResponseEntity<?> getBestRate(@PathVariable Long id) {
+        try {
+            List<StatisticDTO> ads = this.advertisementService.getBestRate(id);
+
+            System.out.println(ads);
+            return new ResponseEntity(ads, HttpStatus.OK);
+
         } catch (NullPointerException e) {
             return ResponseEntity.notFound().build();
         }
