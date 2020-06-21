@@ -118,6 +118,10 @@
                         <schema>
                             <url>http://localhost:8095/ws/rent.wsdl</url>
                         </schema>
+
+                        <schema>
+                            <url>http://localhost:8090/ws/statistics.wsdl</url>
+                        </schema>
                     </schemas>
                 </configuration>
             </plugin>
