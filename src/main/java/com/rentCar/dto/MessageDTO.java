@@ -17,8 +17,9 @@ public class MessageDTO {
     private String senderUsername;
     private long recepientId;
     private long rentRequestId;
+    private boolean seen;
 
-    public MessageDTO(long id, LocalDateTime date, String content, long senderId, String senderUsername, long recepientId, long rentRequestId) {
+    public MessageDTO(long id, LocalDateTime date, String content, long senderId, String senderUsername, long recepientId, long rentRequestId, boolean seen) {
         this.id = id;
         String[] dateTime = date.toString().split("T");
         this.dateString = dateTime[0] + " at " + dateTime[1] + "h";
@@ -27,5 +28,6 @@ public class MessageDTO {
         this.senderUsername = senderUsername;
         this.recepientId = recepientId;
         this.rentRequestId = rentRequestId;
+        this.seen = seen;
     }
 }

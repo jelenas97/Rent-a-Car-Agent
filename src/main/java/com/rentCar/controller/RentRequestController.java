@@ -39,6 +39,9 @@ public class RentRequestController {
     private TermService termService;
 
     @Autowired
+    private RentClient rentRequestClient;
+
+    @Autowired
     private RentClient rentClient;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -106,7 +109,7 @@ public class RentRequestController {
     public ResponseEntity<List<RentRequestDTO>> getRentRequestsReserved(@PathVariable String id) {
 
         try {
-            return new ResponseEntity<>(rentRequestService.getRentRequestReserved(Long.parseLong(id)), HttpStatus.OK);
+            return rentRequestClient.getRentRequests(Long.parseLong(id));
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
