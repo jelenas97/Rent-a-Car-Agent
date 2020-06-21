@@ -1,5 +1,6 @@
 package com.rentCar.service;
 
+import com.rentCar.dto.MessageDTO;
 import com.rentCar.model.Message;
 
 import java.util.List;
