@@ -113,22 +113,26 @@ insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_
 values (3, 0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
 --
 
-insert into car_fuel_type(car_id, fuel_type_id) values (1, 3);
-insert into car_fuel_type(car_id, fuel_type_id) values (2,3);
-insert into car_fuel_type(car_id, fuel_type_id) values (3, 3);
+insert into car_fuel_type(car_id, fuel_type_id)
+values (1, 3);
+insert into car_fuel_type(car_id, fuel_type_id)
+values (2, 3);
+insert into car_fuel_type(car_id, fuel_type_id)
+values (3, 3);
 
-insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Really good car!','2020-06-13',3,3,1,'APPROVED');
+insert into comment(content, date, advertisement_id, rent_request_id, user_id, status)
+values ('Really good car!', '2020-06-13', 3, 3, 1, 'APPROVED');
 #insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Awesome car!','2020-05-04',1, ,1,'UNPROCESSED');
 #insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('STUPID CAR!!!!','2020-05-05',1, ,2,'UNPROCESSED');
 
 insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (1, 1, '2020-06-03 05:05:05', 'PENDING', '2020-06-15 04:04:04');
+values (2, 1, '2020-06-03 05:05:05', 'PENDING', '2020-06-15 04:04:04');
 insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
 values (2, 1, '2020-06-12 05:05:05', 'RESERVED', '2020-06-22 04:04:04');
 insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (3, 1, '2020-05-25 05:05:05', 'PAID', '2020-05-20 04:04:04');
+values (2, 1, '2020-05-25 05:05:05', 'PAID', '2020-05-20 04:04:04');
 insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (3, 1, '2020-05-13 05:05:05', 'PAID', '2020-05-19 04:04:04');
+values (2, 1, '2020-05-13 05:05:05', 'PAID', '2020-05-19 04:04:04');
 
 insert into rate(value, advertisement_id, client_id, rent_request_id)
-values(9, 3, 1, 3);
+values (9, 2, 1, 3);
