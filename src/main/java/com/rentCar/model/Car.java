@@ -18,8 +18,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    public Advertisement advertisement;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Advertisement advertisement;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     public CarBrand carBrand;
 
