@@ -73,7 +73,11 @@ values(3, 2);
 insert into user_authority(user_id, authority_id)
 values(4, 2);
 insert into user_authority(user_id, authority_id)
-values (6, 4);
+values(5, 2);
+insert into user_authority(user_id, authority_id)
+values(6, 4);
+insert into user_authority(user_id, authority_id)
+values(7, 4);
 
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (1000, 20, 100, 3);
