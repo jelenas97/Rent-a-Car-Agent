@@ -118,6 +118,9 @@
                         <schema>
                             <url>http://localhost:8087/ws/schema1.wsdl</url>
                         </schema>
+                        <schema>
+                            <url>http://localhost:8095/ws/schema1.wsdl</url>
+                        </schema>
                     </schemas>
                 </configuration>
             </plugin>
