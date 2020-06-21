@@ -1,6 +1,7 @@
 package com.rentCar.soap;
 
 import com.rentCar.RentCar.wsdl.*;
+import com.rentCar.dto.StatisticDTO;
 import com.rentCar.model.Advertisement;
 import com.rentCar.model.FuelType;
 import com.rentCar.service.AdvertisementService;
@@ -8,6 +9,9 @@ import com.rentCar.service.PricelistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdClient extends WebServiceGatewaySupport {
     @Autowired
@@ -115,5 +119,61 @@ public class AdClient extends WebServiceGatewaySupport {
                                 "http://localhost:8084/ws/advertisement/PostAdRequest"));
 
         return response;
+    }
+
+    public List<StatisticDTO> getBestRate(Long id) {
+        GetStatisticRequest request = new GetStatisticRequest();
+        request.setIdUser(id);
+        request.setType("rate");
+
+        GetStatisticResponse response = (GetStatisticResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8084/ws/advertisement/rate", request,
+                        new SoapActionCallback(
+                                "http://localhost:8084/ws/advertisement/GetStatisticRequestRate"));
+        List<StatisticDTO> responseList = new ArrayList<StatisticDTO>();
+        for (com.rentCar.RentCar.wsdl.StatisticDTO statSoap : response.getStatistics()) {
+            StatisticDTO stat = new StatisticDTO();
+            stat.setCarName(statSoap.getCarName());
+            stat.setRate(statSoap.getRate());
+            responseList.add(stat);
+        }
+        return responseList;
+    }
+
+    public List<StatisticDTO> getMostKm(Long id) {
+        GetStatisticRequest request = new GetStatisticRequest();
+        request.setIdUser(id);
+        request.setType("km");
+
+        GetStatisticResponse response = (GetStatisticResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8084/ws/advertisement/km", request,
+                        new SoapActionCallback(
+                                "http://localhost:8084/ws/advertisement/GetStatisticRequestKm"));
+        List<StatisticDTO> responseList = new ArrayList<StatisticDTO>();
+        for (com.rentCar.RentCar.wsdl.StatisticDTO statSoap : response.getStatistics()) {
+            StatisticDTO stat = new StatisticDTO();
+            stat.setCarName(statSoap.getCarName());
+            stat.setKm(statSoap.getKm());
+            responseList.add(stat);
+        }
+        return responseList;
+    }
+
+    public List<StatisticDTO> getMostComment(Long id) {
+        GetStatisticRequest request = new GetStatisticRequest();
+        request.setType("comment");
+        request.setIdUser(id);
+        GetStatisticResponse response = (GetStatisticResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8084/ws/advertisement/comment", request,
+                        new SoapActionCallback(
+                                "http://localhost:8084/ws/advertisement/GetStatisticRequestComment"));
+        List<StatisticDTO> responseList = new ArrayList<StatisticDTO>();
+        for (com.rentCar.RentCar.wsdl.StatisticDTO statSoap : response.getStatistics()) {
+            StatisticDTO stat = new StatisticDTO();
+            stat.setCarName(statSoap.getCarName());
+            stat.setComment(statSoap.getComment());
+            responseList.add(stat);
+        }
+        return responseList;
     }
 }

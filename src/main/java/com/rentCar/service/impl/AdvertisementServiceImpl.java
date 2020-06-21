@@ -1,10 +1,12 @@
 package com.rentCar.service.impl;
 
 import com.rentCar.dto.SearchDTO;
+import com.rentCar.dto.StatisticDTO;
 import com.rentCar.model.Advertisement;
 import com.rentCar.model.CarModel;
 import com.rentCar.model.FuelType;
 import com.rentCar.repository.AdvertisementRepository;
+import com.rentCar.repository.CommentRepository;
 import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.CarModelService;
 import com.rentCar.service.FuelTypeService;
@@ -17,6 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -26,6 +29,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Autowired
     private AdvertisementRepository advertisementRepository;
+
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private CarModelService carModelService;
@@ -178,5 +185,48 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public int findAllCount(Long id) {
         return this.advertisementRepository.findAllCount(id);
+    }
+
+    @Override
+    public List<StatisticDTO> getMostComment(Long id) {
+        List<StatisticDTO> statistics = new ArrayList<StatisticDTO>();
+        List<Advertisement> ads = this.findAll(id);
+        for (Advertisement a : ads) {
+            StatisticDTO stat = new StatisticDTO();
+            Long numberOfComments = this.commentRepository.getNumberOfComments(a.getId());
+            stat.setCarName(a.getCar().getName());
+            stat.setComment(numberOfComments);
+            statistics.add(stat);
+        }
+        statistics.sort(Comparator.comparing(StatisticDTO::getComment).reversed());
+        return statistics;
+    }
+
+    @Override
+    public List<StatisticDTO> getMostKm(Long id) {
+        List<StatisticDTO> statistics = new ArrayList<StatisticDTO>();
+        List<Advertisement> ads = this.findAll(id);
+        for (Advertisement a : ads) {
+            StatisticDTO stat = new StatisticDTO();
+            stat.setCarName(a.getCar().getName());
+            stat.setKm(Integer.toUnsignedLong(a.getCar().getMileage()));
+            statistics.add(stat);
+        }
+        statistics.sort(Comparator.comparing(StatisticDTO::getKm).reversed());
+        return statistics;
+    }
+
+    @Override
+    public List<StatisticDTO> getBestRate(Long id) {
+        List<StatisticDTO> statistics = new ArrayList<StatisticDTO>();
+        List<Advertisement> ads = this.findAll(id);
+        for (Advertisement a : ads) {
+            StatisticDTO stat = new StatisticDTO();
+            stat.setCarName(a.getCar().getName());
+            stat.setRate(a.getCar().getRate());
+            statistics.add(stat);
+        }
+        statistics.sort(Comparator.comparing(StatisticDTO::getRate).reversed());
+        return statistics;
     }
 }
