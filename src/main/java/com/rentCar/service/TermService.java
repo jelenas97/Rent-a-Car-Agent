@@ -9,4 +9,10 @@ public interface TermService {
     void save(Long id, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Term> findTakenTerm(Long id, LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Term> getAllRentedFromCurrentAgent(Long id);
+
+    List<Term> getAllWithReports();
+
+    void save(Term term);
 }

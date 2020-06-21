@@ -2,25 +2,27 @@ package com.rentCar.controller;
 
 import com.rentCar.dto.AgentDTO;
 import com.rentCar.model.Agent;
-import com.rentCar.model.User;
 import com.rentCar.service.AgentService;
-import lombok.RequiredArgsConstructor;
+import com.rentCar.service.TermService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping(value="/agent")
-@RequiredArgsConstructor
+@RequestMapping(value = "agent")
 public class AgentController {
 
-    private final AgentService agentService;
+    @Autowired
+    private TermService termService;
+
+    @Autowired
+    private AgentService agentService;
 
     @RequestMapping("/save")
-    public Agent save(@RequestBody Agent agent){
+    public Agent save(@RequestBody Agent agent) {
         return agentService.save(agent);
     }
 
