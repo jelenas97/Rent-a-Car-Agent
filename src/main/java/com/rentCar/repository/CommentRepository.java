@@ -13,8 +13,13 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "select c from Comment c where c.status = 'UNPROCESSED'")
     List<Comment> findUnprocessed();
-    Comment findById(long id);
-    List<Comment> findByUserId(long id);
-    List<Comment> findByAdvertisementIdAndStatus(long id , ApproveStatus a);
 
+    Comment findById(long id);
+
+    List<Comment> findByUserId(long id);
+
+    List<Comment> findByAdvertisementIdAndStatus(long id, ApproveStatus a);
+
+    @Query(value = "select count(c) from Comment c where c.advertisement.id = ?1")
+    Long getNumberOfComments(Long id);
 }
