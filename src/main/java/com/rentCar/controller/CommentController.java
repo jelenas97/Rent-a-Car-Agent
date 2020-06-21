@@ -1,9 +1,9 @@
 package com.rentCar.controller;
 
+import com.rentCar.RentCar.wsdl.CommentResponse;
 import com.rentCar.dto.CommentDTO;
-import com.rentCar.model.Comment;
 import com.rentCar.service.CommentService;
-import com.rentCar.service.impl.CommentServiceImpl;
+import com.rentCar.soap.StatisticsClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,9 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private StatisticsClient statisticsClient;
 
     @GetMapping(produces="application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -52,6 +55,8 @@ public class CommentController {
 
        try {
            long id = this.commentService.addComment(dto);
+           CommentResponse response = statisticsClient.commentResponse(dto);
+
            return new ResponseEntity(id, HttpStatus.CREATED);
        } catch (Exception e) {
            System.out.println(e);

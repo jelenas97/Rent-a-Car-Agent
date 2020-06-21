@@ -35,7 +35,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<Advertisement> search(SearchDTO dto) {
-        List<Advertisement> ads = this.advertisementRepository.findAdvertisements(dto.getPlace(),dto.getStartDate(),dto.getEndDate());
+        List<Advertisement> ads = this.advertisementRepository.findAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
 
         List<Advertisement> takenAds = this.advertisementRepository.findTakenAdvertisements(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
         List<Advertisement> freeAds = this.advertisementRepository.findFree(dto.getPlace(), dto.getStartDate(), dto.getEndDate());
@@ -124,7 +124,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             }
         }
 
-
+        retAds = loadImages(retAds);
         return retAds;
     }
 
@@ -146,6 +146,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         for (int i = 0; i < ads.size(); i++) {
             String rootPath = System.getProperty("user.dir");
             String resourceFile = rootPath + "\\images\\" + ads.get(i).getCar().getId() + ".txt";
+          // LINUX  String resourceFile = rootPath + "/images/" + ads.get(i).getCar().getId() + ".txt";
             ads.get(i).getCar().setImageGallery(new ArrayList<String>());
 
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(resourceFile))) {

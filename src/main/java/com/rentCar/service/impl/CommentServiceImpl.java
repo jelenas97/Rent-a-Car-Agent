@@ -89,7 +89,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDTO> findProcessedAdvertisementComments(long id) {
 
-        List<Comment> comments = this.commentRepository.findByAdvertisementCarIdAndStatus(id, ApproveStatus.APPROVED);
+        List<Comment> comments = this.commentRepository.findByAdvertisementIdAndStatus(id, ApproveStatus.APPROVED);
         List<CommentDTO> commentDTOS = new ArrayList<>();
         for(Comment com : comments){
             commentDTOS.add(new CommentDTO(com ,0));

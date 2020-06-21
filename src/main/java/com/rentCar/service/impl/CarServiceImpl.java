@@ -1,6 +1,9 @@
 package com.rentCar.service.impl;
 
+import com.rentCar.dto.CarDTO;
+import com.rentCar.model.Advertisement;
 import com.rentCar.model.Car;
+import com.rentCar.repository.AdvertisementRepository;
 import com.rentCar.repository.CarRepository;
 import com.rentCar.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
+    @Autowired
+    private AdvertisementRepository advertisementRepository;
+
     @Override
     public void add(Car car) {
         car.setName(car.getCarBrand() + " " + car.getCarModel());
@@ -24,17 +30,21 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findById(String id) {
+    public CarDTO findById(String id) {
         Long carId = Long.parseLong(id);
         Car car = this.carRepository.findById(carId).orElse(null);
         car = loadImages(car);
-        return car;
+
+        Advertisement a= advertisementRepository.findByCarId(carId);
+        CarDTO carDTO = new CarDTO(car, a);
+        return carDTO;
     }
 
 
     private Car loadImages(Car car) {
         String rootPath = System.getProperty("user.dir");
         String resourceFile = rootPath + "\\images\\" + car.getId() + ".txt";
+       // LINUX String resourceFile = rootPath + "/images/" + car.getId() + ".txt";
         car.setImageGallery(new ArrayList<String>());
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(resourceFile))) {
@@ -54,6 +64,7 @@ public class CarServiceImpl implements CarService {
 
     private void saveImages(List<String> imageGallery, Car car) {
         String rootPath = System.getProperty("user.dir");
+       //LINUX String resourceFile = rootPath + "/images/" + car.getId() + ".txt";
         String resourceFile = rootPath + "\\images\\" + car.getId() + ".txt";
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resourceFile))) {
             for (int i = 0; i < imageGallery.size(); i++) {

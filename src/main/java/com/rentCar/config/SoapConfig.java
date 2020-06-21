@@ -3,6 +3,8 @@ package com.rentCar.config;
 import com.rentCar.soap.AdClient;
 import com.rentCar.soap.MessageClient;
 import com.rentCar.soap.RentClient;
+import com.rentCar.soap.RentClient;
+import com.rentCar.soap.StatisticsClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -42,6 +44,15 @@ public class SoapConfig {
     public RentClient rentClient(Jaxb2Marshaller marshaller) {
         RentClient client = new RentClient();
         client.setDefaultUri("http://localhost:8095/microservices/rent/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+    @Bean
+    public StatisticsClient statisticsClient(Jaxb2Marshaller marshaller) {
+        StatisticsClient client = new StatisticsClient();
+        client.setDefaultUri("http://localhost:8095/microservices/statistics/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;

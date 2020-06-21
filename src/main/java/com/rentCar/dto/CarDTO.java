@@ -1,5 +1,6 @@
 package com.rentCar.dto;
 
+import com.rentCar.model.Advertisement;
 import com.rentCar.model.Car;
 import com.rentCar.model.FuelType;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class CarDTO {
     private Long advertisementId;
     private Long ownerId;
 
-    public CarDTO(Car car) {
+    public CarDTO(Car car, Advertisement a) {
         this.id = car.getId();
         this.carBrand = car.getCarBrand().getName();
         this.fuelType = car.getFuelType();
@@ -38,7 +39,7 @@ public class CarDTO {
         this.imageGallery = car.getImageGallery();
         this.availableTracking = car.getAvailableTracking();
         this.carModel = car.getCarModel().getName();
-        //this.advertisementId= car.getAdvertisement().getId();
-        //this.ownerId=car.getAdvertisement().getOwner().getId();
+        this.advertisementId= a.getId();
+        this.ownerId=a.getOwner().getId();
     }
 }

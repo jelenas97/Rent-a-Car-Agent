@@ -1,5 +1,6 @@
 package com.rentCar.controller;
 
+import com.rentCar.RentCar.wsdl.PhysicalRentResponse;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.dto.RequestsHolderDTO;
 import com.rentCar.model.*;
@@ -39,6 +40,9 @@ public class RentRequestController {
 
     @Autowired
     private RentClient rentRequestClient;
+
+    @Autowired
+    private RentClient rentClient;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     //@PreAuthorize("hasRole('CLIENT') and hasRole('AGENT')")
@@ -189,6 +193,7 @@ public class RentRequestController {
             //  this.rentRequestService.changeStatus(rentDTO.getId(), "PAID");
             this.termService.save(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
 
+            PhysicalRentResponse response = rentClient.physicalRent(rentDTO);
             //automatsko odbijanje
 
             List<RentRequest> rentRequests = this.rentRequestService.findPending(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());

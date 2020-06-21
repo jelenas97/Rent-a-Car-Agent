@@ -9,5 +9,6 @@ import java.util.List;
 public interface RateRepository extends JpaRepository<Rate, Long> {
 
     List<Rate> findByClientId(long id);
-    List<Rate> findByAdvertisementCarId(long id);
+    List<Rate> findByAdvertisementId(long id);
+    boolean findByRentRequestId(long id);
 }
