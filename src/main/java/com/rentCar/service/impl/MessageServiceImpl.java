@@ -36,13 +36,13 @@ public class MessageServiceImpl implements MessageService {
                     this.messageRepository.save(m);
                 }
             }
-            listaDTO.add(new MessageDTO(m.getId(), m.getDate(), m.getContent(), m.getSender().getId(), m.getSender().getUsername(), m.getRecepient().getId(), m.getRentRequest().getId()));
+            listaDTO.add(new MessageDTO(m.getId(), m.getDate(), m.getContent(), m.getSender().getId(), m.getSender().getUsername(), m.getRecepient().getId(), m.getRentRequest().getId(), m.getSeen()));
         }
         return listaDTO;
     }
 
     @Override
-    public void save(MessageDTO messageDTO) {
+    public Message save(MessageDTO messageDTO) {
         Message newMessage = new Message();
         newMessage.setContent(messageDTO.getContent());
         RentRequest rentRequest = rentRequestService.findById(messageDTO.getRentRequestId());
@@ -55,6 +55,7 @@ public class MessageServiceImpl implements MessageService {
         } else {
             newMessage.setRecepient(rentRequest.getSender());
         }
-        this.messageRepository.save(newMessage);
+        newMessage = this.messageRepository.save(newMessage);
+        return newMessage;
     }
 }
