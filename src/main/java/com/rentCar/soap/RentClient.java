@@ -1,8 +1,6 @@
 package com.rentCar.soap;
 
-import com.rentCar.RentCar.wsdl.GetRentRequestRequest;
-import com.rentCar.RentCar.wsdl.GetRentRequestResponse;
-import com.rentCar.RentCar.wsdl.RentRequest;
+import com.rentCar.RentCar.wsdl.*;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.service.MessageService;
 import com.rentCar.service.UserService;
