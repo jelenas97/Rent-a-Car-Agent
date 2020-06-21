@@ -23,6 +23,7 @@ public class CommentController {
     @Autowired
     private StatisticsClient statisticsClient;
 
+
     @GetMapping(produces="application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getUnComments(){
@@ -82,8 +83,7 @@ public class CommentController {
     public ResponseEntity<?> getProcessedAdvertisementComments(@PathVariable Long id){
 
         try {
-            List<CommentDTO> comments = this.commentService.findProcessedAdvertisementComments(id);
-
+            List<CommentDTO> comments = statisticsClient.getComments(id);
             return new ResponseEntity(comments, HttpStatus.OK);
 
         }catch(NullPointerException e){
