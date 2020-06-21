@@ -123,7 +123,7 @@ public class AdvertisementController {
     @GetMapping(value = "comment/user/{id}", produces = "application/json")
     public ResponseEntity<?> getMostComment(@PathVariable Long id) {
         try {
-            List<StatisticDTO> ads = this.advertisementService.getMostComment(id);
+            List<StatisticDTO> ads = this.adClient.getMostComment(id);
 
             System.out.println(ads);
             return new ResponseEntity(ads, HttpStatus.OK);
@@ -136,7 +136,7 @@ public class AdvertisementController {
     @GetMapping(value = "km/user/{id}", produces = "application/json")
     public ResponseEntity<?> getMostKm(@PathVariable Long id) {
         try {
-            List<StatisticDTO> ads = this.advertisementService.getMostKm(id);
+            List<StatisticDTO> ads = this.adClient.getMostKm(id);
 
             System.out.println(ads);
             return new ResponseEntity(ads, HttpStatus.OK);
@@ -149,7 +149,7 @@ public class AdvertisementController {
     @GetMapping(value = "rate/user/{id}", produces = "application/json")
     public ResponseEntity<?> getBestRate(@PathVariable Long id) {
         try {
-            List<StatisticDTO> ads = this.advertisementService.getBestRate(id);
+            List<StatisticDTO> ads = this.adClient.getBestRate(id);
 
             System.out.println(ads);
             return new ResponseEntity(ads, HttpStatus.OK);
