@@ -1,5 +1,6 @@
 package com.rentCar.controller;
 
+import com.rentCar.RentCar.wsdl.CommentOwnerResponse;
 import com.rentCar.RentCar.wsdl.CommentResponse;
 import com.rentCar.dto.CommentDTO;
 import com.rentCar.service.CommentService;
@@ -71,6 +72,8 @@ public class CommentController {
 
         try {
             long id = this.commentService.addCommentOwner(dto);
+            CommentOwnerResponse response = statisticsClient.commentOwnerResponse(dto);
+
             return new ResponseEntity(id, HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e);
