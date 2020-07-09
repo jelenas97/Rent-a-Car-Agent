@@ -1,9 +1,6 @@
 package com.rentCar.soap;
 
-import com.rentCar.RentCar.wsdl.CommentRequest;
-import com.rentCar.RentCar.wsdl.CommentResponse;
-import com.rentCar.RentCar.wsdl.GetCommentRequest;
-import com.rentCar.RentCar.wsdl.GetCommentResponse;
+import com.rentCar.RentCar.wsdl.*;
 import com.rentCar.dto.CommentDTO;
 import com.rentCar.model.User;
 import com.rentCar.service.UserService;
@@ -38,6 +35,26 @@ public class StatisticsClient extends WebServiceGatewaySupport {
                 .marshalSendAndReceive("http://localhost:8090/ws/statistics", request,
                         new SoapActionCallback(
                                 "http://localhost:8090/ws/statistics/CommentRequest"));
+
+        return response;
+    }
+
+    public CommentOwnerResponse commentOwnerResponse(CommentDTO commentDTO) {
+
+
+        CommentOwnerRequest request = new CommentOwnerRequest();
+        request.setDate(commentDTO.getDate().toString());
+        request.setDateString(commentDTO.getDateString());
+        request.setContent(commentDTO.getContent());
+        request.setStatus(commentDTO.getStatus());
+        request.setAdvertisementId(commentDTO.getAdvertisement_id());
+        request.setCommenter(commentDTO.getCommenter());
+        request.setCommenterId(commentDTO.getCommenter_id());
+
+        CommentOwnerResponse response = (CommentOwnerResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8090/ws/statistics", request,
+                        new SoapActionCallback(
+                                "http://localhost:8090/ws/statistics/CommentOwnerRequest"));
 
         return response;
     }
