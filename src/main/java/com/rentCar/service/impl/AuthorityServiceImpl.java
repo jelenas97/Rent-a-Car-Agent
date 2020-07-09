@@ -24,10 +24,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public List<Authority> findByName(String name) {
-        Authority auth = this.authorityRepository.findByName(name);
-        List<Authority> auths = new ArrayList<>();
-        auths.add(auth);
-        return auths;
+    public Authority findByName(String name) {
+        return this.authorityRepository.findByName(name);
     }
 }

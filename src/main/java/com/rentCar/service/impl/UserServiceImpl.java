@@ -2,8 +2,6 @@ package com.rentCar.service.impl;
 
 import com.rentCar.dto.UserDTO;
 import com.rentCar.enumerations.AccountStatus;
-import com.rentCar.model.Authority;
-import com.rentCar.model.Client;
 import com.rentCar.model.User;
 import com.rentCar.repository.UserRepository;
 import com.rentCar.service.AuthorityService;
@@ -57,24 +55,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Client save(UserDTO userDTO) {
-        Client client = new Client();
-        client.setFirstName(userDTO.getFirstName());
-        client.setLastName(userDTO.getLastName());
-        client.setStatus(AccountStatus.ACTIVE);
-        client.setEmail(userDTO.getEmail());
-        client.setUsername(userDTO.getUsername());
-
-        if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-            client.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        }
-
-        List<Authority> auth = authorityService.findByName("ROLE_CLIENT");
-        client.setAuthorities(auth);
-
-        userRepository.save(client);
-
-        return client;
+    public User save(User user) {
+        userRepository.save(user);
+        return user;
     }
 
     @Override

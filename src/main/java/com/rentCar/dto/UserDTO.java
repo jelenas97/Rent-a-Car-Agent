@@ -18,10 +18,8 @@ public class UserDTO {
     private String status;
     private String username;
     private String password;
-    private String confirmPassword;
     private String firstName;
     private String lastName;
-    private String address;
     private List<String> roles;
 
     public UserDTO(User user) {
@@ -31,7 +29,6 @@ public class UserDTO {
         this.status = user.getStatus().toString();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.address=user.getAddress();
     }
 
 }
