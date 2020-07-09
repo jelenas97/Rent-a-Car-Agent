@@ -41,7 +41,6 @@ public class AdvertisementController {
     @PostMapping(value = "/searchAds", produces = "application/json")
     @PermitAll
     public ResponseEntity<?> searchAdvertisements(@RequestBody SearchDTO searchDto) {
-
         try {
             System.out.println("SearchDto: : " + searchDto.toString());
             List<Advertisement> ads = this.advertisementService.search(searchDto);

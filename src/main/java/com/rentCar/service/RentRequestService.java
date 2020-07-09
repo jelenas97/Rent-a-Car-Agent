@@ -1,6 +1,7 @@
 package com.rentCar.service;
 
 import com.rentCar.dto.RentRequestDTO;
+import com.rentCar.dto.RequestsHolderDTO;
 import com.rentCar.model.RentRequest;
 
 import java.time.LocalDateTime;
@@ -23,4 +24,13 @@ public interface RentRequestService {
     RentRequest findById(long rentRequestId);
 
     List<RentRequestDTO> getRentRequestReserved(long id);
+
+    void processRequest(String confirm, RentRequestDTO rentDTO);
+
+    void processRequestsBundle(String confirm, RequestsHolderDTO holderDTO);
+
+    void sendRequest(RequestsHolderDTO holderDTO);
+
+    void rent(RentRequest rentRequest);
+
 }
