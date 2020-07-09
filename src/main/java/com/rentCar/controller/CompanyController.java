@@ -1,23 +1,32 @@
 package com.rentCar.controller;
 
+import com.rentCar.model.Authority;
 import com.rentCar.model.Company;
+import com.rentCar.service.AuthorityService;
 import com.rentCar.service.CompanyService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping("/company")
-@RequiredArgsConstructor
+@RequestMapping("company")
 public class CompanyController {
 
-    private final CompanyService companyService;
+    @Autowired
+    private CompanyService companyService;
 
-    @RequestMapping("/save")
-    public Company save(@RequestBody Company company){
+    @Autowired
+    private AuthorityService authorityService;
+
+    @PostMapping
+    public Company save(@RequestBody Company company) {
+        Authority authority = authorityService.findByName("ROLE_COMPANY");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        company.setAuthorities(authorities);
         return companyService.save(company);
     }
 }
