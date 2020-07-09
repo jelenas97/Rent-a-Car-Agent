@@ -9,4 +9,6 @@ public interface RequestsHolderService {
     void save(RequestsHolder requestsHolder);
 
     List<RequestsHolderDTO> getAllPending(Long id);
+
+    RequestsHolder findById(Long id);
 }
