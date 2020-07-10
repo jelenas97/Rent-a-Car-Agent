@@ -4,6 +4,7 @@ import com.rentCar.dto.AdvertisementDTO;
 import com.rentCar.dto.TermDTO;
 import com.rentCar.model.Term;
 import com.rentCar.service.TermService;
+import com.rentCar.soap.ReportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class TermController {
 
     @Autowired
     private TermService termService;
+
+    @Autowired
+    private ReportClient reportClient;
 
     @PostMapping(produces = "application/json")
     // @PreAuthorize("hasRole('')")
@@ -62,33 +66,10 @@ public class TermController {
     }
 
     @GetMapping(value = "/agent/{id}", produces = "application/json")
-    @PreAuthorize("hasRole('AGENT')")
+    @PreAuthorize("hasAuthority('ROLE_AGENT')")
     public List<TermDTO> getAllRentedFromCurrentAgent(@PathVariable Long id) {
-        List<Term> rented = this.termService.getAllRentedFromCurrentAgent(id);
-        List<TermDTO> termDTOS = new ArrayList<>();
-
-        for (Term t : rented) {
-            TermDTO termDTO = new TermDTO();
-            termDTO.setId(t.getId());
-            termDTO.setStartDate(t.getStartDate());
-            termDTO.setEndDate(t.getEndDate());
-
-            AdvertisementDTO advertisementDTO = new AdvertisementDTO();
-            advertisementDTO.setId(t.getAdvertisement().getId());
-            advertisementDTO.setName(t.getAdvertisement().getCar().getName());
-            advertisementDTO.setCarBrand(t.getAdvertisement().getCar().getCarBrand().getName());
-            advertisementDTO.setModel(t.getAdvertisement().getCar().getCarModel().getName());
-            advertisementDTO.setStartDate(t.getAdvertisement().getStartDate());
-            advertisementDTO.setEndDate(t.getAdvertisement().getEndDate());
-
-            termDTO.setAdvertisement(advertisementDTO);
-
-            termDTOS.add(termDTO);
-
-        }
-
-        System.out.println(termDTOS.size());
-        return termDTOS;
+        List<TermDTO> rented = this.reportClient.getTerms(id);
+        return rented;
     }
 
 }
