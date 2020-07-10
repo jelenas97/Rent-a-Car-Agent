@@ -1,10 +1,6 @@
 package com.rentCar.config;
 
-import com.rentCar.soap.AdClient;
-import com.rentCar.soap.MessageClient;
-import com.rentCar.soap.RentClient;
-import com.rentCar.soap.RentClient;
-import com.rentCar.soap.StatisticsClient;
+import com.rentCar.soap.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -25,6 +21,15 @@ public class SoapConfig {
     @Bean
     public AdClient adClient(Jaxb2Marshaller marshaller) {
         AdClient client = new AdClient();
+        client.setDefaultUri("http://localhost:8084/advertisement/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
+    }
+
+    @Bean
+    public ReportClient reportClient(Jaxb2Marshaller marshaller) {
+        ReportClient client = new ReportClient();
         client.setDefaultUri("http://localhost:8084/advertisement/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
