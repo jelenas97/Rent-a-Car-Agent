@@ -8,6 +8,7 @@ import com.rentCar.model.Advertisement;
 import com.rentCar.model.User;
 import com.rentCar.service.AdvertisementService;
 import com.rentCar.service.CarService;
+import com.rentCar.service.RentReportService;
 import com.rentCar.service.UserService;
 import com.rentCar.soap.AdClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class AdvertisementController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RentReportService rentReportService;
 
     @Autowired
     private AdClient adClient;
@@ -136,7 +140,7 @@ public class AdvertisementController {
     @GetMapping(value = "km/user/{id}", produces = "application/json")
     public ResponseEntity<?> getMostKm(@PathVariable Long id) {
         try {
-            List<StatisticDTO> ads = this.adClient.getMostKm(id);
+            List<StatisticDTO> ads = this.rentReportService.getMostKmByUserId(id);
 
             System.out.println(ads);
             return new ResponseEntity(ads, HttpStatus.OK);

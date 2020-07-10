@@ -21,7 +21,6 @@ public class AdvertisementDTO {
     private String carClass;
     private Integer kilometresLimit;
     private String transmissionType;
-    private Boolean cwd;
     private Integer kidSeats;
     private Integer mileage;
     private Double rate;
@@ -43,7 +42,6 @@ public class AdvertisementDTO {
         this.carClass = ad.getCar().getCarClass().getName();
         this.kilometresLimit = ad.getKilometresLimit();
         this.transmissionType = ad.getCar().getTransmissionType().getName();
-        this.cwd = ad.getCdw();
         this.kidSeats = ad.getCar().getKidSeats();
         this.mileage = ad.getCar().getMileage();
         this.rate = 10.0;

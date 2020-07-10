@@ -84,33 +84,33 @@ values (1000, 20, 100, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (2000, 50, 200, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
-values (1500, 30, 200,1);
+values (1500, 30, 200, 1);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
-values (1200, 25, 0 ,1);
+values (1200, 25, 0, 1);
 
 insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
 values (1, 1, 2, 1000, 'Sián', 5.0, 1, 1, 3, 1);
-insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
+insert into advertisement(micro_id, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
                           end_date)
-values (1, 1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-10-03');
+values (1, 20, 'Novi Sad', 5000, 1, 3, 1, '2020-05-03', '2020-10-03');
 
 insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
 values (2, 1, 0, 10000, 'Batmobile', 10.0, 2, 2, 2,
         2);
-insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
+insert into advertisement(micro_id, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
                           end_date)
-values (2, 0, 10, 'Novi Sad', 5000, 2, 4, 2, '2020-05-03', '2020-10-03');
+values (2, 10, 'Novi Sad', 5000, 2, 4, 2, '2020-05-03', '2020-10-03');
 --
 insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
 values (3, 1, 0, 10000,
         'NOVO', 10.0, 1, 1, 1,
         1);
-insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
+insert into advertisement(micro_id, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
                           end_date)
-values (3, 0, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
+values (3, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
 --
 
 insert into car_fuel_type(car_id, fuel_type_id)
@@ -125,14 +125,37 @@ values ('Really good car!', '2020-06-13', 3, 3, 1, 'APPROVED');
 #insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Awesome car!','2020-05-04',1, ,1,'UNPROCESSED');
 #insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('STUPID CAR!!!!','2020-05-05',1, ,2,'UNPROCESSED');
 
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (2, 1, '2020-06-03 05:05:05', 'PENDING', '2020-06-15 04:04:04');
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (2, 1, '2020-06-12 05:05:05', 'RESERVED', '2020-06-22 04:04:04');
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (2, 1, '2020-05-25 05:05:05', 'PAID', '2020-05-20 04:04:04');
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time)
-values (2, 1, '2020-05-13 05:05:05', 'PAID', '2020-05-19 04:04:04');
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
+values (2, 1, '2020-06-03 05:05:05', 'PENDING', '2020-06-15 04:04:04', 4);
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
+values (2, 1, '2020-06-12 05:05:05', 'RESERVED', '2020-06-22 04:04:04', 5);
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
+values (2, 1, '2020-05-25 05:05:05', 'PAID', '2020-05-20 04:04:04', 6);
+insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
+values (2, 1, '2020-05-13 05:05:05', 'PAID', '2020-05-19 04:04:04', 6);
+
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-07-19T22:00', 'RESERVED', '2020-06-17T22:00', 1, 1, 1);
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-07-21T22:00', 'PENDING', '2020-06-20T22:00', 1, 1, 1);
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-07-29T22:00', 'RESERVED', '2020-06-27T22:00', 1, 1, 1);
+
+
+
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-07-19T22:00', 'PENDING', '2020-06-17T22:00', 1, 2, 2);
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-07-21T22:00', 'PENDING', '2020-06-20T22:00', 1, 2, 2);
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-08-04T22:00', 'PENDING', '2020-06-30T22:00', 1, 2, 2);
+
+
+
+insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
+values ('2020-08-26T22:00', 'PENDING', '2020-07-03T22:00', 1, 3, 2);
+
+
 
 insert into rate(value, advertisement_id, client_id, rent_request_id)
 values (9, 2, 1, 3);
