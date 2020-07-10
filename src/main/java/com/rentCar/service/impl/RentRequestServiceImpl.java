@@ -1,5 +1,6 @@
 package com.rentCar.service.impl;
 
+import com.rentCar.dto.EmailMessage;
 import com.rentCar.dto.RentRequestDTO;
 import com.rentCar.dto.RequestsHolderDTO;
 import com.rentCar.enumerations.RentRequestStatus;
@@ -41,6 +42,9 @@ public class RentRequestServiceImpl implements RentRequestService {
 
     @Autowired
     private RequestsHolderService requestsHolderService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<RentRequestDTO> getHistoryRentRequests(long id) {
@@ -146,6 +150,14 @@ public class RentRequestServiceImpl implements RentRequestService {
 
     @Override
     public void processRequest(String confirm, RentRequestDTO rentDTO) {
+        // EmailMessage = new EmailMessage("")
+        RentRequest request = this.rentRequestRepository.findById(rentDTO.getId()).orElse(null);
+
+        String email = request.getSender().getEmail();
+        String rejection = "Your request for reservation" + request.getAdvertisement().getCar().getCarClass() + "has been rejected";
+
+        String accept = "Your request for reservation" + request.getAdvertisement().getCar().getCarClass() + "has been accepted";
+        System.out.println(email);
         if (confirm.equals("YES")) {
             System.out.println(rentDTO);
             List<Term> term = this.termService.findTakenTerm(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
@@ -153,23 +165,31 @@ public class RentRequestServiceImpl implements RentRequestService {
 
             if (term.size() == 0) {
                 System.out.println("NEMA TERMINA SA PREKLAPANJEM!!!!");
-                RentRequest request = this.rentRequestRepository.findById(rentDTO.getId()).orElse(null);
                 if (request != null) {
                     this.rent(request);
+
                     List<RentRequest> rentRequests = this.findPending(rentDTO.getAdvertisementId(), rentDTO.getStartDateTime(), rentDTO.getEndDateTime());
                     System.out.println("Ove odbijam " + rentRequests);
+                    this.emailService.sendEmail(new EmailMessage(email, accept));
                     this.automaticRejection(rentRequests);
                 }
             } else {
+                this.emailService.sendEmail(new EmailMessage(email, rejection));
                 this.changeStatus(rentDTO.getId(), RentRequestStatus.CANCELED.toString());
             }
         } else {
+            this.emailService.sendEmail(new EmailMessage(email, rejection));
             this.changeStatus(rentDTO.getId(), RentRequestStatus.CANCELED.toString());
         }
     }
 
     @Override
     public void processRequestsBundle(String confirm, RequestsHolderDTO holderDTO) {
+        String email = "";
+        String rejection = "Your request for bundle has been rejected";
+
+        String accept = "Your request for bundle has been accepted";
+        RentRequestDTO dto = new RentRequestDTO();
         if (confirm.equals("YES")) {
             //true = nema preklapanja  u jednom terminu! Dodaj ih sve!
             //false = ima preklapanja u jednom/vise! Sve odbij!
@@ -183,7 +203,7 @@ public class RentRequestServiceImpl implements RentRequestService {
                 }
             }
             if (yes) {
-                RentRequestDTO dto = new RentRequestDTO();
+
                 for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
                     RentRequest request = this.rentRequestRepository.findById(rentDTO.getId()).orElse(null);
                     dto = rentDTO;
@@ -191,17 +211,26 @@ public class RentRequestServiceImpl implements RentRequestService {
                         this.rent(request);
                     }
                 }
+
+                email = this.userService.findById(dto.getSenderId()).getEmail();
+                this.emailService.sendEmail(new EmailMessage(email, accept));
+
                 List<RentRequest> rentRequests = this.findPending(dto.getAdvertisementId(), dto.getStartDateTime(), dto.getEndDateTime());
                 this.automaticRejection(rentRequests);
             } else {
                 for (RentRequestDTO rentDTO : holderDTO.getRentRequests()) {
                     this.changeStatus(rentDTO.getId(), RentRequestStatus.CANCELED.toString());
+                    dto = rentDTO;
                 }
+                email = this.userService.findById(dto.getSenderId()).getEmail();
+                this.emailService.sendEmail(new EmailMessage(email, rejection));
             }
         } else {
             for (RentRequestDTO r : holderDTO.getRentRequests()) {
                 this.changeStatus(r.getId(), RentRequestStatus.CANCELED.toString());
             }
+            email = this.userService.findById(dto.getSenderId()).getEmail();
+            this.emailService.sendEmail(new EmailMessage(email, rejection));
         }
     }
 
@@ -245,11 +274,16 @@ public class RentRequestServiceImpl implements RentRequestService {
                     System.out.println("Ovo je bilo u bundle uklanjam!!!" + id);
                     this.changeStatus(id, "CANCELED");
                 }
+                String email = request.getSender().getEmail();
+                String rejection = "Your request for bundle has been rejected";
+                this.emailService.sendEmail(new EmailMessage(email, rejection));
+
             } else {
                 this.changeStatus(request.getId(), "CANCELED");
+                String email = request.getSender().getEmail();
+                String rejection = "Your request for reservation" + request.getAdvertisement().getCar().getCarClass() + "has been rejected";
+                this.emailService.sendEmail(new EmailMessage(email, rejection));
             }
         }
     }
-
-
 }
