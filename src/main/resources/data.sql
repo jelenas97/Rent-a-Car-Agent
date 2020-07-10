@@ -46,14 +46,16 @@ insert into authority (name)
 values ('ROLE_ADMIN');
 
 insert into users(type, password, username, email, status, first_name, last_name, address)
-values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'petar', 'pera@gmail.com', 'ACTIVE', 'Petar', 'Petrovic', 'Balzakova 15');
+values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'petar', 'bertrand162@ifchuck.com',
+        'ACTIVE', 'Petar', 'Petrovic', 'Balzakova 15');
 insert into users(type, password, username, email, status, first_name, last_name, address)
-values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'nikola', 'nikola@gmail.com',
+values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'nikola', 'bertrand162@ifchuck.com',
         'ACTIVE', 'Nikola', 'Nikolic', 'Balzakova 70');
 insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
-values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'agent@gmail.com', 'ACTIVE', 'Agent', 'Agentski', 'Balzakova 30', '555');
+values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'bertrand162@ifchuck.com',
+        'ACTIVE', 'Agent', 'Agentski', 'Balzakova 30', '555');
 insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
-values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent2', 'agent2@gmail.com',
+values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent2', 'bertrand162@ifchuck.com',
         'ACTIVE', 'Nenad', 'Nenadovic', 'Balzakova 15', '161');
 insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
 values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent3', 'agent3@gmail.com',
@@ -101,7 +103,7 @@ values (2, 1, 0, 10000, 'Batmobile', 10.0, 2, 2, 2,
         2);
 insert into advertisement(micro_id, cdw, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
                           end_date)
-values (2, 0, 10, 'Novi Sad', 5000, 2, 4, 2, '2020-05-03', '2020-10-03');
+values (2, 0, 10, 'Novi Sad', 5000, 2, 3, 2, '2020-05-03', '2020-10-03');
 --
 insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)

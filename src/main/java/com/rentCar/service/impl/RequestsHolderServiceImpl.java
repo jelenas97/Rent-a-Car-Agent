@@ -30,4 +30,9 @@ public class RequestsHolderServiceImpl implements RequestsHolderService {
         }
         return requestsHolderDTOS;
     }
+
+    @Override
+    public RequestsHolder findById(Long id) {
+        return this.requestsHolderRepository.find(id);
+    }
 }
