@@ -30,8 +30,6 @@ public class Advertisement {
     @Column
     private String place;
 
-    @Column
-    private Boolean cdw;
 
     @Column(name="startDate",nullable = false)
     private LocalDate startDate;

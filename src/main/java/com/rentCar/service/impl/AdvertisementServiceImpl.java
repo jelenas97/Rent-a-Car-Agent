@@ -73,10 +73,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             Predicate<Advertisement> byLimitMileage = ad -> ad.getKilometresLimit() >= dto.getLimitMileage();
             predicates.add(byLimitMileage);
         }
-        if (dto.getDmg() != null) {
+      /*  if (dto.getDmg() != null) {
             Predicate<Advertisement> byCwd = ad -> ad.getCdw() == dto.getDmg();
             predicates.add(byCwd);
-        }
+        }*/
         if (dto.getBrand() != null) {
             Predicate<Advertisement> byBrand = ad -> ad.getCar().getCarBrand().getName().equals(dto.getBrand());
             predicates.add(byBrand);
