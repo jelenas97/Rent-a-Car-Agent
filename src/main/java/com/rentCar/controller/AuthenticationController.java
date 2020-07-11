@@ -5,7 +5,6 @@ import com.rentCar.dto.UserTokenState;
 import com.rentCar.model.User;
 import com.rentCar.security.TokenUtils;
 import com.rentCar.security.auth.JwtAuthenticationRequest;
-import com.rentCar.service.UserService;
 import com.rentCar.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,24 +35,16 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    @Autowired
-    private UserService userService;
-
-    // Prvi endpoint koji pogadja korisnik kada se loguje.
-    // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
                                                                     HttpServletResponse response) {
 
-        //
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
 
-        // Ubaci korisnika u trenutni security kontekst
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
@@ -65,7 +56,6 @@ public class AuthenticationController {
         userDTO.setStatus(user.getStatus().toString());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
-        userDTO.setAddress(user.getAddress());
 
         ArrayList<String> roles = new ArrayList<>();
 
@@ -74,7 +64,6 @@ public class AuthenticationController {
         }
         userDTO.setRoles(roles);
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, userDTO));
     }
 

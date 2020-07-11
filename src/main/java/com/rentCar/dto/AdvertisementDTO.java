@@ -32,6 +32,7 @@ public class AdvertisementDTO {
     private Long ownerID;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String ownerEmail;
 
     public AdvertisementDTO(Advertisement ad) {
         this.id = ad.getId();
@@ -51,6 +52,7 @@ public class AdvertisementDTO {
         this.price = ad.getPriceList().getPricePerDay();
         this.model = ad.getCar().getCarModel().getName();
         this.ownerID = ad.getOwner().getId();
+        this.ownerEmail = ad.getOwner().getEmail();
     }
 
 }
