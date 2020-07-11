@@ -2,6 +2,7 @@ package com.rentCar.soap;
 
 import com.rentCar.RentCar.wsdl.*;
 import com.rentCar.dto.RentRequestDTO;
+import com.rentCar.dto.RequestsHolderDTO;
 import com.rentCar.service.MessageService;
 import com.rentCar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RentClient extends WebServiceGatewaySupport {
     @Autowired
@@ -77,5 +80,44 @@ public class RentClient extends WebServiceGatewaySupport {
 
             return response;
         }
+
+    public List<RequestsHolderDTO> getRequestHoldersRequest(Long rentRequestId) {
+
+
+        GetRequestHoldersRequest request = new GetRequestHoldersRequest();
+        request.setId(rentRequestId);
+
+        GetRequestHoldersResponse response = (GetRequestHoldersResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8095/ws/microservices/rent", request,
+                        new SoapActionCallback(
+                                "http://localhost:8095/ws/microservices/rent/GetRequestHolderRequest"));
+        List<RequestsHolderDTO> listResponse = new ArrayList<>();
+        for (com.rentCar.RentCar.wsdl.RequestsHolderDTO holder : response.getRequestsHolder()) {
+            RequestsHolderDTO requestsHolderDTO = new RequestsHolderDTO();
+            requestsHolderDTO.setBundle(holder.isBundle());
+            requestsHolderDTO.setId(holder.getId());
+            Set<RentRequestDTO> list = new HashSet<>();
+            for (RentRequest rr : holder.getRentRequests()) {
+                RentRequestDTO rrDto = new RentRequestDTO();
+                rrDto.setAdvertisementId(rr.getAdvertisementId());
+                rrDto.setCars(rr.getCars());
+                rrDto.setId(rr.getId());
+                rrDto.setEndDateString(rr.getEndDateString());
+                rrDto.setStartDateString(rr.getStartDateString());
+                rrDto.setEndDateTime(LocalDateTime.parse(rr.getEndDateTime()));
+                rrDto.setStartDateTime(LocalDateTime.parse(rr.getStartDateTime()));
+                rrDto.setNumberOfUnseen(rr.getNumberOfUnseen());
+                rrDto.setRentRequestStatus(rr.getRentRequestStatus());
+                rrDto.setSenderId(rr.getSenderId());
+
+                list.add(rrDto);
+            }
+
+            requestsHolderDTO.setRentRequests(list);
+
+            listResponse.add(requestsHolderDTO);
+        }
+        return listResponse;
+    }
 
     }

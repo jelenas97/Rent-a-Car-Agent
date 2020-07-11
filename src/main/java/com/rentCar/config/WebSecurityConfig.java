@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
                 // svim korisnicima dopusti da pristupe putanjama /auth/**, (/h2-console/** ako se koristi H2 baza) i /api/foo
-                .authorizeRequests().antMatchers("/auth/**", "/registerRequest", "/car/**").permitAll().antMatchers("/h2-console/**").permitAll()
+                .authorizeRequests().antMatchers("/auth/**", "/registerRequest", "/car/**", "/requestHolder/**").permitAll().antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/codebook/getCodeBookInfo").permitAll().antMatchers(HttpMethod.GET, "/advertisement").permitAll()
                 .antMatchers(HttpMethod.GET, "/model/**").permitAll().antMatchers(HttpMethod.POST, "/advertisement/searchAds").permitAll()
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
