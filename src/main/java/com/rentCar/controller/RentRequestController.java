@@ -97,7 +97,7 @@ public class RentRequestController {
     @PermitAll
     public ResponseEntity<?> processRequestsBundle(@PathVariable String confirm, @RequestBody RequestsHolderDTO holderDTO) {
         try {
-            this.rentRequestService.processRequestsBundle(confirm, holderDTO);
+            this.rentClient.processRequestsBundle(confirm, holderDTO);
             return new ResponseEntity(null, HttpStatus.OK);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
@@ -109,7 +109,7 @@ public class RentRequestController {
     @PermitAll
     public ResponseEntity<?> processRequest(@PathVariable String confirm, @RequestBody RentRequestDTO rentDTO) {
         try {
-            this.rentRequestService.processRequest(confirm, rentDTO);
+            this.rentClient.processRequest(confirm, rentDTO);
             return new ResponseEntity(null, HttpStatus.OK);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error during processing request bundle");
