@@ -51,7 +51,6 @@ public class AdClient extends WebServiceGatewaySupport {
         request.setOwnerId(3l);
         request.setStartDate(ad.getStartDate().toString());
         request.setEndDate(ad.getEndDate().toString());
-        request.setCdw(ad.getCdw());
         request.setLimitKm(ad.getKilometresLimit());
         request.setLocation(ad.getPlace());
 
