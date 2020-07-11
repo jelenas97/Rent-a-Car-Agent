@@ -106,9 +106,12 @@ public class RentClient extends WebServiceGatewaySupport {
                 rrDto.setStartDateString(rr.getStartDateString());
                 rrDto.setEndDateTime(LocalDateTime.parse(rr.getEndDateTime()));
                 rrDto.setStartDateTime(LocalDateTime.parse(rr.getStartDateTime()));
+                rrDto.setStartDateString(rr.getStartDateTime());
+                rrDto.setEndDateString(rr.getEndDateTime());
                 rrDto.setNumberOfUnseen(rr.getNumberOfUnseen());
                 rrDto.setRentRequestStatus(rr.getRentRequestStatus());
                 rrDto.setSenderId(rr.getSenderId());
+
 
                 list.add(rrDto);
             }
@@ -120,4 +123,57 @@ public class RentClient extends WebServiceGatewaySupport {
         return listResponse;
     }
 
+    public void processRequestsBundle(String confirm, RequestsHolderDTO holderDTO) {
+        ConfirmRequestHolderRequest request = new ConfirmRequestHolderRequest();
+        request.setConfirm(confirm);
+        com.rentCar.RentCar.wsdl.RequestsHolderDTO holder = new com.rentCar.RentCar.wsdl.RequestsHolderDTO();
+        holder.setBundle(holderDTO.getBundle());
+        holder.setId(holderDTO.getId());
+        for (RentRequestDTO rr : holderDTO.getRentRequests()) {
+            RentRequest rentRequest = new RentRequest();
+            rentRequest.setAdvertisementId(rr.getAdvertisementId());
+            rentRequest.setId(rr.getId());
+            rentRequest.setStartDateString(rr.getStartDateTime().toString());
+            rentRequest.setEndDateString(rr.getEndDateTime().toString());
+            rentRequest.setStartDateTime(rr.getStartDateTime().toString());
+            rentRequest.setEndDateTime(rr.getEndDateTime().toString());
+            rentRequest.setRentRequestStatus(rr.getRentRequestStatus());
+            rentRequest.setCars(rr.getCars());
+            rentRequest.setSenderId(rr.getSenderId());
+            rentRequest.setNumberOfUnseen(0);
+            holder.getRentRequests().add(rentRequest);
+        }
+        request.setRequestsHolder(holder);
+        ConfirmRequestHolderResponse response = (ConfirmRequestHolderResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8095/ws/microservices/rent", request,
+                        new SoapActionCallback(
+                                "http://localhost:8095/ws/microservices/rent/ConfirmRequestHolderRequest"));
+
+
     }
+
+    public void processRequest(String confirm, RentRequestDTO rentDTO) {
+        ConfirmRentRequestRequest request = new ConfirmRentRequestRequest();
+        request.setConfirm(confirm);
+        RentRequest rentRequest = new RentRequest();
+        rentRequest.setId(rentDTO.getId());
+        rentRequest.setAdvertisementId(rentDTO.getAdvertisementId());
+        rentRequest.setStartDateString(rentDTO.getStartDateTime().toString());
+        rentRequest.setEndDateString(rentDTO.getEndDateTime().toString());
+        rentRequest.setStartDateTime(rentDTO.getStartDateTime().toString());
+        rentRequest.setEndDateTime(rentDTO.getEndDateTime().toString());
+        rentRequest.setRentRequestStatus(rentDTO.getRentRequestStatus());
+        rentRequest.setCars(rentDTO.getCars());
+        rentRequest.setSenderId(rentDTO.getSenderId());
+        rentRequest.setNumberOfUnseen(0);
+
+        request.setRequest(rentRequest);
+
+        ConfirmRentRequestResponse response = (ConfirmRentRequestResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8095/ws/microservices/rent", request,
+                        new SoapActionCallback(
+                                "http://localhost:8095/ws/microservices/rent/ConfirmRentRequestRequest"));
+
+
+    }
+}
