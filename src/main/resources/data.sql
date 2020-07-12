@@ -36,59 +36,28 @@ insert into transmission_type(name, active)
 values ('Semi-Automatic', 1);
 
 
-insert into authority (name)
-values ('ROLE_CLIENT');
+
 insert into authority (name)
 values ('ROLE_AGENT');
-insert into authority (name)
-values ('ROLE_COMPANY');
-insert into authority (name)
-values ('ROLE_ADMIN');
 
-insert into users(type, password, username, email, status, first_name, last_name, address)
-values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'petar', 'bertrand162@ifchuck.com',
-        'ACTIVE', 'Petar', 'Petrovic', 'Balzakova 15');
-insert into users(type, password, username, email, status, first_name, last_name, address)
-values ('CLIENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'nikola', 'bertrand162@ifchuck.com',
-        'ACTIVE', 'Nikola', 'Nikolic', 'Balzakova 70');
-insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
-values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'bertrand162@ifchuck.com',
+
+
+insert into users(id,type, password, username, email, status, first_name, last_name, address, business_registration_number)
+values (3,'AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent', 'bertrand162@ifchuck.com',
         'ACTIVE', 'Agent', 'Agentski', 'Balzakova 30', '555');
-insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
-values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent2', 'bertrand162@ifchuck.com',
-        'ACTIVE', 'Nenad', 'Nenadovic', 'Balzakova 15', '161');
-insert into users(type, password, username, email, status, first_name, last_name, address, business_registration_number)
-values ('AGENT', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'agent3', 'agent3@gmail.com',
-        'ACTIVE', 'Marko', 'Markovic', 'Balzakova 15', '873');
-insert into users(type, password, username, email, status, first_name, last_name, address)
-values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin', 'admin@gmail.com', 'ACTIVE', 'Bojan', 'Bojanic', 'Balzakova 15');
-insert into users(type, password, username, email, status, first_name, last_name, address)
-values ('ADMIN', '$2a$10$yNKbCm5ETrM/bNnJMcmIxe/95qU6vpqnxn2/i9pAv5PZsrPbnJLvK', 'admin2', 'admin2@gmail.com',
-        'ACTIVE', 'Damir', 'Damirovic', 'Balzakova 45');
 
 insert into user_authority(user_id, authority_id)
-values(1, 1);
-insert into user_authority(user_id, authority_id)
-values(2, 1);
-insert into user_authority(user_id, authority_id)
-values(3, 2);
-insert into user_authority(user_id, authority_id)
-values(4, 2);
-insert into user_authority(user_id, authority_id)
-values(5, 2);
-insert into user_authority(user_id, authority_id)
-values(6, 4);
-insert into user_authority(user_id, authority_id)
-values(7, 4);
+values(3, 1);
+
 
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (1000, 20, 100, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
 values (2000, 50, 200, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
-values (1500, 30, 200, 1);
+values (1500, 30, 200, 3);
 insert into price_list(price_per_day, price_per_km, cdw, creator_id)
-values (1200, 25, 0, 1);
+values (1200, 25, 0, 3);
 
 insert into car(micro_id, available_tracking, kid_seats, mileage, name, rate, car_brand_id, car_class_id,
                 transmission_type_id, car_model_id)
@@ -112,7 +81,7 @@ values (3, 1, 0, 10000,
         1);
 insert into advertisement(micro_id, discount, place, kilometres_limit, car_id, owner_id, price_list_id, start_date,
                           end_date)
-values (3, 20, 'Novi Sad', 5000, 3, 1, 1, '2020-05-03', '2020-10-03');
+values (3, 20, 'Novi Sad', 5000, 3, 3, 1, '2020-05-03', '2020-10-03');
 --
 
 insert into car_fuel_type(car_id, fuel_type_id)
@@ -122,42 +91,4 @@ values (2, 3);
 insert into car_fuel_type(car_id, fuel_type_id)
 values (3, 3);
 
-insert into comment(content, date, advertisement_id, rent_request_id, user_id, status)
-values ('Really good car!', '2020-06-13', 3, 3, 1, 'APPROVED');
-#insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('Awesome car!','2020-05-04',1, ,1,'UNPROCESSED');
-#insert into comment(content, date, advertisement_id, rent_request_id, user_id, status) values ('STUPID CAR!!!!','2020-05-05',1, ,2,'UNPROCESSED');
 
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
-values (2, 1, '2020-06-03 05:05:05', 'PENDING', '2020-06-15 04:04:04', 4);
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
-values (2, 1, '2020-06-12 05:05:05', 'RESERVED', '2020-06-22 04:04:04', 5);
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
-values (2, 1, '2020-05-25 05:05:05', 'PAID', '2020-05-20 04:04:04', 6);
-insert into rent_request(advertisement_id, sender_id, end_date_time, rent_request_status, start_date_time, requests_id)
-values (2, 1, '2020-05-13 05:05:05', 'PAID', '2020-05-19 04:04:04', 6);
-
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-07-19T22:00', 'RESERVED', '2020-06-17T22:00', 1, 1, 1);
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-07-21T22:00', 'PENDING', '2020-06-20T22:00', 1, 1, 1);
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-07-29T22:00', 'RESERVED', '2020-06-27T22:00', 1, 1, 1);
-
-
-
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-07-19T22:00', 'PENDING', '2020-06-17T22:00', 1, 2, 2);
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-07-21T22:00', 'PENDING', '2020-06-20T22:00', 1, 2, 2);
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-08-04T22:00', 'PENDING', '2020-06-30T22:00', 1, 2, 2);
-
-
-
-insert into rent_request(end_date_time, rent_request_status, start_date_time, advertisement_id, requests_id, sender_id)
-values ('2020-08-26T22:00', 'PENDING', '2020-07-03T22:00', 1, 3, 2);
-
-
-
-insert into rate(value, advertisement_id, client_id, rent_request_id)
-values (9, 2, 1, 3);
