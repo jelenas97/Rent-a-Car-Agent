@@ -47,7 +47,7 @@ public class MessageController {
             if (message.getIdMessage() == 0) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            this.messageService.save(messageDTO);
+            //this.messageService.save(messageDTO);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (NullPointerException e) {

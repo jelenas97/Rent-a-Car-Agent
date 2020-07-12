@@ -1,6 +1,7 @@
 package com.rentCar.controller;
 
 import com.rentCar.dto.UserDTO;
+import com.rentCar.enumerations.AccountStatus;
 import com.rentCar.model.User;
 import com.rentCar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/user")
 @CrossOrigin("http://localhost:4200")
 public class UserController {
@@ -50,5 +51,10 @@ public class UserController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_CLIENT', 'ROLE_AGENT')")
     public User user(Principal user) {
         return this.userService.findByUsername(user.getName());
+    }
+
+    @PostMapping("/username")
+    public AccountStatus userByUsername(@RequestBody String username) {
+        return this.userService.findByUsername(username).getStatus();
     }
 }
